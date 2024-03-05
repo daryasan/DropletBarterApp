@@ -1,0 +1,11 @@
+import lombok.AllArgsConstructor
+import com.google.gson.annotations.SerializedName
+import retrofit2.http.POST
+import kotlin.Throws
+import lombok.RequiredArgsConstructor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import com.google.gson.GsonBuilder
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import com.example.dropletbarterapp.server.api.AuthApi
+import com.example.dropletbarterapp.screens.MainActivity

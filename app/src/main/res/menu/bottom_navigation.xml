@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/main"
+        android:title="@string/for_you_bottom_nav"
+        android:icon="@drawable/main_bottom_nav_icon"
+       />
+    <item
+        android:id="@+id/search"
+        android:title="@string/search_bottom_nav"
+        android:icon="@drawable/search_bottom_nav_icon"
+        />
+    <item
+        android:id="@+id/advertisements"
+        android:icon="@drawable/ads_bottom_nav_icon"
+        android:title="@string/ads_bottom_nav" />
+    <item
+        android:id="@+id/chats"
+        android:icon="@drawable/chats_bottom_nav_assets"
+        android:title="@string/chats_bottom_nav" />
+    <item
+        android:id="@+id/profile"
+        android:icon="@drawable/profile_bottom_nav_icon"
+        android:title="@string/profile_bottom_nav" />
+
+</menu>

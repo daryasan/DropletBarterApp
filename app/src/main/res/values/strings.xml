@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Droplet</string>
+    <string name="search_bottom_nav">Поиск</string>
+    <string name="for_you_bottom_nav">Для вас</string>
+    <string name="ads_bottom_nav">Объявления</string>
+    <string name="chats_bottom_nav">Чаты</string>
+    <string name="profile_bottom_nav">Профиль</string>
+</resources>
