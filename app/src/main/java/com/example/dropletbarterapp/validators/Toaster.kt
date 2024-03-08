@@ -1,30 +1,36 @@
-package com.example.dropletbarterapp.validators;
+package com.example.dropletbarterapp.validators
 
-import android.content.Context;
-import android.widget.Toast;
+import android.content.Context
+import android.widget.Toast
 
-public class Toaster {
-
-    public Boolean checkNullsAndGetToast(String message, Context context, String... checked) {
-        for (String s : checked) {
-            if (s == null) {
-                Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                return false;
+class Toaster {
+    fun checkNullsAndGetToast(
+        message: String,
+        context: Context,
+        vararg checked: String
+    ): Boolean {
+        for (s in checked) {
+            if (s.isEmpty()) {
+                Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+                return false
             }
         }
-        return true;
+        return true
     }
 
-    public void getToast(Context context, String message){
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    fun getToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
-    public Boolean checkNullsAndGetToast(String message, Context context, String checked) {
-        if (checked == null) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-            return false;
+    fun getToastWrongLogin(context: Context){
+        Toast.makeText(context, "Неверный номер телефона или адрес почты!", Toast.LENGTH_SHORT).show()
+    }
+
+    fun checkNullsAndGetToast(message: String, context: Context, checked: String): Boolean {
+        if (checked.isEmpty()) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            return false
         }
-        return true;
+        return true
     }
-
 }

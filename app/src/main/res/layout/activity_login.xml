@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.AuthActivity">
+    tools:context=".auth.screens.LoginActivity">
 
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_alignEnd="@+id/editTextLogin"
         android:layout_alignParentTop="true"
         android:layout_marginStart="-0dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="160dp"
         android:layout_marginEnd="-0dp"
         android:layout_marginBottom="45dp">
 
@@ -26,8 +26,8 @@
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:text="ВОЙТИ ПО ПОЧТЕ"
-            android:textSize="12sp"
-            android:layout_marginRight="20dp"/>
+            android:textSize="11sp"
+            android:layout_marginEnd="20dp"/>
 
 
         <Button
@@ -37,7 +37,7 @@
             android:layout_height="60dp"
             android:layout_marginBottom="30dp"
             android:text="ВОЙТИ ПО ТЕЛЕФОНУ"
-            android:textSize="12sp" />
+            android:textSize="11sp" />
     </LinearLayout>
 
     <EditText
@@ -86,7 +86,7 @@
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_alignStart="@+id/buttonLogin"
         android:layout_alignEnd="@+id/buttonLogin"
         android:layout_alignParentBottom="true"

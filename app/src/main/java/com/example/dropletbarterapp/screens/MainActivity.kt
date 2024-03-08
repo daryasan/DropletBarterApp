@@ -5,26 +5,32 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.R
-import com.example.dropletbarterapp.models.User
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.dropletbarterapp.Dependencies
+import com.example.dropletbarterapp.auth.screens.LoginActivity
+import com.example.dropletbarterapp.databinding.ActivityMainBinding
+import com.example.dropletbarterapp.utils.TokenSharedPreferencesService
 
 
 class MainActivity : AppCompatActivity() {
 
-    companion object {
-        var currentUser: User? = null
-    }
+    private lateinit var binding: ActivityMainBinding
+    //private lateinit var dependencies: Dependencies
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        Dependencies.initDependencies(this)
 
-        authorize()
+
+        // if not authorized -> authorize
+        if (Dependencies.tokenService.getAccessToken() == null) {
+            authorize()
+        }
 
         // set navigation
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.selectedItemId = R.id.main
-        bottomNavigationView.setOnItemSelectedListener { item: MenuItem ->
+        binding.bottomNavigation.selectedItemId = R.id.main
+        binding.bottomNavigation.setOnItemSelectedListener { item: MenuItem ->
             // choose navigation activity
             if (item.itemId == R.id.main) {
                 startActivity(Intent(applicationContext, MainActivity::class.java))
@@ -56,7 +62,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun authorize() {
-        startActivity(Intent(applicationContext, AuthActivity::class.java))
+        startActivity(Intent(applicationContext, LoginActivity::class.java))
         overridePendingTransition(0, 0)
     }
 

@@ -17,10 +17,10 @@
         android:theme="@style/Theme.DropletBarterApp"
         tools:targetApi="31">
         <activity
-            android:name=".screens.RegisterActivity"
+            android:name=".auth.screens.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.AuthActivity"
+            android:name=".auth.screens.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".screens.ProfileActivity"

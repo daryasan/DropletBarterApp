@@ -1,13 +1,21 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.JwtTokenResponse;
 import com.example.backend.dto.LoginByEmailDTO;
 import com.example.backend.dto.LoginByPhoneDTO;
 import com.example.backend.exceptions.AuthException;
+import com.example.backend.exceptions.UserException;
 import com.example.backend.models.User;
 import com.example.backend.repositories.UserRepository;
+import com.example.backend.security.JwtUtil;
+import com.example.backend.security.SecurityConfig;
 
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,51 +23,58 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
     private final UserRepository userRepository;
+    private final JwtUtil jwtUtil;
+
     private final PasswordEncoder passwordEncoder;
 
+    private final AuthenticationManager authenticationManager;
+    private final SecurityConfig securityConfig;
 
-    public User saveUser(User user) {
 
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return user;
-
-    }
-
-    public User loginByEmail(LoginByEmailDTO loginByEmailDTO) throws AuthException {
-        User user;
-        if (userRepository.findByEmail(loginByEmailDTO.getEmail()).isPresent()) {
-            user = userRepository.findByEmail(loginByEmailDTO.getEmail()).get();
+    public JwtTokenResponse loginByEmail(LoginByEmailDTO loginByEmailDTO) throws AuthException {
+        Optional<User> user = userRepository.findByEmail(loginByEmailDTO.getEmail());
+        if (user.isPresent()) {
+            UsernamePasswordAuthenticationToken auth =
+                    new UsernamePasswordAuthenticationToken(loginByEmailDTO.getEmail(), loginByEmailDTO.getPassword());
+            authenticationManager.authenticate(auth);
+            return jwtUtil.generateJWTResponseByPhone(user.get());
         } else {
-            throw new AuthException("Wrong login!");
+            throw new AuthException("Wrong user data!");
         }
 
-        if (user.getPassword().equals(passwordEncoder.encode(loginByEmailDTO.getPassword()))) {
-            return user;
-        }
-        throw new AuthException("Wrong password!");
     }
 
-    public User loginByPhone(LoginByPhoneDTO loginByPhoneDTO) throws AuthException {
-        User user;
-        if (userRepository.findByPhoneNumber(loginByPhoneDTO.getPhone()).isPresent()) {
-            user = userRepository.findByPhoneNumber(loginByPhoneDTO.getPhone()).get();
+    public JwtTokenResponse loginByPhone(LoginByPhoneDTO loginByPhoneDTO) throws AuthException {
+        Optional<User> user = userRepository.findByPhoneNumber(loginByPhoneDTO.getPhone());
+        if (user.isPresent()) {
+            UsernamePasswordAuthenticationToken auth =
+                    new UsernamePasswordAuthenticationToken(loginByPhoneDTO.getPhone(), loginByPhoneDTO.getPassword());
+            authenticationManager.authenticate(auth);
+            return jwtUtil.generateJWTResponseByPhone(user.get());
         } else {
-            throw new AuthException("Wrong login!");
+            throw new AuthException("Wrong user data!");
         }
 
-        if (user.getPassword().equals(passwordEncoder.encode(loginByPhoneDTO.getPassword()))) {
-            return user;
-        }
-        throw new AuthException("Wrong password!");
     }
 
-    public User registerByEmail(LoginByEmailDTO loginByEmailDTO) {
+    public JwtTokenResponse registerByEmail(LoginByEmailDTO loginByEmailDTO) throws UserException {
         User user = new User();
+        if (userRepository.findByEmail(loginByEmailDTO.getEmail()).isPresent()) {
+            throw new UserException("User already exists!");
+        }
         user.setEmail(loginByEmailDTO.getEmail());
         user.setPassword(passwordEncoder.encode(loginByEmailDTO.getPassword()));
         userRepository.save(user);
-        return user;
+        return jwtUtil.generateJWTResponseByEmail(user);
+    }
+
+
+    public JwtTokenResponse registerByPhone(LoginByPhoneDTO loginByPhoneDTO) {
+        User user = new User();
+        user.setPhoneNumber(loginByPhoneDTO.getPhone());
+        user.setPassword(passwordEncoder.encode(loginByPhoneDTO.getPassword()));
+        userRepository.save(user);
+        return jwtUtil.generateJWTResponseByPhone(user);
     }
 
 }

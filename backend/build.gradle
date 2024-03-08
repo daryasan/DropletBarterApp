@@ -8,18 +8,26 @@ java {
 }
 
 
+
 dependencies {
+    implementation 'junit:junit:4.12'
+
 
     //implementation 'com.google.android.material:material:1.8.0'
     compileOnly 'org.projectlombok:lombok:1.18.30'
     annotationProcessor "org.projectlombok:lombok:1.18.30"
+    implementation 'com.auth0:java-jwt:4.4.0'
+
+    implementation 'javax.xml.bind:jaxb-api:2.3.0'
 
     implementation 'org.postgresql:postgresql:42.7.2'
 
-    implementation 'org.springframework.boot:spring-boot-starter-web:2.6.4'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.4'
-    implementation 'org.springframework.boot:spring-boot-starter-security:2.6.4'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.7.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.7.2'
+    implementation 'org.springframework.boot:spring-boot-starter-security:2.7.2'
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.4'
+
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor:2.6.4'
 
    /* implementation "androidx.room:room-runtime:2.4.3"
     implementation "androidx.room:room-ktx:2.4.3"

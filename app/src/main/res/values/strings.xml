@@ -5,4 +5,5 @@
     <string name="ads_bottom_nav">Объявления</string>
     <string name="chats_bottom_nav">Чаты</string>
     <string name="profile_bottom_nav">Профиль</string>
+    <string name="api_url">http://10.193.62.50:8080</string>
 </resources>

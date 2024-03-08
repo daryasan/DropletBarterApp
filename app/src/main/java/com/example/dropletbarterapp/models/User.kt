@@ -11,8 +11,8 @@ import javax.persistence.Table
 
 class User(
     @SerializedName("email") val email: String? = null,
-    @SerializedName("phone") val phone: Long?,
-    @SerializedName("password") val password: String,
+    @SerializedName("phone") val phone: Long? = 0,
+    @SerializedName("password") val password: String? = null,
     @SerializedName("firstName") val firstName: String? = null,
     @SerializedName("lastName") val lastName: String? = null,
     @SerializedName("address") val address: String? = null,
