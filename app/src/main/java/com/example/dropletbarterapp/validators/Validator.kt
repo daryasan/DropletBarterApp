@@ -4,7 +4,7 @@ import android.content.Context
 
 class Validator(val context: Context) {
 
-    val toaster: Toaster = Toaster()
+    private val toaster: Toaster = Toaster()
 
     fun validatePassword(password: String): Boolean {
         return toaster.checkNullsAndGetToast(

@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserEditDTO {
+public class UserEditDto {
     String firstName;
     String lastName;
+    String address;
+    String photo;
 }

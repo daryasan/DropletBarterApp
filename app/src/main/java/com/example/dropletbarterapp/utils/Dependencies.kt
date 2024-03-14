@@ -1,10 +1,11 @@
-package com.example.dropletbarterapp
+package com.example.dropletbarterapp.utils
 
 import android.content.Context
+import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.AuthRepository
-import com.example.dropletbarterapp.auth.UserAuthRepository
-import com.example.dropletbarterapp.utils.TokenService
-import com.example.dropletbarterapp.utils.TokenSharedPreferencesService
+import com.example.dropletbarterapp.auth.RuntimeAuthRepository
+import com.example.dropletbarterapp.profile.RuntimeUserRepository
+import com.example.dropletbarterapp.profile.UserRepository
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,6 +28,7 @@ object Dependencies {
             .build()
     }
 
-    val authRepository: AuthRepository by lazy { UserAuthRepository(retrofit) }
+    val authRepository: AuthRepository by lazy { RuntimeAuthRepository(retrofit) }
+    val userRepository: UserRepository by lazy { RuntimeUserRepository(retrofit) }
     val tokenService: TokenService by lazy { TokenSharedPreferencesService(applicationContext) }
 }

@@ -1,8 +1,8 @@
 package com.example.backend.controllers;
 
 import com.example.backend.dto.JwtTokenResponse;
-import com.example.backend.dto.LoginByEmailDTO;
-import com.example.backend.dto.LoginByPhoneDTO;
+import com.example.backend.dto.LoginByEmailDto;
+import com.example.backend.dto.LoginByPhoneDto;
 import com.example.backend.exceptions.AuthException;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.services.AuthService;
@@ -27,7 +27,7 @@ public class AuthController {
     private final Validator validator;
 
     @PostMapping("/loginEmail")
-    ResponseEntity<JwtTokenResponse> signInByEmail(@RequestBody LoginByEmailDTO loginByEmailDTO) throws AuthException {
+    ResponseEntity<JwtTokenResponse> signInByEmail(@RequestBody LoginByEmailDto loginByEmailDTO) throws AuthException {
         try {
             return ResponseEntity.ok(auth.loginByEmail(loginByEmailDTO));
         } catch (AuthException e) {
@@ -37,7 +37,7 @@ public class AuthController {
     }
 
     @PostMapping("/loginPhone")
-    ResponseEntity<JwtTokenResponse> signInByPhone(@RequestBody LoginByPhoneDTO loginByPhoneDTO) throws AuthException {
+    ResponseEntity<JwtTokenResponse> signInByPhone(@RequestBody LoginByPhoneDto loginByPhoneDTO) throws AuthException {
         try {
             return ResponseEntity.ok(auth.loginByPhone(loginByPhoneDTO));
         } catch (AuthException e) {
@@ -46,7 +46,7 @@ public class AuthController {
     }
 
     @PostMapping("/registerEmail")
-    ResponseEntity<JwtTokenResponse> signUpByEmail(@RequestBody LoginByEmailDTO loginByEmailDTO, BindingResult bindingResult) throws UserException {
+    ResponseEntity<JwtTokenResponse> signUpByEmail(@RequestBody LoginByEmailDto loginByEmailDTO, BindingResult bindingResult) throws UserException {
         validator.validate(loginByEmailDTO, bindingResult);
         try {
             return new ResponseEntity<>(auth.registerByEmail(loginByEmailDTO), HttpStatus.CREATED);
@@ -57,9 +57,13 @@ public class AuthController {
     }
 
     @PostMapping("/registerPhone")
-    ResponseEntity<JwtTokenResponse> signUpByPhone(@RequestBody LoginByPhoneDTO loginByPhoneDTO, BindingResult bindingResult) {
+    ResponseEntity<JwtTokenResponse> signUpByPhone(@RequestBody LoginByPhoneDto loginByPhoneDTO, BindingResult bindingResult) throws UserException {
         validator.validate(loginByPhoneDTO, bindingResult);
-        return new ResponseEntity<>(auth.registerByPhone(loginByPhoneDTO), HttpStatus.CREATED);
+        try {
+            return new ResponseEntity<>(auth.registerByPhone(loginByPhoneDTO), HttpStatus.CREATED);
+        } catch (UserException e) {
+            throw e;
+        }
     }
 
 }

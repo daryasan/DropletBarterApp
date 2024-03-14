@@ -28,15 +28,12 @@ public class User {
     private String firstName;
     private String lastName;
     private String address;
-    private byte[] photo;
+    private String photo;
     private double rating;
     private Long items;
-    //@OneToMany(targetEntity=Advertisement.class, mappedBy="user", fetch= FetchType.EAGER)
-    //private List<Advertisement> favourites;
-//    @OneToMany(targetEntity=Advertisement.class, mappedBy="user", fetch= FetchType.EAGER)
+//    private List<Advertisement> favourites;
 //    private List<Advertisement> purchases;
-//    @OneToMany(targetEntity=Review.class, mappedBy="user", fetch= FetchType.EAGER)
 //    private List<Review> reviews;
-    //private List<Chat> chats;
+//    private List<Chat> chats;
 
 }

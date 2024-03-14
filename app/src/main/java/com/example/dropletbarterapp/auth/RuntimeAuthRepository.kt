@@ -7,7 +7,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 
-class UserAuthRepository(retrofit: Retrofit) : AuthRepository {
+class RuntimeAuthRepository(retrofit: Retrofit) : AuthRepository {
 
     private val authApi = retrofit.create(AuthApi::class.java)
 

@@ -1,6 +1,6 @@
 package com.example.backend.services;
 
-import com.example.backend.dto.UserEditDTO;
+import com.example.backend.dto.UserEditDto;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.models.User;
 import com.example.backend.repositories.UserRepository;
@@ -25,7 +25,7 @@ public class UserService {
         }
     }
 
-    public User editUser(Long id, UserEditDTO userEditDTO) throws UserException {
+    public User editUser(Long id, UserEditDto userEditDTO) throws UserException {
         Optional<User> optionalUser = userRepository.findById(id);
         User user;
         if (optionalUser.isPresent()) {

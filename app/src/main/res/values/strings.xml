@@ -5,5 +5,45 @@
     <string name="ads_bottom_nav">Объявления</string>
     <string name="chats_bottom_nav">Чаты</string>
     <string name="profile_bottom_nav">Профиль</string>
-    <string name="api_url">http://10.193.62.50:8080</string>
+    <string name="api_url">http://10.193.60.38:8080</string>
+    <string name="firstLastName">%1$s %2$s</string>
+    <string name="itemsNumber">Айтемов: %1$d</string>
+    <string name="alertMesPhone">Укажите номер телефона в настройках!</string>
+    <string name="alertMesEmail">Укажите электронную почту в настройках!</string>
+    <string name="alertMesAddress">Укажите адрес в настройках!</string>
+    <string name="alertMesFirstLastName">Укажите имя в настройках!</string>
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="EmailHint">Электронная почта</string>
+    <string name="PhoneHint">Номер телефона</string>
+    <string name="AddressHint">Адрес</string>
+    <string name="FirstNameHint">Имя</string>
+    <string name="LastNameHint">Фамилия</string>
+    <string name="Save">Сохранить</string>
+    <string name="TitleEdit">Личная информация</string>
+    <string name="changePhoto">Изменить фото</string>
+    <string name="MyAdvertisements">Мои объявления</string>
+    <string name="Favourites">Избранное</string>
+    <string name="SharedUsage">Совместное использование</string>
+    <string name="advertisementsName">Название объявления</string>
+    <string name="addAdvertisement">Добавьте объявление</string>
+    <string name="EmptyForNow">Пока здесь пусто...</string>
+    <string name="category">Категория</string>
+    <string name="myMessages">Мои сообщения</string>
+    <string name="recommendations">Рекомендации</string>
+    <string name="forYou">Для вас</string>
+    <string name="recent">Недавно опубликованные</string>
+    <string name="near">Рядом</string>
 </resources>

@@ -16,7 +16,7 @@ class User(
     @SerializedName("firstName") val firstName: String? = null,
     @SerializedName("lastName") val lastName: String? = null,
     @SerializedName("address") val address: String? = null,
-    @SerializedName("photo") val photo: ByteArray? = null,
+    @SerializedName("photo") val photo: String? = null,
     @SerializedName("rating") val rating: Double = 0.0,
     @SerializedName("items") val items: Long = 0,
     // @SerializedName("favourites") val favourites: MutableList<Advertisement>,

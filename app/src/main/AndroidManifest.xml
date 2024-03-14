@@ -23,19 +23,19 @@
             android:name=".auth.screens.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.ProfileActivity"
+            android:name=".profile.screens.ProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.ChatsActivity"
+            android:name=".chats.screens.ChatsActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.AdvertisementsActivity"
+            android:name=".advertisements.screens.AdvertisementsActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.SearchActivity"
+            android:name=".search.screens.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".screens.MainActivity"
+            android:name=".foryou.screens.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,6 +43,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

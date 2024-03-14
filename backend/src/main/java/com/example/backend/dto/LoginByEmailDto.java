@@ -3,9 +3,9 @@ package com.example.backend.dto;
 import lombok.Data;
 
 @Data
-public class LoginByPhoneDTO {
+public class LoginByEmailDto {
 
-    private Long phone;
+    private String email;
     private String password;
 
 }
