@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.databinding.ActivityRegisterBinding
 import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.auth.dto.TokenEntity
-import com.example.dropletbarterapp.foryou.screens.MainActivity
+import com.example.dropletbarterapp.mainscreens.foryou.screens.MainActivity
 import com.example.dropletbarterapp.validators.Toaster
 import com.example.dropletbarterapp.validators.Validator
 import kotlinx.coroutines.CoroutineScope

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".chats.screens.ChatsActivity">
+    tools:context=".mainscreens.chats.screens.ChatsActivity">
 
     <TextView
         android:id="@+id/textViewChats"

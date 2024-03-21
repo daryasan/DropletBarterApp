@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +15,7 @@
         android:layout_alignEnd="@+id/editTextLogin"
         android:layout_alignParentTop="true"
         android:layout_marginStart="-0dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="140dp"
         android:layout_marginEnd="-0dp"
         android:layout_marginBottom="45dp">
 
@@ -25,7 +24,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="60dp"
-            android:text="ВОЙТИ ПО ПОЧТЕ"
+            android:text="@string/loginByEmail"
             android:textSize="11sp"
             android:layout_marginEnd="20dp"/>
 
@@ -36,7 +35,7 @@
             android:layout_weight="1"
             android:layout_height="60dp"
             android:layout_marginBottom="30dp"
-            android:text="ВОЙТИ ПО ТЕЛЕФОНУ"
+            android:text="@string/loginByPhobe"
             android:textSize="11sp" />
     </LinearLayout>
 
@@ -51,7 +50,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="30dp"
         android:ems="10"
-        android:hint="Электронная почта"
+        android:hint="@string/email"
         android:inputType="textPersonName"
         android:textAlignment="center" />
 
@@ -66,7 +65,7 @@
         android:layout_marginEnd="70dp"
         android:layout_marginBottom="45dp"
         android:ems="10"
-        android:hint="Пароль"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:textAlignment="center" />
 
@@ -80,26 +79,41 @@
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="20dp"
-        android:text="ВОЙТИ"
+        android:text="@string/logIn"
         android:textSize="15sp"/>
 
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/buttonLogin"
+        android:layout_alignEnd="@+id/buttonLogin"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="20dp"
+        android:textAllCaps="false"
+        android:layout_above="@+id/buttonForgotPassword"
+        android:background="@android:color/transparent"
+        android:text="@string/notRegisteredYet"
+        android:textColor="@color/accent_color"
+        android:textSize="14sp" />
+
+
+    <Button
+        android:id="@+id/buttonForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
         android:layout_alignStart="@+id/buttonLogin"
         android:layout_alignEnd="@+id/buttonLogin"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="160dp"
+        android:layout_marginBottom="140dp"
         android:textAllCaps="false"
-
         android:background="@android:color/transparent"
-        android:text="Еще не зарегистрированы?"
+        android:text="@string/forgotPassword"
         android:textColor="@color/accent_color"
         android:textSize="14sp" />
-
 
 
 </RelativeLayout>

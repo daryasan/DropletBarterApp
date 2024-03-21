@@ -4,11 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.view.MenuItem
 import com.example.dropletbarterapp.R
-import com.example.dropletbarterapp.advertisements.screens.AdvertisementsActivity
-import com.example.dropletbarterapp.profile.screens.ProfileActivity
-import com.example.dropletbarterapp.chats.screens.ChatsActivity
-import com.example.dropletbarterapp.foryou.screens.MainActivity
-import com.example.dropletbarterapp.search.screens.SearchActivity
+import com.example.dropletbarterapp.mainscreens.advertisements.screens.AdvertisementsActivity
+import com.example.dropletbarterapp.mainscreens.profile.screens.ProfileActivity
+import com.example.dropletbarterapp.mainscreens.chats.screens.ChatsActivity
+import com.example.dropletbarterapp.mainscreens.foryou.screens.MainActivity
+import com.example.dropletbarterapp.mainscreens.search.screens.SearchActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 object Navigation {

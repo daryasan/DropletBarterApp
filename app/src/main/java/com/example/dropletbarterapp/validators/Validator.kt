@@ -6,12 +6,28 @@ class Validator(val context: Context) {
 
     private val toaster: Toaster = Toaster()
 
+    // TODO decent validators i beg
+
     fun validatePassword(password: String): Boolean {
-        return toaster.checkNullsAndGetToast(
-            "Заполните все поля!",
-            context,
-            password
-        )
+        if (toaster.checkNullsAndGetToast(
+                "Пароль не может быть пустым!",
+                context,
+                password
+            )
+        ) {
+            if (password.length < 6) return false
+            if (password.filter { it.isDigit() }.firstOrNull() == null) return false
+            if (password.filter { it.isLetter() }
+                    .firstOrNull { it.isUpperCase() } == null) return false
+            if (password.filter { it.isLetter() }
+                    .firstOrNull { it.isLowerCase() } == null) return false
+            return true
+        }
+        return false
+    }
+
+    fun validateAndRepeatPassword(password: String, repeatPassword: String): Boolean {
+        return (validatePassword(password) && repeatPassword == password)
     }
 
     private fun validateEmail(email: String): Boolean {

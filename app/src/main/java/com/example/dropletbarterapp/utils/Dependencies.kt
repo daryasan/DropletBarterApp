@@ -4,8 +4,8 @@ import android.content.Context
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.AuthRepository
 import com.example.dropletbarterapp.auth.RuntimeAuthRepository
-import com.example.dropletbarterapp.profile.RuntimeUserRepository
-import com.example.dropletbarterapp.profile.UserRepository
+import com.example.dropletbarterapp.mainscreens.profile.RuntimeUserRepository
+import com.example.dropletbarterapp.mainscreens.profile.UserRepository
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

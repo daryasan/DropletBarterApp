@@ -73,17 +73,19 @@ public class AuthService {
         }
         user.setEmail(loginByEmailDTO.getEmail());
         user.setPassword(passwordEncoder.encode(loginByEmailDTO.getPassword()));
-        userRepository.save(user);
 
         // init lists
+        ReviewsList reviewsList = new ReviewsList();
+        reviewsList.setUser(user);
+        reviewsList.setReviews(new ArrayList<>());
         FavouritesList favouritesList = new FavouritesList(user, new ArrayList<>());
-        favouritesListRepository.save(favouritesList);
-
-        ReviewsList reviewsList = new ReviewsList(user, new ArrayList<>());
-        reviewsListRepository.save(reviewsList);
-
         PurchasesList purchasesList = new PurchasesList(user, new ArrayList<>());
+
+        userRepository.save(user);
+        reviewsListRepository.save(reviewsList);
+        favouritesListRepository.save(favouritesList);
         purchasesListRepository.save(purchasesList);
+
 
         return jwtUtil.generateJWTResponse(user);
     }
