@@ -110,7 +110,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
-                        android:text="@string/adress" />
+                        android:text="@string/address" />
 
                     <View
                         android:layout_width="match_parent"

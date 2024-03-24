@@ -1,7 +1,10 @@
 package com.example.dropletbarterapp.ui.adapters
 
+import android.graphics.drawable.Drawable
+import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dropletbarterapp.R
@@ -38,6 +41,19 @@ class AdvertisementsAdapter :
 
         with(holder.binding) {
 
+            buttonFavourites.bringToFront()
+
+            // TODO set currentuser.favourites.contsins(ads)
+//            buttonFavourites.setOnClickListener {
+//                if (ads.) {
+//                    buttonFavourites.setImageResource(R.drawable.favourites_true)
+//                } else {
+//                    buttonFavourites.setImageResource(R.drawable.favourites_false)
+//                }
+//
+//            }
+
+            // TODO set favourite
             if (ads.photo != null) {
                 Glide.with(context).load(ads.photo)
                     .centerInside()

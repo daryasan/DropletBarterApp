@@ -23,8 +23,7 @@
     <!-- Sync Preferences -->
     <string name="sync_title">Sync email periodically</string>
     <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails</string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
     <string name="EmailHint">Электронная почта</string>
     <string name="PhoneHint">Номер телефона</string>
@@ -60,17 +59,32 @@
     <string name="changeLogin">Изменить способы входа и пароль</string>
     <string name="changePasswordSettings">Изменить пароль</string>
     <string name="logOut">Выйти</string>
-    <string name="adress">Адрес</string>
+    <string name="address">Адрес</string>
     <string name="phone">Номер телефона</string>
     <string name="items">Aйтемов:</string>
     <string name="name">Имя</string>
     <string name="repeatPassword">Повторите пароль</string>
     <string name="adsName">Название объявления</string>
-    <string name="enterMessage">Введите сообщение...</string>
-    <string name="sentMes">Отправленное сообщение...</string>
-    <string name="recievedMes">Полученное сообщение</string>
+    <string name="enterMessage">Введите сообщение…</string>
+    <string name="sentMes">Отправленное сообщение</string>
+    <string name="receivedMes">Полученное сообщение</string>
     <string name="connect">Связаться</string>
     <string name="take">Забрать себе</string>
-    <string name="simular">Похожие</string>
+    <string name="similar">Похожие</string>
     <string name="reviews">Отзывы</string>
+    <string name="close">Недалеко от меня</string>
+    <string name="nothingFound">Кажется, ничего не нашлось! Попробуйте перефразировать запрос</string>
+    <string-array name="categoryArray">
+        <item>Не выбрано</item>
+        <item>Совместное использование</item>
+        <item>Одежда</item>
+        <item>Электроника</item>
+        <item>Здоровье</item>
+        <item>Для дома</item>
+        <item>Для животных</item>
+        <item>Аксессуары</item>
+        <item>Услуги</item>
+        <item>Другое</item>
+    </string-array>
+
 </resources>

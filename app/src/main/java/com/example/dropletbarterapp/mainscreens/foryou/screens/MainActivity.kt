@@ -2,12 +2,14 @@ package com.example.dropletbarterapp.mainscreens.foryou.screens
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.screens.LoginActivity
 import com.example.dropletbarterapp.databinding.ActivityMainBinding
 import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
+import com.example.dropletbarterapp.mainscreens.fragments.SearchFragment
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.EditDataFragment
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
@@ -47,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
             )
         }
-        // ?
+
         binding.recyclerView.adapter = adapter
         adapter.setOnAdvertisementClickListener(object :
             AdvertisementsAdapter.OnAdvertisementClickListener {
@@ -59,6 +61,28 @@ class MainActivity : AppCompatActivity() {
                 transaction.replace(R.id.forYouLayout, fragment)
                 transaction.addToBackStack(null)
                 transaction.commit()
+            }
+        })
+
+        //search
+        binding.searchBarMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                if (p0 != null) {
+                    disableAndHideElements()
+                    val fragment = SearchFragment.newInstance()
+                    val bundle = Bundle()
+                    bundle.putString("query", p0)
+                    fragment.arguments = bundle
+                    val transaction = supportFragmentManager.beginTransaction()
+                    transaction.replace(R.id.forYouLayout, fragment)
+                    transaction.addToBackStack(null)
+                    transaction.commit()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
             }
         })
 
