@@ -6,9 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.ChatItemBinding
+import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Chat
 
 class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatsViewHolder>() {
+
+    private var onChatClickListener: ChatAdapter.OnChatClickListener? = null
 
     var chats: List<Chat> = emptyList()
         set(newValue) {
@@ -45,5 +48,17 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatsViewHolder>() {
             textViewRecentMessage.text = chat.messages[chat.messages.lastIndex].message
         }
 
+        holder.itemView.setOnClickListener {
+            onChatClickListener?.onChatClick(chats[position])
+        }
+
+    }
+
+    fun setOnChatClickListener(listener: OnChatClickListener) {
+        onChatClickListener = listener
+    }
+
+    interface OnChatClickListener {
+        fun onChatClick(chat: Chat)
     }
 }

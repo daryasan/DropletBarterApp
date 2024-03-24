@@ -12,6 +12,5 @@ import javax.persistence.GenerationType
 class ChatMessage(
     val message: String,
     val sender: User,
-    val sendingTime: LocalDateTime,
-    val read: Boolean = false
+    val sendingTime: LocalDateTime
 )

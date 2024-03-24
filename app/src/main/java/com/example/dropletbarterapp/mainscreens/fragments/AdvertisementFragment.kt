@@ -1,6 +1,5 @@
 package com.example.dropletbarterapp.mainscreens.fragments
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -85,10 +84,9 @@ class AdvertisementFragment : Fragment() {
     }
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        // TODO use viewmodel
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // viewModel
     }
 
 
