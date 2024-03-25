@@ -5,7 +5,7 @@
     <string name="ads_bottom_nav">Объявления</string>
     <string name="chats_bottom_nav">Чаты</string>
     <string name="profile_bottom_nav">Профиль</string>
-    <string name="api_url">http://10.193.61.242:8080</string>
+    <string name="api_url">http://10.193.61.76:8080</string>
     <string name="firstLastName">%1$s %2$s</string>
     <string name="itemsNumber">Айтемов: %1$d</string>
     <string name="alertMesPhone">Укажите номер телефона в настройках!</string>
@@ -74,6 +74,8 @@
     <string name="reviews">Отзывы</string>
     <string name="close">Недалеко от меня</string>
     <string name="nothingFound">Кажется, ничего не нашлось! Попробуйте перефразировать запрос</string>
+    <string name="advertisementName">Название объявления</string>
+    <string name="publish">Опубликовать</string>
     <string-array name="categoryArray">
         <item>Не выбрано</item>
         <item>Совместное использование</item>

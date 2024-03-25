@@ -77,7 +77,13 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        enableAndShowElements()
+        val fragmentManager = supportFragmentManager
+        if (fragmentManager.backStackEntryCount > 0) {
+            fragmentManager.popBackStack()
+            if (fragmentManager.backStackEntryCount == 1) {
+                enableAndShowElements()
+            }
+        }
     }
 
     private fun disableAndHideElements() {

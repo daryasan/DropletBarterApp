@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dropletbarterapp.R
@@ -59,6 +60,14 @@ class ChangeLoginsFragment : Fragment() {
                 viewModel.editPassword(password)
             }
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
         return binding.root
     }
 
@@ -66,10 +75,10 @@ class ChangeLoginsFragment : Fragment() {
         super.onAttach(context)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        (activity as ProfileActivity).enableAndShowElements()
-        requireActivity().supportFragmentManager.popBackStack()
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        (activity as ProfileActivity).enableAndShowElements()
+//        requireActivity().supportFragmentManager.popBackStack()
+//    }
 
 }

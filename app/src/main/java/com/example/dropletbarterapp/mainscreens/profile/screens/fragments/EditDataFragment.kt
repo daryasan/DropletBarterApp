@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
@@ -39,9 +40,18 @@ class EditDataFragment : Fragment() {
         binding.buttonSave.setOnClickListener {
             //viewModel.saveEditedData()
 
-            returnToActivity()
+            requireActivity().onBackPressed()
         }
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
         return binding.root
+
     }
 
 
@@ -64,15 +74,15 @@ class EditDataFragment : Fragment() {
 //
 //    }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        (activity as ProfileActivity).enableAndShowElements()
-        requireActivity().supportFragmentManager.popBackStack()
-    }
+//    override fun onDestroyView() {
+//        super.onDestroyView()
+//        (activity as ProfileActivity).enableAndShowElements()
+//        requireActivity().supportFragmentManager.popBackStack()
+//    }
 
-    private fun returnToActivity() {
-        (requireActivity() as ProfileActivity).enableAndShowElements()
-        requireActivity().supportFragmentManager.popBackStack()
-    }
+//    private fun returnToActivity() {
+//        (requireActivity() as ProfileActivity).enableAndShowElements()
+//        requireActivity().supportFragmentManager.popBackStack()
+//    }
 
 }

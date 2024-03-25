@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.ActivityAdvertisementsBinding
+import com.example.dropletbarterapp.mainscreens.advertisements.screens.fragments.AddAdvertisementFragment
 import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
@@ -48,13 +49,29 @@ class AdvertisementsActivity : AppCompatActivity() {
             }
         })
 
+        binding.buttonAddAds.setOnClickListener {
+            disableAndHideElements()
+            val fragment = AddAdvertisementFragment.newInstance()
+            //fragment.arguments = bundle
+            val transaction = supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.frameLayoutAds, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
+
         // change lists
         setButtonsChange()
 
     }
 
     override fun onBackPressed() {
-        enableAndShowElements()
+        val fragmentManager = supportFragmentManager
+        if (fragmentManager.backStackEntryCount > 0) {
+            fragmentManager.popBackStack()
+            if (fragmentManager.backStackEntryCount == 1) {
+                enableAndShowElements()
+            }
+        }
     }
 
     private fun disableAndHideElements() {

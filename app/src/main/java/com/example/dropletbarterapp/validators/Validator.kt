@@ -41,6 +41,9 @@ class Validator(val context: Context) {
     }
 
     fun validateLogin(login: String, isEmail: Boolean): Boolean {
+        if (login == "") {
+            return false
+        }
         return if (isEmail) {
             validateEmail(login)
         } else {

@@ -53,13 +53,7 @@ class PersonalChatFragment : Fragment() {
         // go back
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                val fragmentManager = requireActivity().supportFragmentManager
-                if (fragmentManager.backStackEntryCount > 0) {
-                    if (fragmentManager.backStackEntryCount == 1) {
-                        requireActivity().onBackPressed()
-                    }
-                    fragmentManager.popBackStack()
-                }
+                requireActivity().onBackPressed()
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
