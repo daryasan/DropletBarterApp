@@ -8,7 +8,7 @@ import kotlinx.parcelize.Parcelize
 class UserDataDto(
     @SerializedName("id") var id: Long,
     @SerializedName("email") val email: String? = null,
-    @SerializedName("phone") val phone: Long? = 0,
+    @SerializedName("phoneNumber") val phone: Long? = 0,
     @SerializedName("firstName") var firstName: String? = null,
     @SerializedName("lastName") var lastName: String? = null,
     @SerializedName("address") var address: String? = null,

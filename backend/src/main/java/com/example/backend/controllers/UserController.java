@@ -1,6 +1,9 @@
 package com.example.backend.controllers;
 
 
+import com.example.backend.dto.UserChangeLoginsEmailDto;
+import com.example.backend.dto.UserChangeLoginsPasswordDto;
+import com.example.backend.dto.UserChangeLoginsPhoneDto;
 import com.example.backend.dto.UserEditDto;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.models.User;
@@ -41,5 +44,39 @@ public class UserController {
             throw e;
         }
     }
+
+    @PatchMapping("/changeEmail/{id}")
+    public ResponseEntity<User> editUserEmail(@PathVariable Long id, @RequestBody UserChangeLoginsEmailDto email) throws UserException {
+        try {
+            User user = userService.editEmail(id, email);
+            return ResponseEntity.ok(user);
+        } catch (UserException e) {
+            throw e;
+        }
+    }
+
+
+    @PatchMapping("/changePhone/{id}")
+    public ResponseEntity<User> editUserPhone(@PathVariable Long id, @RequestBody UserChangeLoginsPhoneDto phone) throws UserException {
+        try {
+            User user = userService.editPhone(id, phone);
+            return ResponseEntity.ok(user);
+        } catch (UserException e) {
+            throw e;
+        }
+    }
+
+
+    @PatchMapping("/changePassword/{id}")
+    public ResponseEntity<User> editUserPassword(@PathVariable Long id, @RequestBody UserChangeLoginsPasswordDto password) throws UserException {
+        try {
+            User user = userService.changePassword(id, password);
+            return ResponseEntity.ok(user);
+        } catch (UserException e) {
+            throw e;
+        }
+    }
+
+
 }
 

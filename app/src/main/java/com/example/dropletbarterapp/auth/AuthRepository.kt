@@ -13,4 +13,6 @@ interface AuthRepository {
     suspend fun signUpByPhone(phone: Long, password: String): TokenEntity
 
     suspend fun logOut(tokenEntity: TokenEntity)
+
+    suspend fun refreshTokensById(id : Long) : TokenEntity
 }

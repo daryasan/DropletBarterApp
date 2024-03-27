@@ -5,7 +5,7 @@
     <string name="ads_bottom_nav">Объявления</string>
     <string name="chats_bottom_nav">Чаты</string>
     <string name="profile_bottom_nav">Профиль</string>
-    <string name="api_url">http://10.193.61.76:8080</string>
+    <string name="api_url">http://10.193.62.16:8080</string>
     <string name="firstLastName">%1$s %2$s</string>
     <string name="itemsNumber">Айтемов: %1$d</string>
     <string name="alertMesPhone">Укажите номер телефона в настройках!</string>

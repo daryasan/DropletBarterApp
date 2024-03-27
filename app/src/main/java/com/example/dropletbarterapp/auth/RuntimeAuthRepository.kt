@@ -49,4 +49,10 @@ class RuntimeAuthRepository(retrofit: Retrofit) : AuthRepository {
         }
     }
 
+    override suspend fun refreshTokensById(id: Long): TokenEntity {
+        return withContext(Dispatchers.IO) {
+            return@withContext authApi.refreshTokens(id)
+        }
+    }
+
 }

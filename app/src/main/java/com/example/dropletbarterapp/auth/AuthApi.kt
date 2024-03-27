@@ -5,6 +5,7 @@ import com.example.dropletbarterapp.auth.dto.LoginByPhoneDTO
 import com.example.dropletbarterapp.auth.dto.TokenEntity
 import retrofit2.http.Body
 import retrofit2.http.POST
+import retrofit2.http.Path
 
 interface AuthApi {
     @POST("auth/loginEmail")
@@ -21,5 +22,8 @@ interface AuthApi {
 
     @POST("api/logout/")
     suspend fun logOut(@Body tokenEntity: TokenEntity)
+
+    @POST("auth/refresh/{user_id}")
+    suspend fun refreshTokens(@Path("user_id") userId: Long): TokenEntity
 
 }

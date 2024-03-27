@@ -1,7 +1,9 @@
 package com.example.dropletbarterapp.mainscreens.profile
 
-import com.example.dropletbarterapp.models.User
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
+import com.example.dropletbarterapp.mainscreens.profile.dto.UserEditLoginsEmailDto
+import com.example.dropletbarterapp.mainscreens.profile.dto.UserEditLoginsPasswordDto
+import com.example.dropletbarterapp.mainscreens.profile.dto.UserEditLoginsPhoneDto
 
 interface UserRepository {
 
@@ -10,10 +12,28 @@ interface UserRepository {
     suspend fun editPersonalData(
         accessToken: String,
         userId: Long,
-        firstName: String? = null,
-        lastName: String? = null,
-        photo: String? = null,
+        firstName: String,
+        lastName: String,
+        photo: ByteArray? = null,
         address: String? = null
     ): UserDataDto
+
+    suspend fun changeEmail(
+        accessToken: String,
+        userId: Long,
+        email: UserEditLoginsEmailDto
+    )
+
+    suspend fun changePhone(
+        accessToken: String,
+        userId: Long,
+        phone: UserEditLoginsPhoneDto
+    )
+
+    suspend fun changePassword(
+        accessToken: String,
+        userId: Long,
+        password: UserEditLoginsPasswordDto
+    )
 
 }

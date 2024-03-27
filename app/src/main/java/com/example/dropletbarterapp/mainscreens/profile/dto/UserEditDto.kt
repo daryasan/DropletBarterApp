@@ -11,5 +11,7 @@ class UserEditDto(
     @SerializedName("lastName")
     var lastName: String? = null,
     @SerializedName("address")
-    var address: String? = null
+    var address: String? = null,
+    @SerializedName("photo")
+    var photo: ByteArray? = null
 )

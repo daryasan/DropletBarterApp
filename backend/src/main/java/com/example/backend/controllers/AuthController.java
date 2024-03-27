@@ -4,6 +4,7 @@ import com.example.backend.dto.JwtTokenResponse;
 import com.example.backend.dto.LoginByEmailDto;
 import com.example.backend.dto.LoginByPhoneDto;
 import com.example.backend.exceptions.AuthException;
+import com.example.backend.exceptions.RefreshException;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.services.AuthService;
 
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +66,16 @@ public class AuthController {
         } catch (UserException e) {
             throw e;
         }
+    }
+
+    @PostMapping("/refresh/{id}")
+    ResponseEntity<JwtTokenResponse> refreshById(@PathVariable Long id) throws RefreshException {
+        try {
+            return ResponseEntity.ok(auth.refreshTokensById(id));
+        } catch (RefreshException e) {
+            throw e;
+        }
+
     }
 
 }

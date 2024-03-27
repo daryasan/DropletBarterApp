@@ -23,13 +23,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: AdvertisementsAdapter
     //private val toaster = Toaster()
+    private var isLoading = false;
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //enableAndShowElements()
         Dependencies.initDependencies(this)
 
         // FOR TESTING DB

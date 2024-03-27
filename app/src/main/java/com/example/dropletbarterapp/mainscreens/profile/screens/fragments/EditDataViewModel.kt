@@ -1,41 +1,47 @@
 package com.example.dropletbarterapp.mainscreens.profile.screens.fragments
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import com.auth0.android.jwt.JWT
 import com.example.dropletbarterapp.utils.Dependencies
-import com.example.dropletbarterapp.databinding.FragmentEditBinding
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
+import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.maps.YandexApi
 import com.example.dropletbarterapp.validators.Toaster
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import kotlin.coroutines.CoroutineContext
 
 class EditDataViewModel : ViewModel(), CoroutineScope {
 
-    private val toaster: Toaster = Toaster()
+    companion object {
+        private val retrofit = Retrofit.Builder().baseUrl("https://geocode-maps.yandex.ru/")
+            .addConverterFactory(GsonConverterFactory.create()).build()
+        val api: YandexApi = retrofit.create(YandexApi::class.java)
 
-//    fun saveEditedData() {
-//        if (toaster.checkNullsAndGetToast(
-//                "Введите имя!",
-//                context,
-//                binding.editTextLastName.text.toString()
-//            )
-//        ) {
-//            val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
-//            launch {
-//                Dependencies.userRepository.editPersonalData(
-//                    Dependencies.tokenService.getAccessToken().toString(),
-//                    jwt.getClaim("id").asString()!!.toLong(),
-//                    binding.editTextFirstName.text.toString(),
-//                    binding.editTextLastName.text.toString(),
-//                    binding.editTextAddress.text.toString()
-//                )
-//            }
-//        }
-//    }
+    }
+
+
+    suspend fun saveEditedData(firstName: String, lastName: String, photo : ByteArray?, address: String?) {
+        val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
+        Dependencies.userRepository.editPersonalData(
+            Dependencies.tokenService.getAccessToken().toString(),
+            jwt.getClaim("id").asString()!!.toLong(),
+            firstName, lastName, address = address, photo = photo
+        )
+    }
+
+    suspend fun getUserData(): UserDataDto {
+        val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
+        return Dependencies.userRepository.findUserById(
+            Dependencies.tokenService.getAccessToken().toString(),
+            jwt.getClaim("id").asString()!!.toLong()
+        )
+    }
 
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main

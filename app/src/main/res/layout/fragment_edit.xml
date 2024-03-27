@@ -47,7 +47,7 @@
             android:layout_marginEnd="100dp"
             android:text="@string/changePhoto" />
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/editTextAddress"
             android:layout_width="wrap_content"
             android:layout_height="50dp"

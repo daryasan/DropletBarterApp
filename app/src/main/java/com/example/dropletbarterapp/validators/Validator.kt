@@ -16,7 +16,7 @@ class Validator(val context: Context) {
             )
         ) {
             if (password.length < 6) return false
-            if (password.filter { it.isDigit() }.firstOrNull() == null) return false
+            if (password.firstOrNull { it.isDigit() } == null) return false
             if (password.filter { it.isLetter() }
                     .firstOrNull { it.isUpperCase() } == null) return false
             if (password.filter { it.isLetter() }
@@ -27,6 +27,9 @@ class Validator(val context: Context) {
     }
 
     fun validateAndRepeatPassword(password: String, repeatPassword: String): Boolean {
+//        if (repeatPassword != password) {
+//            toaster.getToast(context, "Пароли не совпадают!")
+//        }
         return (validatePassword(password) && repeatPassword == password)
     }
 
@@ -37,7 +40,8 @@ class Validator(val context: Context) {
 
     private fun validatePhone(phone: Long): Boolean {
         return toaster.checkNullsAndGetToast("Заполните все поля!", context, phone.toString()) &&
-                android.util.Patterns.PHONE.matcher(phone.toString()).matches()
+                android.util.Patterns.PHONE.matcher(phone.toString()).matches() &&
+                (phone.toString().length == 11 || phone.toString().length == 12)
     }
 
     fun validateLogin(login: String, isEmail: Boolean): Boolean {

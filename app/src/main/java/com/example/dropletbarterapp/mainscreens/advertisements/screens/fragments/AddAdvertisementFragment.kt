@@ -62,17 +62,15 @@ class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener 
         registerForActivityResult(StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
                 // TODO select photo (cache)
-//                val uuid: String = UUID.randomUUID().toString()
-//                val outputDir: File = getCacheDir()
-//                val file: File = File.createTempFile(uuid, ".jpg", outputDir)
-//                val imageUri = FileProvider.getUriForFile(
-//                    Objects.requireNonNull(
-//                        requireContext()
-//                    ),
-//                    BuildConfig.APPLICATION_ID + ".fileProvider", file
-//                )
-//                binding.imageViewEditPhoto.setImageURI(imageUri)
-//                photos.add(it.data?.data.toString())
+                val uuid: String = UUID.randomUUID().toString()
+                val outputDir: File = requireContext().cacheDir
+                val file: File = File.createTempFile(uuid, ".jpg", outputDir)
+                val imageUri = FileProvider.getUriForFile(
+                    Objects.requireNonNull(requireContext()),
+                    BuildConfig.APPLICATION_ID + ".provider", file
+                )
+                binding.imageViewEditPhoto.setImageURI(imageUri)
+                photos.add(it.data?.data.toString())
             } else {
                 toaster.getToast(requireContext(), "Что-то пошло не так...")
             }
@@ -133,7 +131,6 @@ class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener 
 
         return binding.root
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -1,10 +1,19 @@
 package com.example.dropletbarterapp.mainscreens.profile.screens
 
+import android.app.Activity
 import android.content.Intent
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
+import com.example.dropletbarterapp.BuildConfig
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.screens.LoginActivity
 import com.example.dropletbarterapp.databinding.ActivityProfileBinding
@@ -13,7 +22,13 @@ import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.Change
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.EditDataFragment
 import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.utils.Navigation
+import com.example.dropletbarterapp.utils.Utils
+import com.example.dropletbarterapp.validators.Toaster
+import com.yandex.mapkit.MapKitFactory
 import kotlinx.coroutines.*
+import java.io.File
+import java.io.InputStream
+import java.util.*
 
 
 class ProfileActivity : AppCompatActivity(), CoroutineScope {
@@ -37,44 +52,17 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
         setContentView(binding.root)
         Dependencies.initDependencies(this)
         enableAndShowElements()
-
-//        try {
-//            runBlocking {
-//                launch {
-//                    userDataDto = getUserData()
-//                    setUserDataToScreen(userDataDto)
-//                }
-//            }
-//        } catch (e: Exception) {
-//            Dependencies.tokenService.killTokens()
-//            startActivity(Intent(applicationContext, LoginActivity::class.java))
-//            overridePendingTransition(0, 0)
-//        }
+        // TODO key??
+       // MapKitFactory.setApiKey("b97b0bac-f872-49a3-a911-2699275df4db")
 
         Navigation.setNavigation(this, R.id.profile)
 
         binding.buttonSettings.setOnClickListener {
-            disableAndHideElements()
-            //val bundle = Bundle()
-            //bundle.putParcelable("userData", userDataDto)
-            val fragment = EditDataFragment.newInstance()
-            //fragment.arguments = bundle
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.profileLayout, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            startEditDataFragment()
         }
 
         binding.buttonSettingsEmail.setOnClickListener {
-            disableAndHideElements()
-            //val bundle = Bundle()
-            //bundle.putParcelable("userData", userDataDto)
-            val fragment = ChangeLoginsFragment.newInstance()
-            //fragment.arguments = bundle
-            val transaction = fragmentManager.beginTransaction()
-            transaction.replace(R.id.profileLayout, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            startChangeLoginsFragment()
         }
 
         binding.buttonLogOut.setOnClickListener {
@@ -83,6 +71,16 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
                 onResult()
             }
         }
+
+        binding.imageViewAvatar.setOnClickListener {
+            startEditDataFragment()
+        }
+    }
+
+
+    override fun onResume() {
+        fetchUser()
+        super.onResume()
     }
 
     override fun onBackPressed() {
@@ -91,6 +89,7 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
             fragmentManager.popBackStack()
             if (fragmentManager.backStackEntryCount == 1) {
                 enableAndShowElements()
+                fetchUser()
             }
         }
     }
@@ -100,7 +99,7 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
         binding.layoutProfileRoot.isEnabled = false
     }
 
-    fun enableAndShowElements() {
+    private fun enableAndShowElements() {
         binding.layoutProfileRoot.alpha = 1f
         binding.layoutProfileRoot.isEnabled = true
     }
@@ -116,10 +115,12 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
     private fun setUserDataToScreen(userDataDto: UserDataDto) {
         if (userDataDto.photo == null) {
             binding.imageViewAvatar.setImageResource(R.drawable.empty_profile_image)
+        } else {
+            binding.imageViewAvatar.setImageBitmap(
+                Utils.decodeBitmapImageFromDB(userDataDto.photo!!)
+            )
+
         }
-//        } else {
-//            binding.imageViewAvatar.setImageURI(userDataDto.photo)
-//        }
         binding.textViewUserFirstLastName.text =
             if (userDataDto.firstName == null && userDataDto.lastName == null) {
                 getString(R.string.alertMesFirstLastName)
@@ -153,5 +154,46 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
     private fun logOut() {
         Dependencies.tokenService.killTokens()
     }
+
+    private fun fetchUser() {
+        try {
+            runBlocking {
+                launch {
+                    userDataDto = getUserData()
+                    setUserDataToScreen(userDataDto)
+                }
+            }
+        } catch (e: Exception) {
+            runBlocking {
+                val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
+                Dependencies.tokenService.setTokens(
+                    Dependencies.authRepository.refreshTokensById(
+                        jwt.getClaim("id").asString()!!.toLong()
+                    )
+                )
+                userDataDto = getUserData()
+                setUserDataToScreen(userDataDto)
+            }
+        }
+    }
+
+    private fun startEditDataFragment() {
+        disableAndHideElements()
+        val fragment = EditDataFragment.newInstance()
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.profileLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun startChangeLoginsFragment() {
+        disableAndHideElements()
+        val fragment = ChangeLoginsFragment.newInstance()
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.profileLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
 
 }

@@ -4,6 +4,7 @@ import com.example.backend.dto.JwtTokenResponse;
 import com.example.backend.dto.LoginByEmailDto;
 import com.example.backend.dto.LoginByPhoneDto;
 import com.example.backend.exceptions.AuthException;
+import com.example.backend.exceptions.RefreshException;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.models.FavouritesList;
 import com.example.backend.models.PurchasesList;
@@ -111,6 +112,20 @@ public class AuthService {
         purchasesListRepository.save(purchasesList);
 
         return jwtUtil.generateJWTResponse(user);
+    }
+
+    public JwtTokenResponse refreshTokensById(Long id) throws RefreshException {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            // ?
+//            UsernamePasswordAuthenticationToken auth =
+//                    new UsernamePasswordAuthenticationToken(email, user.get().getPassword());
+//            authenticationManager.authenticate(auth);
+            return jwtUtil.generateJWTResponse(user.get());
+        } else {
+            throw new RefreshException("Wrong user data!");
+        }
+
     }
 
 }
