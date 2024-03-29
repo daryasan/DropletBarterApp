@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.dropletbarterapp.databinding.CategoryItemBinding
 import com.example.dropletbarterapp.models.Category
-import com.example.dropletbarterapp.models.uimodels.UICategory
+import com.example.dropletbarterapp.ui.models.UICategory
 
 class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>() {
 

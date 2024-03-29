@@ -13,9 +13,11 @@ import com.example.dropletbarterapp.databinding.FragmentChangeLoginsBinding
 import com.example.dropletbarterapp.databinding.FragmentEditBinding
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.mainscreens.profile.screens.ProfileActivity
+import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.validators.Toaster
 import com.example.dropletbarterapp.validators.Validator
 import kotlinx.coroutines.runBlocking
+import retrofit2.HttpException
 
 class ChangeLoginsFragment : Fragment() {
 
@@ -40,9 +42,19 @@ class ChangeLoginsFragment : Fragment() {
         binding.buttonChangeEmail.setOnClickListener {
             val email = binding.editTextEmail.text.toString()
             if (validator.validateLogin(email, true)) {
-                runBlocking {
-                    viewModel.editEmail(email)
+                try {
+                    runBlocking {
+                        viewModel.editEmail(email)
+                    }
+                } catch (e: HttpException) {
+                    runBlocking {
+                        Dependencies.tokenService.refreshTokens()
+                        viewModel.editEmail(email)
+                    }
+                } catch (e: Exception) {
+                    requireActivity().onBackPressed()
                 }
+
                 toaster.getToast(requireContext(), "Почта успешно изменена!")
             } else {
                 toaster.getToast(requireContext(), "Неверный формат электронный почты!")
@@ -55,9 +67,19 @@ class ChangeLoginsFragment : Fragment() {
                 phone = phone.substring(1, phone.length - 1)
             }
             if (validator.validateLogin(phone, false)) {
-                runBlocking {
-                    viewModel.editPhone(phone.toLong())
+                try {
+                    runBlocking {
+                        viewModel.editPhone(phone.toLong())
+                    }
+                } catch (e: HttpException) {
+                    runBlocking {
+                        Dependencies.tokenService.refreshTokens()
+                        viewModel.editPhone(phone.toLong())
+                    }
+                } catch (e: Exception) {
+                    requireActivity().onBackPressed()
                 }
+
                 toaster.getToast(requireContext(), "Телефон успешно изменен!")
             } else {
                 toaster.getToast(requireContext(), "Неверный формат номера телефона!")
@@ -72,9 +94,19 @@ class ChangeLoginsFragment : Fragment() {
                     binding.editTextRepeatPassword.text.toString()
                 )
             ) {
-                runBlocking {
-                    viewModel.editPassword(password)
+                try {
+                    runBlocking {
+                        viewModel.editPassword(password)
+                    }
+                } catch (e: HttpException) {
+                    runBlocking {
+                        Dependencies.tokenService.refreshTokens()
+                        viewModel.editPassword(password)
+                    }
+                } catch (e: Exception) {
+                    requireActivity().onBackPressed()
                 }
+
                 toaster.getToast(requireContext(), "Пароль успешно изменен!")
             } else {
                 toaster.getToast(

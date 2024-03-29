@@ -1,20 +1,16 @@
 package com.example.dropletbarterapp.mainscreens.search.screens
 
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.CursorAdapter
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.ActivitySearchBinding
-import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
 import com.example.dropletbarterapp.mainscreens.fragments.SearchFragment
-import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
-import com.example.dropletbarterapp.models.uimodels.UICategory
 import com.example.dropletbarterapp.ui.adapters.CategoryAdapter
 import com.example.dropletbarterapp.utils.Dependencies
-import com.example.dropletbarterapp.utils.Navigation
+import com.example.dropletbarterapp.ui.Navigation
+import com.example.dropletbarterapp.ui.models.UICategory
 
 class SearchActivity : AppCompatActivity() {
 
@@ -63,7 +59,7 @@ class SearchActivity : AppCompatActivity() {
                 val bundle = Bundle()
                 bundle.putInt(
                     "categoryPos",
-                    UICategory.getCategoryPos(category)
+                    UICategory.getPosByCategory(category)
                 )
                 fragment.arguments = bundle
                 val transaction = supportFragmentManager.beginTransaction()

@@ -1,4 +1,4 @@
-package com.example.dropletbarterapp.utils
+package com.example.dropletbarterapp.ui
 
 import android.app.Activity
 import android.content.Intent

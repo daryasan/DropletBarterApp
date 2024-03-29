@@ -4,24 +4,23 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.screens.LoginActivity
 import com.example.dropletbarterapp.databinding.ActivityMainBinding
 import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
 import com.example.dropletbarterapp.mainscreens.fragments.SearchFragment
-import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.EditDataFragment
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
 import com.example.dropletbarterapp.utils.Dependencies
-import com.example.dropletbarterapp.utils.Navigation
+import com.example.dropletbarterapp.ui.Navigation
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: AdvertisementsAdapter
+
     //private val toaster = Toaster()
     private var isLoading = false;
 
@@ -43,12 +42,7 @@ class MainActivity : AppCompatActivity() {
         Navigation.setNavigation(this, R.id.main)
 
         adapter = AdvertisementsAdapter()
-        adapter.advertisements = List(7) {
-            Advertisement(
-                null, "Рекомендуемая книга", "Новая книжка", true, Category.OTHER, null
-
-            )
-        }
+        adapter.advertisements = mutableListOf()
 
         binding.recyclerView.adapter = adapter
         adapter.setOnAdvertisementClickListener(object :
@@ -117,31 +111,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setButtonsChange() {
         binding.buttonMyAdvertisements.setOnClickListener {
-            adapter.advertisements = List(7) {
-                Advertisement(
-                    null, "Рекомендуемая книга", "Новая книжка", true, Category.OTHER, null
-
-                )
-            }
+            adapter.advertisements = mutableListOf()
 
         }
 
         binding.buttonFavourites.setOnClickListener {
-            adapter.advertisements = List(10) {
-                Advertisement(
-                    null, "Книга недавняя", "Новая книжка", true, Category.OTHER, null
-
-                )
-            }
+            adapter.advertisements = mutableListOf()
         }
 
         binding.buttonSharedUsage.setOnClickListener {
-            adapter.advertisements = List(15) {
-                Advertisement(
-                    null, "Книга рядом", "Новая книжка", true, Category.OTHER, null
-
-                )
-            }
+            adapter.advertisements = mutableListOf()
         }
     }
 

@@ -41,16 +41,15 @@
 
                     <ImageView
                         android:id="@+id/imageViewAvatar"
-                        android:layout_width="200dp"
-                        android:layout_height="200dp"
+                        android:layout_width="230dp"
+                        android:layout_height="230dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginStart="50dp"
-                        android:layout_marginTop="50dp"
+                        android:layout_marginTop="30dp"
                         android:layout_marginEnd="50dp"
-                        android:foregroundGravity="center_horizontal"
-                        tools:srcCompat="@drawable/empty_profile_image" />
+                        android:foregroundGravity="center_horizontal" />
 
                     <LinearLayout
                         android:id="@+id/linearLayoutNameItems"

@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.ActivityChatsBinding
 import com.example.dropletbarterapp.mainscreens.chats.screens.fragments.PersonalChatFragment
-import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
 import com.example.dropletbarterapp.models.*
 import com.example.dropletbarterapp.ui.adapters.ChatAdapter
-import com.example.dropletbarterapp.utils.Navigation
+import com.example.dropletbarterapp.ui.Navigation
+import com.example.dropletbarterapp.ui.models.UICategory
 import java.time.LocalDateTime
 
 class ChatsActivity : AppCompatActivity() {
@@ -32,7 +32,13 @@ class ChatsActivity : AppCompatActivity() {
                     ChatMessage("Пpивет!", User(), LocalDateTime.now()),
                 ),
                 Advertisement(
-                    null, "Моя книга", "Новая книжка", true, Category.OTHER, null
+                    0,
+                    null,
+                    "Моя книга",
+                    "Новая книжка",
+                    true,
+                    UICategory.getPosByCategory(Category.OTHER),
+                    null
                 )
             )
         )

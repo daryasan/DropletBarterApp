@@ -1,34 +1,21 @@
 package com.example.dropletbarterapp.mainscreens.profile.screens
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
-import android.util.Log
-import android.widget.Toast
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
 import com.auth0.android.jwt.JWT
-import com.example.dropletbarterapp.BuildConfig
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.screens.LoginActivity
 import com.example.dropletbarterapp.databinding.ActivityProfileBinding
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.ChangeLoginsFragment
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.EditDataFragment
+import com.example.dropletbarterapp.ui.images.CircleCrop
 import com.example.dropletbarterapp.utils.Dependencies
-import com.example.dropletbarterapp.utils.Navigation
-import com.example.dropletbarterapp.utils.Utils
-import com.example.dropletbarterapp.validators.Toaster
-import com.yandex.mapkit.MapKitFactory
+import com.example.dropletbarterapp.ui.Navigation
+import com.example.dropletbarterapp.ui.images.ImageUtils
 import kotlinx.coroutines.*
-import java.io.File
-import java.io.InputStream
-import java.util.*
+import retrofit2.HttpException
 
 
 class ProfileActivity : AppCompatActivity(), CoroutineScope {
@@ -53,7 +40,7 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
         Dependencies.initDependencies(this)
         enableAndShowElements()
         // TODO key??
-       // MapKitFactory.setApiKey("b97b0bac-f872-49a3-a911-2699275df4db")
+        // MapKitFactory.setApiKey("b97b0bac-f872-49a3-a911-2699275df4db")
 
         Navigation.setNavigation(this, R.id.profile)
 
@@ -113,14 +100,9 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun setUserDataToScreen(userDataDto: UserDataDto) {
-        if (userDataDto.photo == null) {
-            binding.imageViewAvatar.setImageResource(R.drawable.empty_profile_image)
-        } else {
-            binding.imageViewAvatar.setImageBitmap(
-                Utils.decodeBitmapImageFromDB(userDataDto.photo!!)
-            )
 
-        }
+        ImageUtils.loadImageBitmap(userDataDto.photo, this, binding.imageViewAvatar, CircleCrop())
+
         binding.textViewUserFirstLastName.text =
             if (userDataDto.firstName == null && userDataDto.lastName == null) {
                 getString(R.string.alertMesFirstLastName)
@@ -163,14 +145,9 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
                     setUserDataToScreen(userDataDto)
                 }
             }
-        } catch (e: Exception) {
+        } catch (e: HttpException) {
             runBlocking {
-                val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
-                Dependencies.tokenService.setTokens(
-                    Dependencies.authRepository.refreshTokensById(
-                        jwt.getClaim("id").asString()!!.toLong()
-                    )
-                )
+                Dependencies.tokenService.refreshTokens()
                 userDataDto = getUserData()
                 setUserDataToScreen(userDataDto)
             }

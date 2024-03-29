@@ -1,4 +1,4 @@
-package com.example.dropletbarterapp.models.uimodels
+package com.example.dropletbarterapp.ui.models
 
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.models.Category
@@ -92,7 +92,7 @@ class UICategory(
             }
         }
 
-        fun getCategoryPos(category: Category): Int {
+        fun getPosByCategory(category: Category): Int {
             return when (category) {
                 Category.SHARED_USAGE -> 1
                 Category.CLOTHES -> 2
@@ -104,6 +104,21 @@ class UICategory(
                 Category.SERVICES -> 8
                 Category.OTHER -> 9
             }
+        }
+
+        fun getCategoryByPos(pos: Int): Category {
+            when (pos) {
+                1 -> Category.SHARED_USAGE
+                2 -> Category.CLOTHES
+                3 -> Category.ELECTRONICS
+                4 -> Category.HEALTHCARE
+                5 -> Category.FOR_HOME
+                6 -> Category.FOR_PETS
+                7 -> Category.ACCESSORIES
+                8 -> Category.SERVICES
+                9 -> Category.OTHER
+            }
+            throw java.lang.IllegalArgumentException("No category for such position!")
         }
     }
 }

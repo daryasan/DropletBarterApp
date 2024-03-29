@@ -1,10 +1,16 @@
 package com.example.dropletbarterapp.models
 
+import com.example.dropletbarterapp.ui.models.UICategory
+import com.google.gson.annotations.SerializedName
+
 class Advertisement(
-    val photo: String?,
-    val name: String? = null,
-    val description: String? = null,
-    val status_active: Boolean? = null,
-    val category: Category? = null,
-    val owner: User? = null
-) {}
+    @SerializedName("id") val id: Long,
+    @SerializedName("photo") val photo: String?,
+    @SerializedName("name") val name: String? = null,
+    @SerializedName("description") val description: String? = null,
+    @SerializedName("statusActive") val statusActive: Boolean? = null,
+    @SerializedName("category") val category: Int,
+    @SerializedName("ownerId") val ownerId: Long? = null
+) {
+    val categoryEnum: Category = UICategory.getCategoryByPos(category)
+}

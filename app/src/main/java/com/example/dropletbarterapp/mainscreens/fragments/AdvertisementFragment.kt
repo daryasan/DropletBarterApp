@@ -85,11 +85,7 @@ class AdvertisementFragment : Fragment() {
 
 
     private fun setSimilar() {
-        adapter.advertisements = List(10) {
-            Advertisement(
-                null, "Похожая книга", "Новая книжка", true, Category.OTHER, null
-            )
-        }
+        adapter.advertisements = mutableListOf()
     }
 
 }

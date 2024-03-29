@@ -10,28 +10,38 @@ import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
-import com.example.dropletbarterapp.utils.Navigation
+import com.example.dropletbarterapp.ui.Navigation
+import com.example.dropletbarterapp.utils.Dependencies
+import kotlinx.coroutines.runBlocking
+import retrofit2.HttpException
 
 class AdvertisementsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdvertisementsBinding
     private lateinit var adapter: AdvertisementsAdapter
+    private lateinit var viewModel: AdvertisementsActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdvertisementsBinding.inflate(layoutInflater)
+        viewModel = AdvertisementsActivityViewModel()
         setContentView(binding.root)
 
         // set navigation
         Navigation.setNavigation(this, R.id.advertisements)
 
         adapter = AdvertisementsAdapter()
-        adapter.advertisements = List(10) {
-            Advertisement(
-                null, "Моя книга", "Новая книжка", true, Category.OTHER, null
-
-            )
+        try {
+            runBlocking {
+                adapter.advertisements = viewModel.findMyAdvertisements()
+            }
+        } catch (e: HttpException) {
+            runBlocking {
+                Dependencies.tokenService.refreshTokens()
+                adapter.advertisements = viewModel.findMyAdvertisements()
+            }
         }
+
 
         checkVisibility()
         binding.recyclerView.adapter = adapter
@@ -58,6 +68,7 @@ class AdvertisementsActivity : AppCompatActivity() {
             transaction.addToBackStack(null)
             transaction.commit()
         }
+
 
         // change lists
         setButtonsChange()
@@ -86,34 +97,38 @@ class AdvertisementsActivity : AppCompatActivity() {
 
     private fun setButtonsChange() {
         binding.buttonMyAdvertisements.setOnClickListener {
-            adapter.advertisements = List(10) {
-                Advertisement(
-                    null, "Моя книга", "Новая книжка", true, Category.OTHER, null
-
-                )
+            try {
+                runBlocking {
+                    adapter.advertisements = viewModel.findMyAdvertisements()
+                }
+            } catch (e: HttpException) {
+                runBlocking {
+                    Dependencies.tokenService.refreshTokens()
+                    adapter.advertisements = viewModel.findMyAdvertisements()
+                }
             }
+
             checkVisibility()
             binding.buttonEmptyAction.text = "Добавьте объявление"
         }
 
         binding.buttonFavourites.setOnClickListener {
-            adapter.advertisements = List(10) {
-                Advertisement(
-                    null, "Любимая Книга", "Новая книжка", true, Category.OTHER, null
-
-                )
+            try {
+                runBlocking {
+                    adapter.advertisements = viewModel.getFavourites()
+                }
+            } catch (e: HttpException) {
+                runBlocking {
+                    Dependencies.tokenService.refreshTokens()
+                    adapter.advertisements = viewModel.getFavourites()
+                }
             }
             checkVisibility()
             binding.buttonEmptyAction.text = "Поиск"
         }
 
         binding.buttonSharedUsage.setOnClickListener {
-            adapter.advertisements = List(10) {
-                Advertisement(
-                    null, "Общая книга", "Новая книжка", true, Category.OTHER, null
-
-                )
-            }
+            adapter.advertisements = mutableListOf()
             checkVisibility()
             binding.buttonEmptyAction.text = "Поиск"
         }
@@ -126,5 +141,6 @@ class AdvertisementsActivity : AppCompatActivity() {
             binding.buttonEmptyAction.visibility = View.INVISIBLE
         }
     }
+
 
 }

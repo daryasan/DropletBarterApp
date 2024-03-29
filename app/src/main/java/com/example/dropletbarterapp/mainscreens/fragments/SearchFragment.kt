@@ -13,8 +13,8 @@ import androidx.activity.OnBackPressedCallback
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.FragmentSearchBinding
 import com.example.dropletbarterapp.models.Advertisement
-import com.example.dropletbarterapp.models.uimodels.UICategory
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
+import com.example.dropletbarterapp.ui.models.UICategory
 
 class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -128,7 +128,7 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
 
-    private fun setAdvertisements(ads: List<Advertisement>) {
+    private fun setAdvertisements(ads: MutableList<Advertisement>) {
         adapter.advertisements = ads
     }
 

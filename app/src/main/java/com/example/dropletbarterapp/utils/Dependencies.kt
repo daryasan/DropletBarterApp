@@ -4,6 +4,10 @@ import android.content.Context
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.AuthRepository
 import com.example.dropletbarterapp.auth.RuntimeAuthRepository
+import com.example.dropletbarterapp.mainscreens.advertisements.api.ads.AdvertisementRepository
+import com.example.dropletbarterapp.mainscreens.advertisements.api.ads.RuntimeAdvertisementRepository
+import com.example.dropletbarterapp.mainscreens.advertisements.api.favourites.FavouritesRepository
+import com.example.dropletbarterapp.mainscreens.advertisements.api.favourites.RuntimeFavouritesRepository
 import com.example.dropletbarterapp.mainscreens.profile.RuntimeUserRepository
 import com.example.dropletbarterapp.mainscreens.profile.UserRepository
 import com.google.gson.GsonBuilder
@@ -30,5 +34,11 @@ object Dependencies {
 
     val authRepository: AuthRepository by lazy { RuntimeAuthRepository(retrofit) }
     val userRepository: UserRepository by lazy { RuntimeUserRepository(retrofit) }
+    val advertisementRepository: AdvertisementRepository by lazy {
+        RuntimeAdvertisementRepository(
+            retrofit
+        )
+    }
+    val favouritesRepository: FavouritesRepository by lazy { RuntimeFavouritesRepository(retrofit) }
     val tokenService: TokenService by lazy { TokenSharedPreferencesService(applicationContext) }
 }

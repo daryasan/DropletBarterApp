@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,9 +24,9 @@ public class Advertisement {
     private byte[] photo;
     private String name;
     private String description;
-    private Boolean status_active;
-    private Category category;
-    @OneToOne
-    private User owner;
+    private Boolean statusActive;
+    private int category;
+    //@OneToOne
+    private Long ownerId;
 
 }

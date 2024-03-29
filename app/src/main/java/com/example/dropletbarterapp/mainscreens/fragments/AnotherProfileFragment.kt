@@ -69,11 +69,7 @@ class AnotherProfileFragment : Fragment() {
 
     private fun setAdvertisements() {
         adapter = AdvertisementsAdapter()
-        adapter.advertisements = List(10) {
-            Advertisement(
-                null, "Чужая книга", "Новая книжка", true, Category.OTHER, null
-            )
-        }
+        adapter.advertisements = mutableListOf()
     }
 
 }

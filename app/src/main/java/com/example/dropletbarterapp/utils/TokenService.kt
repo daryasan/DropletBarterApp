@@ -11,4 +11,6 @@ interface TokenService {
     fun getAccessToken(): String?
 
     fun getRefreshToken(): String?
+
+    suspend fun refreshTokens()
 }

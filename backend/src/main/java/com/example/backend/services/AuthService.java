@@ -8,11 +8,9 @@ import com.example.backend.exceptions.RefreshException;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.models.FavouritesList;
 import com.example.backend.models.PurchasesList;
-import com.example.backend.models.ReviewsList;
 import com.example.backend.models.User;
 import com.example.backend.repositories.FavouritesListRepository;
 import com.example.backend.repositories.PurchasesListRepository;
-import com.example.backend.repositories.ReviewsListRepository;
 import com.example.backend.repositories.UserRepository;
 import com.example.backend.security.JwtUtil;
 
@@ -31,7 +29,6 @@ import lombok.RequiredArgsConstructor;
 public class AuthService {
     private final UserRepository userRepository;
     private final FavouritesListRepository favouritesListRepository;
-    private final ReviewsListRepository reviewsListRepository;
     private final PurchasesListRepository purchasesListRepository;
     private final JwtUtil jwtUtil;
 
@@ -73,18 +70,15 @@ public class AuthService {
             throw new UserException("User already exists!");
         }
         user.setEmail(loginByEmailDTO.getEmail());
+        user.setItems(5L);
         user.setPassword(passwordEncoder.encode(loginByEmailDTO.getPassword()));
 
-        // init lists
-        ReviewsList reviewsList = new ReviewsList();
-        reviewsList.setUser(user);
-        reviewsList.setReviews(new ArrayList<>());
         FavouritesList favouritesList = new FavouritesList(user, new ArrayList<>());
         PurchasesList purchasesList = new PurchasesList(user, new ArrayList<>());
 
         userRepository.save(user);
-        reviewsListRepository.save(reviewsList);
         favouritesListRepository.save(favouritesList);
+
         purchasesListRepository.save(purchasesList);
 
 
@@ -104,9 +98,6 @@ public class AuthService {
         // init lists
         FavouritesList favouritesList = new FavouritesList(user, new ArrayList<>());
         favouritesListRepository.save(favouritesList);
-
-        ReviewsList reviewsList = new ReviewsList(user, new ArrayList<>());
-        reviewsListRepository.save(reviewsList);
 
         PurchasesList purchasesList = new PurchasesList(user, new ArrayList<>());
         purchasesListRepository.save(purchasesList);

@@ -1,6 +1,7 @@
 package com.example.dropletbarterapp.utils
 
 import android.content.Context
+import com.auth0.android.jwt.JWT
 import com.example.dropletbarterapp.auth.dto.TokenEntity
 
 class TokenSharedPreferencesService(context: Context) : TokenService {
@@ -24,6 +25,14 @@ class TokenSharedPreferencesService(context: Context) : TokenService {
 
     override fun getAccessToken(): String? = sharedPreferences.getString(ACCESS_TOKEN, null)
     override fun getRefreshToken(): String? = sharedPreferences.getString(REFRESH_TOKEN, null)
+    override suspend fun refreshTokens() {
+        val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
+        Dependencies.tokenService.setTokens(
+            Dependencies.authRepository.refreshTokensById(
+                jwt.getClaim("id").asString()!!.toLong()
+            )
+        )
+    }
 
     companion object {
         private const val TOKEN_FILE_NAME = "token_file"
