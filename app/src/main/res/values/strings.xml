@@ -76,6 +76,7 @@
     <string name="nothingFound">Кажется, ничего не нашлось! Попробуйте перефразировать запрос</string>
     <string name="advertisementName">Название объявления</string>
     <string name="publish">Опубликовать</string>
+    <string name="purchases">Покупки</string>
     <string-array name="categoryArray">
         <item>Не выбрано</item>
         <item>Совместное использование</item>

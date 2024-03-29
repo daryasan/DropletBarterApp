@@ -1,5 +1,6 @@
 package com.example.dropletbarterapp.mainscreens.advertisements.screens
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -7,6 +8,7 @@ import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.ActivityAdvertisementsBinding
 import com.example.dropletbarterapp.mainscreens.advertisements.screens.fragments.AddAdvertisementFragment
 import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
+import com.example.dropletbarterapp.mainscreens.search.screens.SearchActivity
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
@@ -49,26 +51,13 @@ class AdvertisementsActivity : AppCompatActivity() {
         adapter.setOnAdvertisementClickListener(object :
             AdvertisementsAdapter.OnAdvertisementClickListener {
             override fun onAdvertisementClick(advertisement: Advertisement) {
-                disableAndHideElements()
-                val fragment = AdvertisementFragment.newInstance()
-                //fragment.arguments = bundle
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.frameLayoutAds, fragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                startAdsFragment(advertisement)
             }
         })
 
         binding.buttonAddAds.setOnClickListener {
-            disableAndHideElements()
-            val fragment = AddAdvertisementFragment.newInstance()
-            //fragment.arguments = bundle
-            val transaction = supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.frameLayoutAds, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            startAddAdsFragment()
         }
-
 
         // change lists
         setButtonsChange()
@@ -110,6 +99,9 @@ class AdvertisementsActivity : AppCompatActivity() {
 
             checkVisibility()
             binding.buttonEmptyAction.text = "Добавьте объявление"
+            binding.buttonAddAds.setOnClickListener {
+                startAddAdsFragment()
+            }
         }
 
         binding.buttonFavourites.setOnClickListener {
@@ -125,13 +117,47 @@ class AdvertisementsActivity : AppCompatActivity() {
             }
             checkVisibility()
             binding.buttonEmptyAction.text = "Поиск"
+            binding.buttonEmptyAction.setOnClickListener {
+                startSearch()
+            }
         }
 
         binding.buttonSharedUsage.setOnClickListener {
-            adapter.advertisements = mutableListOf()
+            try {
+                runBlocking {
+                    adapter.advertisements = viewModel.getSharedUsage()
+                }
+            } catch (e: HttpException) {
+                runBlocking {
+                    Dependencies.tokenService.refreshTokens()
+                    adapter.advertisements = viewModel.getSharedUsage()
+                }
+            }
             checkVisibility()
             binding.buttonEmptyAction.text = "Поиск"
+            binding.buttonEmptyAction.setOnClickListener {
+                startSearch()
+            }
         }
+
+        binding.buttonPurchases.setOnClickListener {
+            try {
+                runBlocking {
+                    adapter.advertisements = viewModel.getPurchases()
+                }
+            } catch (e: HttpException) {
+                runBlocking {
+                    Dependencies.tokenService.refreshTokens()
+                    adapter.advertisements = viewModel.getPurchases()
+                }
+            }
+            checkVisibility()
+            binding.buttonEmptyAction.text = "Поиск"
+            binding.buttonEmptyAction.setOnClickListener {
+                startSearch()
+            }
+        }
+
     }
 
     private fun checkVisibility() {
@@ -140,6 +166,37 @@ class AdvertisementsActivity : AppCompatActivity() {
         } else {
             binding.buttonEmptyAction.visibility = View.INVISIBLE
         }
+    }
+
+    private fun startAddAdsFragment() {
+        disableAndHideElements()
+        val fragment = AddAdvertisementFragment.newInstance()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayoutAds, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun startAdsFragment(advertisement: Advertisement) {
+        disableAndHideElements()
+        val fragment = AdvertisementFragment.newInstance()
+        val bundle = Bundle()
+        bundle.putLong("adsId", advertisement.id)
+        fragment.arguments = bundle
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayoutAds, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun startSearch() {
+        startActivity(
+            Intent(
+                applicationContext,
+                SearchActivity::class.java
+            )
+        )
+        overridePendingTransition(0, 0)
     }
 
 

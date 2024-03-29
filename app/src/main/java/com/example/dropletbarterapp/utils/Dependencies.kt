@@ -8,6 +8,10 @@ import com.example.dropletbarterapp.mainscreens.advertisements.api.ads.Advertise
 import com.example.dropletbarterapp.mainscreens.advertisements.api.ads.RuntimeAdvertisementRepository
 import com.example.dropletbarterapp.mainscreens.advertisements.api.favourites.FavouritesRepository
 import com.example.dropletbarterapp.mainscreens.advertisements.api.favourites.RuntimeFavouritesRepository
+import com.example.dropletbarterapp.mainscreens.advertisements.api.purchases.PurchasesRepository
+import com.example.dropletbarterapp.mainscreens.advertisements.api.purchases.RuntimePurchasesRepository
+import com.example.dropletbarterapp.mainscreens.advertisements.api.shared.RuntimeSharedUsagesRepository
+import com.example.dropletbarterapp.mainscreens.advertisements.api.shared.SharedUsageRepository
 import com.example.dropletbarterapp.mainscreens.profile.RuntimeUserRepository
 import com.example.dropletbarterapp.mainscreens.profile.UserRepository
 import com.google.gson.GsonBuilder
@@ -40,5 +44,11 @@ object Dependencies {
         )
     }
     val favouritesRepository: FavouritesRepository by lazy { RuntimeFavouritesRepository(retrofit) }
+    val purchasesRepository: PurchasesRepository by lazy { RuntimePurchasesRepository(retrofit) }
+    val sharedUsageRepository: SharedUsageRepository by lazy {
+        RuntimeSharedUsagesRepository(
+            retrofit
+        )
+    }
     val tokenService: TokenService by lazy { TokenSharedPreferencesService(applicationContext) }
 }

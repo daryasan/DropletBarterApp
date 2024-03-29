@@ -15,8 +15,22 @@ class AdvertisementsActivityViewModel {
         )
     }
 
-     suspend fun getFavourites(): List<Advertisement> {
+    suspend fun getFavourites(): List<Advertisement> {
         return Dependencies.favouritesRepository.findForUser(
+            Dependencies.tokenService.getAccessToken().toString(),
+            getUserId()
+        )
+    }
+
+    suspend fun getSharedUsage(): List<Advertisement> {
+        return Dependencies.sharedUsageRepository.findForUser(
+            Dependencies.tokenService.getAccessToken().toString(),
+            getUserId()
+        )
+    }
+
+    suspend fun getPurchases(): List<Advertisement> {
+        return Dependencies.purchasesRepository.findForUser(
             Dependencies.tokenService.getAccessToken().toString(),
             getUserId()
         )

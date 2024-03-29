@@ -1,17 +1,16 @@
-package com.example.dropletbarterapp.mainscreens.advertisements.api.favourites
+package com.example.dropletbarterapp.mainscreens.advertisements.api.shared
 
-import com.example.backend.dto.AddAdvertisementRequest
 import com.example.dropletbarterapp.models.Advertisement
-import retrofit2.http.*
 
-interface FavouritesRepository {
-    suspend fun addToFavourites(
+interface SharedUsageRepository {
+
+    suspend fun addToSharedUsage(
         accessToken: String,
         userId: Long,
         adsId: Long
     )
 
-    suspend fun deleteFromFavourites(
+    suspend fun deleteFromSharedUsage(
         accessToken: String,
         userId: Long,
         adsId: Long
@@ -21,5 +20,4 @@ interface FavouritesRepository {
         accessToken: String,
         userId: Long
     ): List<Advertisement>
-
 }

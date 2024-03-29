@@ -73,9 +73,7 @@ class AdvertisementsAdapter :
                     }
 
                 }
-
             }
-
 
             ImageUtils.loadImageBitmap(ads.photo, context, imageViewAds, SquareCrop())
 

@@ -38,7 +38,7 @@ class ChatsActivity : AppCompatActivity() {
                     "Новая книжка",
                     true,
                     UICategory.getPosByCategory(Category.OTHER),
-                    null
+                    1
                 )
             )
         )

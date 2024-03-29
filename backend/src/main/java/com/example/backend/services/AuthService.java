@@ -8,9 +8,11 @@ import com.example.backend.exceptions.RefreshException;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.models.FavouritesList;
 import com.example.backend.models.PurchasesList;
+import com.example.backend.models.SharedUsageList;
 import com.example.backend.models.User;
 import com.example.backend.repositories.FavouritesListRepository;
 import com.example.backend.repositories.PurchasesListRepository;
+import com.example.backend.repositories.SharedUsageListRepository;
 import com.example.backend.repositories.UserRepository;
 import com.example.backend.security.JwtUtil;
 
@@ -29,6 +31,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthService {
     private final UserRepository userRepository;
     private final FavouritesListRepository favouritesListRepository;
+    private final SharedUsageListRepository sharedUsageListRepository;
     private final PurchasesListRepository purchasesListRepository;
     private final JwtUtil jwtUtil;
 
@@ -75,10 +78,11 @@ public class AuthService {
 
         FavouritesList favouritesList = new FavouritesList(user, new ArrayList<>());
         PurchasesList purchasesList = new PurchasesList(user, new ArrayList<>());
+        SharedUsageList sharedUsageList = new SharedUsageList(user, new ArrayList<>());
 
         userRepository.save(user);
         favouritesListRepository.save(favouritesList);
-
+        sharedUsageListRepository.save(sharedUsageList);
         purchasesListRepository.save(purchasesList);
 
 
@@ -108,10 +112,6 @@ public class AuthService {
     public JwtTokenResponse refreshTokensById(Long id) throws RefreshException {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
-            // ?
-//            UsernamePasswordAuthenticationToken auth =
-//                    new UsernamePasswordAuthenticationToken(email, user.get().getPassword());
-//            authenticationManager.authenticate(auth);
             return jwtUtil.generateJWTResponse(user.get());
         } else {
             throw new RefreshException("Wrong user data!");

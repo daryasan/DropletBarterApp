@@ -10,7 +10,7 @@ class Advertisement(
     @SerializedName("description") val description: String? = null,
     @SerializedName("statusActive") val statusActive: Boolean? = null,
     @SerializedName("category") val category: Int,
-    @SerializedName("ownerId") val ownerId: Long? = null
+    @SerializedName("ownerId") val ownerId: Long
 ) {
     val categoryEnum: Category = UICategory.getCategoryByPos(category)
 }
