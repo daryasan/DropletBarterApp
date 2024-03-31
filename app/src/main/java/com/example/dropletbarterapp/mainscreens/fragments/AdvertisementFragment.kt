@@ -1,6 +1,7 @@
 package com.example.dropletbarterapp.mainscreens.fragments
 
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +13,11 @@ import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.FragmentAdvertisementBinding
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.models.Advertisement
-import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
 import com.example.dropletbarterapp.ui.images.ImageUtils
 import com.example.dropletbarterapp.ui.images.SquareCrop
 import kotlinx.coroutines.runBlocking
+
 
 class AdvertisementFragment : Fragment() {
 
@@ -52,12 +53,7 @@ class AdvertisementFragment : Fragment() {
         }
 
         binding.linLayoutSeller.setOnClickListener {
-            val fragment = AnotherProfileFragment.newInstance()
-            //fragment.arguments = bundle TODO pass args
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.adsLayout, fragment)
-            transaction.addToBackStack(null)
-            transaction.commit()
+            startProfileFragment(advertisement)
         }
 
         binding.recyclerView.layoutManager =
@@ -84,6 +80,7 @@ class AdvertisementFragment : Fragment() {
         // go back
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
+                @Suppress("DEPRECATION")
                 requireActivity().onBackPressed()
             }
         }
@@ -96,6 +93,7 @@ class AdvertisementFragment : Fragment() {
     }
 
     private fun setData() {
+
         ImageUtils.loadImageBitmap(
             advertisement.photo,
             requireContext(),
@@ -104,10 +102,13 @@ class AdvertisementFragment : Fragment() {
         )
         binding.textViewAdsName.text = advertisement.name
         binding.textViewAdsDescription.text = advertisement.description
-        binding.textViewAdsName.text =
+        binding.textViewSellerName.text =
             getString(R.string.firstLastName, ownerData.firstName, ownerData.lastName)
         if (ownerData.address != null) {
             binding.textViewAddress.text = ownerData.address
+        }
+        if (advertisement.description == null) {
+            binding.textViewAdsDescription.height = 0
         }
 
         ImageUtils.loadImageBitmap(
@@ -123,6 +124,17 @@ class AdvertisementFragment : Fragment() {
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
         val fragment = newInstance()
+        fragment.arguments = bundle
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.adsLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun startProfileFragment(advertisement: Advertisement) {
+        val bundle = Bundle()
+        bundle.putLong("ownerId", advertisement.ownerId)
+        val fragment = AnotherProfileFragment.newInstance()
         fragment.arguments = bundle
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(R.id.adsLayout, fragment)

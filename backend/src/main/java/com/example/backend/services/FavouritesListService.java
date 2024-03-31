@@ -38,11 +38,7 @@ public class FavouritesListService {
     public void removeAdvertisementsFromFavourites(AddAdvertisementRequest request) throws UserException, AdvertisementException {
         FavouritesList favouritesList = findFavouritesForUser(request.getUserId());
         List<Advertisement> advertisements = favouritesList.getAdvertisements();
-        for (Advertisement ad : advertisements) {
-            if (Objects.equals(ad.getId(), request.getAdsId())) {
-                advertisements.remove(ad);
-            }
-        }
+        advertisements.removeIf(ad -> Objects.equals(ad.getId(), request.getAdsId()));
         favouritesList.setAdvertisements(advertisements);
         favouritesListRepository.save(favouritesList);
     }
