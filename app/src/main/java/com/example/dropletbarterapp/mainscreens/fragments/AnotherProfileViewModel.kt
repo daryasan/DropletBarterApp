@@ -15,10 +15,17 @@ class AnotherProfileViewModel : ViewModel() {
     }
 
     suspend fun findAdvertisementsForUser(id: Long): List<Advertisement> {
-        return Dependencies.advertisementRepository.findAdvertisementsOwnedByUser(
+        var ads = Dependencies.advertisementRepository.findAdvertisementsOwnedByUser(
             Dependencies.tokenService.getAccessToken().toString(),
             id
         )
+        removeArchived(ads)
+        return ads
+    }
+
+    fun removeArchived(ads: List<Advertisement>) {
+        ads.toMutableSet().removeIf { !it.statusActive }
+        ads.toList()
     }
 
 }

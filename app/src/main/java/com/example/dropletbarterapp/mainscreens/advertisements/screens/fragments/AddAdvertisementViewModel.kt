@@ -26,13 +26,6 @@ class AddAdvertisementViewModel : ViewModel() {
         )
     }
 
-    suspend fun getFavourites(): List<Advertisement> {
-        return Dependencies.favouritesRepository.findForUser(
-            Dependencies.tokenService.getAccessToken().toString(),
-            getUserId()
-        )
-    }
-
     private fun getUserId(): Long {
         val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
         return jwt.getClaim("id").asString()!!.toLong()

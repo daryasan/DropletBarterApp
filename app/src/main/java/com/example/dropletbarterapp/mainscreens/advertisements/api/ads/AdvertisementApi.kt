@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -21,6 +22,13 @@ interface AdvertisementApi {
     suspend fun findAdvertisement(
         @Header("Authorization") accessToken: String,
         @Path("id") id: Long
+    ): Advertisement
+
+    @PATCH("/advertisement/edit/{id}")
+    suspend fun editAdvertisement(
+        @Header("Authorization") accessToken: String,
+        @Path("id") id: Long,
+        @Body advertisementEditDto: AdvertisementEditDto
     ): Advertisement
 
     @GET("/advertisement/all")

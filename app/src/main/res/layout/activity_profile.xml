@@ -72,8 +72,9 @@
                             android:id="@+id/textViewItems"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
-                            android:layout_weight="2"
-                            android:gravity="center"
+                            android:layout_weight="2.5"
+                            android:gravity="center_vertical"
+                            android:paddingStart="10dp"
                             android:text="@string/items" />
                     </LinearLayout>
 
@@ -128,10 +129,20 @@
                         android:text="@string/changePersonalData" />
 
                     <Button
-                        android:id="@+id/buttonSettingsEmail"
+                        android:id="@+id/buttonQueries"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/buttonSettings"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="5dp"
+                        android:text="@string/changePersonalData" />
+
+                    <Button
+                        android:id="@+id/buttonSettingsEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/buttonQueries"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="5dp"

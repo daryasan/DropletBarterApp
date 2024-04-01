@@ -21,6 +21,16 @@ interface AdvertisementRepository {
         id: Long
     ): Advertisement
 
+    suspend fun editAdvertisement(
+        accessToken: String,
+        id: Long,
+        photo: ByteArray,
+        name: String,
+        description: String?,
+        category: Category,
+        statusActive: Boolean
+    ): Advertisement
+
 
     suspend fun findAllAdvertisements(
         accessToken: String,

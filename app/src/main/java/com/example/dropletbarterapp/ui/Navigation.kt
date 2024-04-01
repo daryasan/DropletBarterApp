@@ -5,9 +5,8 @@ import android.content.Intent
 import android.view.MenuItem
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.mainscreens.advertisements.screens.AdvertisementsActivity
-import com.example.dropletbarterapp.mainscreens.profile.screens.ProfileActivity
-import com.example.dropletbarterapp.mainscreens.chats.screens.ChatsActivity
 import com.example.dropletbarterapp.mainscreens.foryou.screens.MainActivity
+import com.example.dropletbarterapp.mainscreens.profile.screens.ProfileActivity
 import com.example.dropletbarterapp.mainscreens.search.screens.SearchActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -43,16 +42,6 @@ object Navigation {
                     Intent(
                         activity.applicationContext,
                         AdvertisementsActivity::class.java
-                    )
-                )
-                activity.overridePendingTransition(0, 0)
-                return@setOnItemSelectedListener true
-            }
-            if (item.itemId == R.id.chats) {
-                activity.startActivity(
-                    Intent(
-                        activity.applicationContext,
-                        ChatsActivity::class.java
                     )
                 )
                 activity.overridePendingTransition(0, 0)

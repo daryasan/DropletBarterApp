@@ -26,27 +26,19 @@ class SearchActivity : AppCompatActivity() {
 
         Navigation.setNavigation(this, R.id.search)
 
-        //search
-        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                if (p0 != null) {
-                    disableAndHideElements()
-                    val fragment = SearchFragment.newInstance()
-                    val bundle = Bundle()
-                    bundle.putString("query", p0)
-                    fragment.arguments = bundle
-                    val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.searchLayout, fragment)
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return false
-            }
-        })
+//        //search
+//        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(p0: String?): Boolean {
+//                if (p0 != null) {
+//                    startSearchFragment(p0)
+//                }
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(p0: String?): Boolean {
+//                return false
+//            }
+//        })
 
         // category adapter
         adapter = CategoryAdapter()
@@ -54,18 +46,7 @@ class SearchActivity : AppCompatActivity() {
         adapter.setOnCategoryClickListener(object :
             CategoryAdapter.OnCategoryClickListener {
             override fun onCategoryClick(category: Category) {
-                disableAndHideElements()
-                val fragment = SearchFragment.newInstance()
-                val bundle = Bundle()
-                bundle.putInt(
-                    "categoryPos",
-                    UICategory.getPosByCategory(category)
-                )
-                fragment.arguments = bundle
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.searchLayout, fragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                startSearchFragment(category)
             }
         })
 
@@ -80,6 +61,21 @@ class SearchActivity : AppCompatActivity() {
                 enableAndShowElements()
             }
         }
+    }
+
+    private fun startSearchFragment(category: Category) {
+        disableAndHideElements()
+        val fragment = SearchFragment.newInstance()
+        val bundle = Bundle()
+        bundle.putInt(
+            "categoryPos",
+            UICategory.getPosByCategory(category)
+        )
+        fragment.arguments = bundle
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.searchLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun disableAndHideElements() {

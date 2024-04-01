@@ -108,15 +108,15 @@ class UICategory(
 
         fun getCategoryByPos(pos: Int): Category {
             when (pos) {
-                1 -> Category.SHARED_USAGE
-                2 -> Category.CLOTHES
-                3 -> Category.ELECTRONICS
-                4 -> Category.HEALTHCARE
-                5 -> Category.FOR_HOME
-                6 -> Category.FOR_PETS
-                7 -> Category.ACCESSORIES
-                8 -> Category.SERVICES
-                9 -> Category.OTHER
+                1 -> return Category.SHARED_USAGE
+                2 -> return Category.CLOTHES
+                3 -> return Category.ELECTRONICS
+                4 -> return Category.HEALTHCARE
+                5 -> return Category.FOR_HOME
+                6 -> return Category.FOR_PETS
+                7 -> return Category.ACCESSORIES
+                8 -> return Category.SERVICES
+                9 -> return Category.OTHER
             }
             throw java.lang.IllegalArgumentException("No category for such position!")
         }

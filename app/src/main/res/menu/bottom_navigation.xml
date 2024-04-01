@@ -15,10 +15,6 @@
         android:icon="@drawable/ads_bottom_nav_icon"
         android:title="@string/ads_bottom_nav" />
     <item
-        android:id="@+id/chats"
-        android:icon="@drawable/chats_bottom_nav_assets"
-        android:title="@string/chats_bottom_nav" />
-    <item
         android:id="@+id/profile"
         android:icon="@drawable/profile_bottom_nav_icon"
         android:title="@string/profile_bottom_nav" />

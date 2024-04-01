@@ -1,4 +1,4 @@
-package com.example.dropletbarterapp.mainscreens.advertisements.screens.fragments
+package com.example.dropletbarterapp.mainscreens.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,43 +7,39 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.contract.ActivityResultContracts.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dropletbarterapp.R
-import com.example.dropletbarterapp.databinding.FragmentAddAdvertisementBinding
+import com.example.dropletbarterapp.databinding.FragmentEditAdvertisementBinding
+import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.images.ImageLoader
+import com.example.dropletbarterapp.ui.images.ImageUtils
 import com.example.dropletbarterapp.ui.images.SquareCrop
 import com.example.dropletbarterapp.ui.models.UICategory
 import com.example.dropletbarterapp.validators.Toaster
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
-
-class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener {
+class EditAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     companion object {
-        fun newInstance() = AddAdvertisementFragment()
+        fun newInstance() = EditAdvertisementFragment()
     }
 
-    private lateinit var viewModel: AddAdvertisementViewModel
-    private lateinit var binding: FragmentAddAdvertisementBinding
+    private lateinit var viewModel: EditAdvertisementViewModel
+    private lateinit var binding: FragmentEditAdvertisementBinding
+    private lateinit var advertisement: Advertisement
+    private lateinit var imageLoader: ImageLoader
     private val toaster = Toaster()
     private var category: Category? = null
-    private var photo: ByteArray? = null
-    private var name: String? = null
-    private var description: String? = null
-    private lateinit var imageLoader: ImageLoader
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentAddAdvertisementBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this)[AddAdvertisementViewModel::class.java]
-        imageLoader = ImageLoader(requireContext(), this, binding.imageViewEditPhoto, SquareCrop())
+        binding = FragmentEditAdvertisementBinding.inflate(layoutInflater)
 
         // spinner
         ArrayAdapter.createFromResource(
@@ -63,13 +59,36 @@ class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener 
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
         return binding.root
+    }
+
+    private fun setData() {
+        ImageUtils.loadImageBitmap(
+            advertisement.photo,
+            requireContext(),
+            binding.imageViewEditPhoto,
+            SquareCrop()
+        )
+        imageLoader.photo = Base64.getDecoder().decode(advertisement.photo)
+        binding.spinnerCategory.setSelection(advertisement.category)
+        binding.editTextAdsName.setText(advertisement.name)
+        binding.editTextAdsDescription.setText(advertisement.description)
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel = ViewModelProvider(this)[EditAdvertisementViewModel::class.java]
+        imageLoader = ImageLoader(requireContext(), this, binding.imageViewEditPhoto, SquareCrop())
+        val adsId = requireArguments().getLong("adsId")
+
+        runBlocking {
+            advertisement = viewModel.findAdvertisement(adsId)
+        }
+
+        setData()
+
 
         // adding photo
         binding.buttonChangePhoto.setOnClickListener {
@@ -79,9 +98,9 @@ class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener 
 
         // submitting ads
         binding.buttonPublish.setOnClickListener {
-            name = binding.editTextAdsName.text.toString()
-            description = binding.editTextAdsDescription.text.toString()
-            photo = imageLoader.photo
+            val name = binding.editTextAdsName.text.toString()
+            val description = binding.editTextAdsDescription.text.toString()
+            val photo = imageLoader.photo
             if (name == "") {
                 toaster.getToast(requireContext(), "Название объявления не может быть пустым!")
             } else if (category == null) {
@@ -90,11 +109,20 @@ class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener 
                 toaster.getToast(requireContext(), "Выберите фото для объявления!")
             } else {
                 runBlocking {
-                    viewModel.addAdvertisement(photo!!, name!!, description!!, category!!)
+                    viewModel.editAdvertisement(
+                        advertisement,
+                        photo,
+                        name,
+                        description,
+                        category!!,
+                        true
+                    )
                 }
                 finishFragment()
             }
         }
+
+        binding.spinnerCategory.setSelection(advertisement.category)
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {

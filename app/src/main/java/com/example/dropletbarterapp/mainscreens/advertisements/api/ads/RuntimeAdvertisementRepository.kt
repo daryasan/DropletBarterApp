@@ -2,6 +2,7 @@ package com.example.dropletbarterapp.mainscreens.advertisements.api.ads
 
 import com.example.dropletbarterapp.mainscreens.advertisements.dto.AdvertisementDataDto
 import com.example.dropletbarterapp.mainscreens.advertisements.dto.AdvertisementEditDto
+import com.example.dropletbarterapp.mainscreens.profile.dto.UserEditDto
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.models.UICategory
@@ -47,6 +48,29 @@ class RuntimeAdvertisementRepository(retrofit: Retrofit) : AdvertisementReposito
             )
         }
 
+    }
+
+    override suspend fun editAdvertisement(
+        accessToken: String,
+        id: Long,
+        photo: ByteArray,
+        name: String,
+        description: String?,
+        category: Category,
+        statusActive: Boolean
+    ): Advertisement {
+        return withContext(Dispatchers.IO) {
+            val advertisementEditDto = AdvertisementEditDto(
+                photo,
+                name,
+                description,
+                statusActive,
+                UICategory.getPosByCategory(category)
+            )
+            return@withContext advertisementApi.editAdvertisement(
+                "Bearer $accessToken", id, advertisementEditDto
+            )
+        }
     }
 
     override suspend fun findAllAdvertisements(accessToken: String): MutableList<Advertisement> {

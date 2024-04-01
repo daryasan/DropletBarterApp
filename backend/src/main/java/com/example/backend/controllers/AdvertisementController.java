@@ -1,5 +1,6 @@
 package com.example.backend.controllers;
 
+import com.example.backend.dto.AdvertisementEditDto;
 import com.example.backend.dto.AdvertisementsDataDto;
 import com.example.backend.exceptions.AdvertisementException;
 import com.example.backend.models.Advertisement;
@@ -8,6 +9,7 @@ import com.example.backend.services.AdvertisementService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +32,16 @@ public class AdvertisementController {
 
         return new ResponseEntity<>(advertisementService.addAdvertisement(advertisementsDataDto),
                 HttpStatus.CREATED);
+    }
+
+    @PatchMapping("/edit/{id}")
+    public ResponseEntity<Advertisement> editAdvertisement(@PathVariable Long id, @RequestBody AdvertisementEditDto advertisementEditDto) throws AdvertisementException {
+        try {
+            Advertisement ads = advertisementService.editAdvertisements(id, advertisementEditDto);
+            return ResponseEntity.ok(ads);
+        } catch (AdvertisementException e) {
+            throw e;
+        }
     }
 
     @GetMapping("/{id}")

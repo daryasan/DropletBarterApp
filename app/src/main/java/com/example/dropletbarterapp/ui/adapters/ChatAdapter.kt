@@ -1,64 +1,64 @@
-package com.example.dropletbarterapp.ui.adapters
-
-import android.view.LayoutInflater
-import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.dropletbarterapp.R
-import com.example.dropletbarterapp.databinding.ChatItemBinding
-import com.example.dropletbarterapp.models.Advertisement
-import com.example.dropletbarterapp.models.Chat
-
-class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatsViewHolder>() {
-
-    private var onChatClickListener: ChatAdapter.OnChatClickListener? = null
-
-    var chats: List<Chat> = emptyList()
-        set(newValue) {
-            field = newValue
-            notifyDataSetChanged()
-        }
-
-    class ChatsViewHolder(val binding: ChatItemBinding) :
-        RecyclerView.ViewHolder(binding.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatsViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val binding = ChatItemBinding.inflate(inflater, parent, false)
-        return ChatsViewHolder(binding)
-    }
-
-    override fun getItemCount(): Int {
-        return chats.size
-    }
-
-    override fun onBindViewHolder(holder: ChatsViewHolder, position: Int) {
-        val chat = chats[position]
-        val context = holder.itemView.context
-
-        with(holder.binding) {
-
-            if (chat.advertisement.photo != null) {
-                Glide.with(context).load(chat.advertisement.photo).circleCrop()
-                    .error(R.drawable.empty_profile_image).circleCrop()
-                    .placeholder(R.drawable.empty_profile_image).circleCrop().into(imageViewChat)
-            }
-
-            textViewChatName.text = chat.advertisement.name
-            textViewRecentMessage.text = chat.messages[chat.messages.lastIndex].message
-        }
-
-        holder.itemView.setOnClickListener {
-            onChatClickListener?.onChatClick(chats[position])
-        }
-
-    }
-
-    fun setOnChatClickListener(listener: OnChatClickListener) {
-        onChatClickListener = listener
-    }
-
-    interface OnChatClickListener {
-        fun onChatClick(chat: Chat)
-    }
-}
+//package com.example.dropletbarterapp.ui.adapters
+//
+//import android.view.LayoutInflater
+//import android.view.ViewGroup
+//import androidx.recyclerview.widget.RecyclerView
+//import com.bumptech.glide.Glide
+//import com.example.dropletbarterapp.R
+//import com.example.dropletbarterapp.databinding.ChatItemBinding
+//import com.example.dropletbarterapp.models.Advertisement
+//import com.example.dropletbarterapp.models.Chat
+//
+//class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatsViewHolder>() {
+//
+//    private var onChatClickListener: ChatAdapter.OnChatClickListener? = null
+//
+//    var chats: List<Chat> = emptyList()
+//        set(newValue) {
+//            field = newValue
+//            notifyDataSetChanged()
+//        }
+//
+//    class ChatsViewHolder(val binding: ChatItemBinding) :
+//        RecyclerView.ViewHolder(binding.root)
+//
+//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatsViewHolder {
+//        val inflater = LayoutInflater.from(parent.context)
+//        val binding = ChatItemBinding.inflate(inflater, parent, false)
+//        return ChatsViewHolder(binding)
+//    }
+//
+//    override fun getItemCount(): Int {
+//        return chats.size
+//    }
+//
+//    override fun onBindViewHolder(holder: ChatsViewHolder, position: Int) {
+//        val chat = chats[position]
+//        val context = holder.itemView.context
+//
+//        with(holder.binding) {
+//
+//            if (chat.advertisement.photo != null) {
+//                Glide.with(context).load(chat.advertisement.photo).circleCrop()
+//                    .error(R.drawable.empty_profile_image).circleCrop()
+//                    .placeholder(R.drawable.empty_profile_image).circleCrop().into(imageViewChat)
+//            }
+//
+//            textViewChatName.text = chat.advertisement.name
+//            textViewRecentMessage.text = chat.messages[chat.messages.lastIndex].message
+//        }
+//
+//        holder.itemView.setOnClickListener {
+//            onChatClickListener?.onChatClick(chats[position])
+//        }
+//
+//    }
+//
+//    fun setOnChatClickListener(listener: OnChatClickListener) {
+//        onChatClickListener = listener
+//    }
+//
+//    interface OnChatClickListener {
+//        fun onChatClick(chat: Chat)
+//    }
+//}

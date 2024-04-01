@@ -56,7 +56,7 @@
     <string name="change">Изменить</string>
     <string name="changePassword">Измените пароль</string>
     <string name="changePersonalData">Изменить личные данные</string>
-    <string name="changeLogin">Изменить способы входа и пароль</string>
+    <string name="changeLogin">Настройки аккаунта</string>
     <string name="changePasswordSettings">Изменить пароль</string>
     <string name="logOut">Выйти</string>
     <string name="address">Адрес</string>
@@ -77,6 +77,10 @@
     <string name="advertisementName">Название объявления</string>
     <string name="publish">Опубликовать</string>
     <string name="purchases">Покупки</string>
+    <string name="more">Больше объявлений</string>
+    <string name="editYoutAds">Редактируйте объявление</string>
+    <string name="changePhotos">Изменить фото</string>
+    <string name="saveChanges">Сохранить изменения</string>
     <string-array name="categoryArray">
         <item>Не выбрано</item>
         <item>Совместное использование</item>

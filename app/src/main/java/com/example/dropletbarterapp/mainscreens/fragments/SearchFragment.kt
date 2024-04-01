@@ -1,5 +1,6 @@
 package com.example.dropletbarterapp.mainscreens.fragments
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.example.dropletbarterapp.databinding.FragmentSearchBinding
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
 import com.example.dropletbarterapp.ui.models.UICategory
+import kotlinx.coroutines.runBlocking
 
 class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -25,6 +27,9 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private lateinit var viewModel: SearchViewModel
     private lateinit var binding: FragmentSearchBinding
     private lateinit var adapter: AdvertisementsAdapter
+    private var query: String? = null
+    private var categoryPos: Int? = 0
+    private var closer = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,8 +37,35 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
     ): View {
         viewModel = ViewModelProvider(this)[SearchViewModel::class.java]
         binding = FragmentSearchBinding.inflate(layoutInflater)
+
+
+        // go back
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                requireActivity().onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         adapter = AdvertisementsAdapter()
 
+        query = arguments?.getString("query")
+//        if (query != null) {
+//            binding.searchBarMain.setQuery(query, false)
+//        }
+
+        categoryPos = arguments?.getInt("categoryPos")
+        if (categoryPos != null) {
+            binding.filterCategory.setSelection(categoryPos!!)
+        }
+
+        setAdvertisements()
+        binding.recyclerView.adapter = adapter
 
         // adapter for dropdown list
         ArrayAdapter.createFromResource(
@@ -51,71 +83,44 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
         adapter.setOnAdvertisementClickListener(object :
             AdvertisementsAdapter.OnAdvertisementClickListener {
             override fun onAdvertisementClick(advertisement: Advertisement) {
-                val fragment = AdvertisementFragment.newInstance()
-                val bundle = Bundle()
-                //bundle.putParcelable("advertisement", advertisement)
-                fragment.arguments = bundle
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.searchLayout, fragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                startAdsFragment(advertisement)
             }
         })
 
-
-        // go back
-        val callback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                requireActivity().onBackPressed()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
-
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        val categoryPos = arguments?.getInt("categoryPos")
-        if (categoryPos != null) {
-            // TODO get all ads
-            binding.filterCategory.setSelection(categoryPos)
-        }
-
-        val query = arguments?.getString("query")
-        if (query != null) {
-            binding.searchBarMain.setQuery(query, false)
-        }
-
-        binding.searchBarMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                if (p0 != null) {
-                    setAdvertisements(viewModel.findAdvertisements())
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return false
-            }
-        })
+//        binding.searchBarMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+//            override fun onQueryTextSubmit(p0: String?): Boolean {
+//                if (p0 != null) {
+//                    query = p0
+//                    setAdvertisements()
+//                }
+//                return true
+//            }
+//
+//            override fun onQueryTextChange(p0: String?): Boolean {
+//                return false
+//            }
+//        })
 
 
         if (binding.checkboxClose.isActivated) {
-            setAdvertisements(viewModel.findCloserAdvertisements())
+            closer = true
+            setAdvertisements()
         } else {
-            setAdvertisements(viewModel.findAdvertisements())
+            closer = false
+            setAdvertisements()
         }
 
         binding.checkboxClose.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                setAdvertisements(viewModel.findCloserAdvertisements())
+                closer = true
+                setAdvertisements()
             } else {
-                setAdvertisements(viewModel.findAdvertisements())
+                closer = false
+                setAdvertisements()
             }
         }
+        binding.filterCategory.setSelection(categoryPos!!)
 
-        binding.recyclerView.adapter = adapter
     }
 
     override fun onResume() {
@@ -125,30 +130,48 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
         } else {
             binding.nothingFound.alpha = 0f
         }
+        binding.filterCategory.setSelection(categoryPos!!)
     }
 
 
-    private fun setAdvertisements(ads: MutableList<Advertisement>) {
-        adapter.advertisements = ads
+    @SuppressLint("NotifyDataSetChanged")
+    private fun setAdvertisements() {
+        adapter.advertisements = viewModel.findAdvertisements(query, categoryPos, closer)
+        adapter.notifyDataSetChanged()
+        if (adapter.advertisements.isEmpty()) {
+            binding.nothingFound.alpha = 1f
+        } else {
+            binding.nothingFound.alpha = 0f
+        }
+
+    }
+
+    private fun startAdsFragment(advertisement: Advertisement) {
+        val bundle = Bundle()
+        bundle.putLong("adsId", advertisement.id)
+        val fragment = AdvertisementFragment.newInstance()
+        fragment.arguments = bundle
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.searchLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
 
         val category = p0?.getItemAtPosition(p2)
         if (category.toString() == "Не выбрано") {
-            setAdvertisements(viewModel.findAdvertisements())
+            categoryPos = null
+            setAdvertisements()
         } else {
-            setAdvertisements(
-                viewModel.findCategoryAdvertisement(
-                    adapter.advertisements,
-                    UICategory.findCategoryByName(category.toString())
-                )
-            )
+            categoryPos = p2
+            setAdvertisements()
         }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
-        setAdvertisements(viewModel.findAdvertisements())
+        categoryPos = null
+        setAdvertisements()
     }
 
 }

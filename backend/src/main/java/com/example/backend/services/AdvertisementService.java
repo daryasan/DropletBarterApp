@@ -1,5 +1,6 @@
 package com.example.backend.services;
 
+import com.example.backend.dto.AdvertisementEditDto;
 import com.example.backend.dto.AdvertisementsDataDto;
 import com.example.backend.exceptions.AdvertisementException;
 import com.example.backend.models.Advertisement;
@@ -39,7 +40,25 @@ public class AdvertisementService {
         if (ads.isPresent()) {
             return ads.get();
         } else {
-            throw new AdvertisementException("No such user!");
+            throw new AdvertisementException("No such advertisement!");
+        }
+    }
+
+    public Advertisement editAdvertisements(Long id, AdvertisementEditDto editDto) throws AdvertisementException {
+        Optional<Advertisement> ads = advertisementRepository.findById(id);
+        if (ads.isPresent()) {
+            Advertisement newAd = ads.get();
+            newAd.setName(editDto.getName());
+            newAd.setDescription(editDto.getDescription());
+            newAd.setPhoto(editDto.getPhoto());
+            newAd.setCategory(editDto.getCategory());
+            newAd.setStatusActive(editDto.getStatusActive());
+
+            advertisementRepository.save(newAd);
+
+            return newAd;
+        } else {
+            throw new AdvertisementException("No such advertisement!");
         }
     }
 

@@ -1,7 +1,6 @@
 package com.example.dropletbarterapp.mainscreens.fragments
 
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -30,6 +29,7 @@ class AdvertisementFragment : Fragment() {
     private lateinit var adapter: AdvertisementsAdapter
     private lateinit var advertisement: Advertisement
     private lateinit var ownerData: UserDataDto
+    var layoutResource: Int = R.id.searchLayout
 
 
     override fun onCreateView(
@@ -72,9 +72,28 @@ class AdvertisementFragment : Fragment() {
         adapter.setOnAdvertisementClickListener(object :
             AdvertisementsAdapter.OnAdvertisementClickListener {
             override fun onAdvertisementClick(advertisement: Advertisement) {
-                startAdsFragment(advertisement)
+                startAdsFragment()
             }
         })
+
+        if (advertisement.ownerId == ownerData.id) {
+            binding.buttonTake.text = "Редактировать"
+            binding.buttonContact.text = "Скрыть"
+
+            binding.buttonTake.setOnClickListener {
+                startEditAdsFragment()
+            }
+
+            binding.buttonContact.setOnClickListener {
+                if (advertisement.statusActive) {
+                    viewModel.hideAdvertisement(advertisement)
+                }
+                binding.buttonContact.text = "В архиве!"
+                binding.imageViewAdsImage.alpha = 0.7f
+                binding.buttonTake.isEnabled = false
+            }
+
+        }
 
 
         // go back
@@ -89,7 +108,7 @@ class AdvertisementFragment : Fragment() {
 
 
     private fun setSimilar() {
-        adapter.advertisements = mutableListOf()
+        adapter.advertisements = viewModel.findSuggestions(10)
     }
 
     private fun setData() {
@@ -100,6 +119,13 @@ class AdvertisementFragment : Fragment() {
             binding.imageViewAdsImage,
             SquareCrop()
         )
+
+        if (!advertisement.statusActive) {
+            binding.imageViewAdsImage.alpha = 0.7f
+            binding.buttonTake.isEnabled = false
+            binding.buttonContact.text = "В архиве!"
+        }
+
         binding.textViewAdsName.text = advertisement.name
         binding.textViewAdsDescription.text = advertisement.description
         binding.textViewSellerName.text =
@@ -117,16 +143,26 @@ class AdvertisementFragment : Fragment() {
             binding.imageViewSellerPhoto,
             SquareCrop()
         )
-
     }
 
-    private fun startAdsFragment(advertisement: Advertisement) {
+    private fun startAdsFragment() {
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
         val fragment = newInstance()
         fragment.arguments = bundle
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.adsLayout, fragment)
+        transaction.replace(layoutResource, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun startEditAdsFragment() {
+        val bundle = Bundle()
+        bundle.putLong("adsId", advertisement.id)
+        val fragment = EditAdvertisementFragment.newInstance()
+        fragment.arguments = bundle
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(layoutResource, fragment) // TRUE
         transaction.addToBackStack(null)
         transaction.commit()
     }
@@ -135,9 +171,10 @@ class AdvertisementFragment : Fragment() {
         val bundle = Bundle()
         bundle.putLong("ownerId", advertisement.ownerId)
         val fragment = AnotherProfileFragment.newInstance()
+        fragment.layoutResource = layoutResource
         fragment.arguments = bundle
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.adsLayout, fragment)
+        transaction.replace(layoutResource, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

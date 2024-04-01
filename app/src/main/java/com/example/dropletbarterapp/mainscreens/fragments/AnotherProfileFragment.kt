@@ -31,6 +31,7 @@ class AnotherProfileFragment : Fragment(), CoroutineScope {
     private lateinit var adapter: AdvertisementsAdapter
     private lateinit var userDataDto: UserDataDto
     private lateinit var adsForUser: List<Advertisement>
+    var layoutResource: Int = R.id.searchLayout
 
 
     override fun onCreateView(
@@ -105,8 +106,9 @@ class AnotherProfileFragment : Fragment(), CoroutineScope {
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
         fragment.arguments = bundle
+        fragment.layoutResource = layoutResource
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frameLayoutAds, fragment)
+        transaction.replace(layoutResource, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

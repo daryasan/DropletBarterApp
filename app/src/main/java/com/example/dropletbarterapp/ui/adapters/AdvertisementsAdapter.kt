@@ -58,6 +58,15 @@ class AdvertisementsAdapter :
                 buttonFavourites.setImageResource(R.drawable.favourites_false)
             }
 
+            if (ads.id == getUserId()) {
+                buttonFavourites.isEnabled = false
+                buttonFavourites.alpha = 0f
+            }
+
+            if (!ads.statusActive) {
+                imageViewAds.alpha = 0.7f
+            }
+
 
             buttonFavourites.setOnClickListener {
                 if (favourites.any { it.id == ads.id }) {

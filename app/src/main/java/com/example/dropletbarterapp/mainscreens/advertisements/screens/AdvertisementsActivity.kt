@@ -180,6 +180,7 @@ class AdvertisementsActivity : AppCompatActivity() {
     private fun startAdsFragment(advertisement: Advertisement) {
         disableAndHideElements()
         val fragment = AdvertisementFragment.newInstance()
+        fragment.layoutResource = R.id.frameLayoutAds
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
         fragment.arguments = bundle

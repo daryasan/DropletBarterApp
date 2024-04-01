@@ -8,18 +8,22 @@ import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.screens.LoginActivity
 import com.example.dropletbarterapp.databinding.ActivityMainBinding
 import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
+import com.example.dropletbarterapp.mainscreens.fragments.AnotherProfileFragment
 import com.example.dropletbarterapp.mainscreens.fragments.SearchFragment
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
 import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.ui.Navigation
+import kotlinx.coroutines.runBlocking
+import retrofit2.HttpException
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: AdvertisementsAdapter
+    private lateinit var viewModel: MainViewModel
 
     //private val toaster = Toaster()
     private var isLoading = false;
@@ -28,20 +32,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        viewModel = MainViewModel()
         setContentView(binding.root)
         Dependencies.initDependencies(this)
-
-        // FOR TESTING DB
-        //Dependencies.tokenService.killTokens()
 
         // if not authorized -> authorize
         if (Dependencies.tokenService.getAccessToken() == null) {
             authorize()
         }
-
         Navigation.setNavigation(this, R.id.main)
 
         adapter = AdvertisementsAdapter()
+        //adapter.advertisements = viewModel.findAllAdvertisements()
         adapter.advertisements = mutableListOf()
 
         binding.recyclerView.adapter = adapter
@@ -49,37 +51,9 @@ class MainActivity : AppCompatActivity() {
             AdvertisementsAdapter.OnAdvertisementClickListener {
             override fun onAdvertisementClick(advertisement: Advertisement) {
                 disableAndHideElements()
-                val fragment = AdvertisementFragment.newInstance()
-                //fragment.arguments = bundle
-                val transaction = supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.forYouLayout, fragment)
-                transaction.addToBackStack(null)
-                transaction.commit()
+                startAdvertisementFragment(advertisement)
             }
         })
-
-        //search
-        binding.searchBarMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                if (p0 != null) {
-                    disableAndHideElements()
-                    val fragment = SearchFragment.newInstance()
-                    val bundle = Bundle()
-                    bundle.putString("query", p0)
-                    fragment.arguments = bundle
-                    val transaction = supportFragmentManager.beginTransaction()
-                    transaction.replace(R.id.forYouLayout, fragment)
-                    transaction.addToBackStack(null)
-                    transaction.commit()
-                }
-                return true
-            }
-
-            override fun onQueryTextChange(p0: String?): Boolean {
-                return false
-            }
-        })
-
         setButtonsChange()
 
     }
@@ -110,18 +84,30 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setButtonsChange() {
-        binding.buttonMyAdvertisements.setOnClickListener {
-            adapter.advertisements = mutableListOf()
-
-        }
-
-        binding.buttonFavourites.setOnClickListener {
-            adapter.advertisements = mutableListOf()
+        binding.buttonAllAdvertisements.setOnClickListener {
+            adapter.advertisements = viewModel.findAllAdvertisements()
         }
 
         binding.buttonSharedUsage.setOnClickListener {
+            adapter.advertisements = viewModel.findSharedUsage()
+        }
+
+        binding.buttonClose.setOnClickListener {
             adapter.advertisements = mutableListOf()
         }
+    }
+
+    private fun startAdvertisementFragment(advertisement: Advertisement) {
+        disableAndHideElements()
+        val bundle = Bundle()
+        bundle.putLong("adsId", advertisement.id)
+        val fragment = AdvertisementFragment.newInstance()
+        fragment.layoutResource = R.id.forYouLayout
+        fragment.arguments = bundle
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.forYouLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 }

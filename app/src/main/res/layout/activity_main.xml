@@ -25,26 +25,14 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <SearchView
-                android:id="@+id/searchBarMain"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="10dp"
-                android:queryHint="Поиск" />
-
             <HorizontalScrollView
                 android:id="@+id/scrollViewMain"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_below="@+id/searchBarMain"
                 android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:scrollbarAlwaysDrawHorizontalTrack="false"
                 android:scrollbars="none">
@@ -58,24 +46,25 @@
                     android:layout_marginBottom="20dp">
 
                     <Button
-                        android:id="@+id/buttonMyAdvertisements"
+                        android:id="@+id/buttonAllAdvertisements"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="10dp"
-                        android:text="@string/forYou"
-                        android:textSize="11sp" />
-
-                    <Button
-                        android:id="@+id/buttonFavourites"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/recent"
+                        android:text="Все"
                         android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/buttonSharedUsage"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:text="@string/SharedUsage"
+                        android:textSize="11sp" />
+
+                    <Button
+                        android:id="@+id/buttonClose"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="35dp"
                         android:layout_marginStart="10dp"
                         android:text="@string/near"
                         android:textSize="11sp" />
