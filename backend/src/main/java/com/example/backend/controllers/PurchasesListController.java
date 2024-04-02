@@ -2,6 +2,7 @@ package com.example.backend.controllers;
 
 import com.example.backend.dto.AddAdvertisementRequest;
 import com.example.backend.exceptions.AdvertisementException;
+import com.example.backend.exceptions.QueryException;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.models.Advertisement;
 import com.example.backend.services.PurchasesListService;
@@ -27,7 +28,7 @@ public class PurchasesListController {
     private final PurchasesListService purchasesListService;
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> addToFavourites(@RequestBody AddAdvertisementRequest request) throws AdvertisementException, UserException {
+    public ResponseEntity<HttpStatus> addToPurchases(@RequestBody AddAdvertisementRequest request) throws AdvertisementException, UserException, QueryException {
         purchasesListService.addAdvertisementsToPurchases(request);
         return ResponseEntity.ok(HttpStatus.OK);
     }

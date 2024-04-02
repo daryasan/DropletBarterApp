@@ -3,6 +3,7 @@ package com.example.dropletbarterapp.mainscreens.advertisements.screens
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.ActivityAdvertisementsBinding
@@ -32,6 +33,7 @@ class AdvertisementsActivity : AppCompatActivity() {
         // set navigation
         Navigation.setNavigation(this, R.id.advertisements)
 
+        chooseActiveButton(binding.buttonMyAdvertisements)
         adapter = AdvertisementsAdapter()
         try {
             runBlocking {
@@ -47,6 +49,9 @@ class AdvertisementsActivity : AppCompatActivity() {
 
         checkVisibility()
         binding.recyclerView.adapter = adapter
+        binding.buttonEmptyAction.setOnClickListener {
+            startAddAdsFragment()
+        }
 
         adapter.setOnAdvertisementClickListener(object :
             AdvertisementsAdapter.OnAdvertisementClickListener {
@@ -87,6 +92,7 @@ class AdvertisementsActivity : AppCompatActivity() {
     private fun setButtonsChange() {
         binding.buttonMyAdvertisements.setOnClickListener {
             try {
+                chooseActiveButton(binding.buttonMyAdvertisements)
                 runBlocking {
                     adapter.advertisements = viewModel.findMyAdvertisements()
                 }
@@ -99,13 +105,14 @@ class AdvertisementsActivity : AppCompatActivity() {
 
             checkVisibility()
             binding.buttonEmptyAction.text = "Добавьте объявление"
-            binding.buttonAddAds.setOnClickListener {
+            binding.buttonEmptyAction.setOnClickListener {
                 startAddAdsFragment()
             }
         }
 
         binding.buttonFavourites.setOnClickListener {
             try {
+                chooseActiveButton(binding.buttonFavourites)
                 runBlocking {
                     adapter.advertisements = viewModel.getFavourites()
                 }
@@ -124,6 +131,7 @@ class AdvertisementsActivity : AppCompatActivity() {
 
         binding.buttonSharedUsage.setOnClickListener {
             try {
+                chooseActiveButton(binding.buttonSharedUsage)
                 runBlocking {
                     adapter.advertisements = viewModel.getSharedUsage()
                 }
@@ -142,6 +150,7 @@ class AdvertisementsActivity : AppCompatActivity() {
 
         binding.buttonPurchases.setOnClickListener {
             try {
+                chooseActiveButton(binding.buttonPurchases)
                 runBlocking {
                     adapter.advertisements = viewModel.getPurchases()
                 }
@@ -198,6 +207,32 @@ class AdvertisementsActivity : AppCompatActivity() {
             )
         )
         overridePendingTransition(0, 0)
+    }
+
+    private fun chooseActiveButton(button: Button) {
+        button.setBackgroundResource(R.drawable.rounded_button)
+        button.setTextColor(resources.getColor(R.color.white))
+
+        if (button != binding.buttonMyAdvertisements) {
+            binding.buttonMyAdvertisements.setBackgroundResource(R.drawable.rounded_button_unactive)
+            binding.buttonMyAdvertisements.setTextColor(resources.getColor(R.color.main_color))
+        }
+
+        if (button != binding.buttonFavourites) {
+            binding.buttonFavourites.setBackgroundResource(R.drawable.rounded_button_unactive)
+            binding.buttonFavourites.setTextColor(resources.getColor(R.color.main_color))
+        }
+
+        if (button != binding.buttonPurchases) {
+            binding.buttonPurchases.setBackgroundResource(R.drawable.rounded_button_unactive)
+            binding.buttonPurchases.setTextColor(resources.getColor(R.color.main_color))
+        }
+
+        if (button != binding.buttonSharedUsage) {
+            binding.buttonSharedUsage.setBackgroundResource(R.drawable.rounded_button_unactive)
+            binding.buttonSharedUsage.setTextColor(resources.getColor(R.color.main_color))
+        }
+
     }
 
 

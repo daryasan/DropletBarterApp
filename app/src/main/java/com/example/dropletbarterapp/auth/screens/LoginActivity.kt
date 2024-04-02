@@ -20,7 +20,6 @@ import java.net.SocketTimeoutException
 
 class LoginActivity : AppCompatActivity(), CoroutineScope {
 
-    private var byEmail = true
     private lateinit var validator: Validator
     private val toaster: Toaster = Toaster()
     private lateinit var binding: ActivityLoginBinding
@@ -47,16 +46,9 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
             startActivity(Intent(applicationContext, RegisterActivity::class.java))
             overridePendingTransition(0, 0)
         }
-        binding.buttonLoginByEmail.setOnClickListener { view: View? ->
-            binding.editTextLogin.hint = "Электронная почта"
-            binding.editTextLogin.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            byEmail = true
-        }
-        binding.buttonLoginByPhone.setOnClickListener { view: View? ->
-            binding.editTextLogin.hint = "Номер телефона"
-            binding.editTextLogin.inputType = InputType.TYPE_CLASS_PHONE
-            byEmail = false
-        }
+
+        binding.editTextLogin.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+
 
         // sign in
         binding.buttonLogin.setOnClickListener { view: View? ->
@@ -78,13 +70,10 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
 
         val password = binding.editTextPassword.text.toString()
         val login = binding.editTextLogin.text.toString()
-        if (validator.validateLogin(login, byEmail) && validator.validatePassword(password)) {
+        if (validator.validateLogin(login, true) && validator.validatePassword(password)) {
             return try {
-                val tokenEntity: TokenEntity = if (byEmail) {
+                val tokenEntity: TokenEntity =
                     Dependencies.authRepository.signInByEmail(login, password)
-                } else {
-                    Dependencies.authRepository.signInByPhone(login.toLong(), password)
-                }
                 Dependencies.tokenService.setTokens(tokenEntity)
                 true
             } catch (e: HttpException) {

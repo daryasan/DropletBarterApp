@@ -1,4 +1,4 @@
-package com.example.dropletbarterapp.mainscreens.profile
+package com.example.dropletbarterapp.mainscreens.profile.api.user
 
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserEditLoginsEmailDto

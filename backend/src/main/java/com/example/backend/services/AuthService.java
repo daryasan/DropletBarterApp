@@ -3,6 +3,7 @@ package com.example.backend.services;
 import com.example.backend.dto.JwtTokenResponse;
 import com.example.backend.dto.LoginByEmailDto;
 import com.example.backend.dto.LoginByPhoneDto;
+import com.example.backend.dto.RegisterDto;
 import com.example.backend.exceptions.AuthException;
 import com.example.backend.exceptions.RefreshException;
 import com.example.backend.exceptions.UserException;
@@ -38,7 +39,6 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationManager authenticationManager;
-    //private final SecurityConfig securityConfig;
 
 
     public JwtTokenResponse loginByEmail(LoginByEmailDto loginByEmailDTO) throws AuthException {
@@ -67,14 +67,17 @@ public class AuthService {
 
     }
 
-    public JwtTokenResponse registerByEmail(LoginByEmailDto loginByEmailDTO) throws UserException {
+    public JwtTokenResponse registerByEmail(RegisterDto registerDto) throws UserException {
         User user = new User();
-        if (userRepository.findByEmail(loginByEmailDTO.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(registerDto.getEmail()).isPresent()) {
             throw new UserException("User already exists!");
         }
-        user.setEmail(loginByEmailDTO.getEmail());
+        user.setEmail(registerDto.getEmail());
+        user.setFirstName(registerDto.getFirstName());
+        user.setLastName(registerDto.getLastName());
+        user.setPhoneNumber(registerDto.getPhone());
         user.setItems(5L);
-        user.setPassword(passwordEncoder.encode(loginByEmailDTO.getPassword()));
+        user.setPassword(passwordEncoder.encode(registerDto.getPassword()));
 
         FavouritesList favouritesList = new FavouritesList(user, new ArrayList<>());
         PurchasesList purchasesList = new PurchasesList(user, new ArrayList<>());

@@ -26,7 +26,6 @@ public class Advertisement {
     private String description;
     private Boolean statusActive;
     private int category;
-    //@OneToOne
     private Long ownerId;
 
 }

@@ -2,6 +2,7 @@ package com.example.dropletbarterapp.mainscreens.foryou.screens
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.R
@@ -25,9 +26,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: AdvertisementsAdapter
     private lateinit var viewModel: MainViewModel
 
-    //private val toaster = Toaster()
-    private var isLoading = false;
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,26 +33,32 @@ class MainActivity : AppCompatActivity() {
         viewModel = MainViewModel()
         setContentView(binding.root)
         Dependencies.initDependencies(this)
-
+        //Dependencies.tokenService.killTokens()
         // if not authorized -> authorize
         if (Dependencies.tokenService.getAccessToken() == null) {
             authorize()
-        }
-        Navigation.setNavigation(this, R.id.main)
+        } else {
 
-        adapter = AdvertisementsAdapter()
-        //adapter.advertisements = viewModel.findAllAdvertisements()
-        adapter.advertisements = mutableListOf()
-
-        binding.recyclerView.adapter = adapter
-        adapter.setOnAdvertisementClickListener(object :
-            AdvertisementsAdapter.OnAdvertisementClickListener {
-            override fun onAdvertisementClick(advertisement: Advertisement) {
-                disableAndHideElements()
-                startAdvertisementFragment(advertisement)
+            runBlocking {
+                Dependencies.tokenService.refreshTokens()
             }
-        })
-        setButtonsChange()
+            Navigation.setNavigation(this, R.id.main)
+
+            adapter = AdvertisementsAdapter()
+            chooseActiveButton(binding.buttonAllAdvertisements)
+            adapter.advertisements = viewModel.findAllAdvertisements()
+
+            binding.recyclerView.adapter = adapter
+            adapter.setOnAdvertisementClickListener(object :
+                AdvertisementsAdapter.OnAdvertisementClickListener {
+                override fun onAdvertisementClick(advertisement: Advertisement) {
+                    disableAndHideElements()
+                    startAdvertisementFragment(advertisement)
+                }
+            })
+            setButtonsChange()
+        }
+
 
     }
 
@@ -85,15 +89,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setButtonsChange() {
         binding.buttonAllAdvertisements.setOnClickListener {
+            chooseActiveButton(binding.buttonAllAdvertisements)
             adapter.advertisements = viewModel.findAllAdvertisements()
         }
 
         binding.buttonSharedUsage.setOnClickListener {
+            chooseActiveButton(binding.buttonSharedUsage)
             adapter.advertisements = viewModel.findSharedUsage()
         }
 
-        binding.buttonClose.setOnClickListener {
-            adapter.advertisements = mutableListOf()
+        binding.buttonRecent.setOnClickListener {
+            chooseActiveButton(binding.buttonRecent)
+            adapter.advertisements = viewModel.findRecent()
         }
     }
 
@@ -108,6 +115,28 @@ class MainActivity : AppCompatActivity() {
         transaction.replace(R.id.forYouLayout, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    private fun chooseActiveButton(button: Button) {
+        button.setBackgroundResource(R.drawable.rounded_button)
+        button.setTextColor(resources.getColor(R.color.white))
+
+        if (button != binding.buttonRecent) {
+            binding.buttonRecent.setBackgroundResource(R.drawable.rounded_button_unactive)
+            binding.buttonRecent.setTextColor(resources.getColor(R.color.main_color))
+        }
+
+        if (button != binding.buttonAllAdvertisements) {
+            binding.buttonAllAdvertisements.setBackgroundResource(R.drawable.rounded_button_unactive)
+            binding.buttonAllAdvertisements.setTextColor(resources.getColor(R.color.main_color))
+        }
+
+        if (button != binding.buttonSharedUsage) {
+            binding.buttonSharedUsage.setBackgroundResource(R.drawable.rounded_button_unactive)
+            binding.buttonSharedUsage.setTextColor(resources.getColor(R.color.main_color))
+        }
+
+
     }
 
 }

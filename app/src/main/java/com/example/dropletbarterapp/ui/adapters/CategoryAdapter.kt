@@ -38,10 +38,10 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categories[position]
-        //val context = holder.itemView.context
 
         with(holder.binding) {
             textViewCategoryName.text = category.name
+            imageViewCategory.setImageResource(category.photo)
         }
 
         holder.itemView.setOnClickListener {

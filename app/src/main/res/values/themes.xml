@@ -5,6 +5,8 @@
         <item name="colorPrimary">@color/main_color</item>
         <item name="colorPrimaryVariant">@color/main_color</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="fontFamily">@font/montserrat</item>
+        <item name="android:textStyle">bold</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/main_color</item>
         <item name="colorSecondaryVariant">@color/accent_color</item>

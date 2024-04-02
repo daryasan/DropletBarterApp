@@ -1,14 +1,9 @@
 package com.example.dropletbarterapp.ui.adapters
 
-import android.graphics.drawable.Drawable
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.auth0.android.jwt.JWT
-import com.bumptech.glide.Glide
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.AdvertisementItemBinding
 import com.example.dropletbarterapp.models.Advertisement
@@ -58,7 +53,7 @@ class AdvertisementsAdapter :
                 buttonFavourites.setImageResource(R.drawable.favourites_false)
             }
 
-            if (ads.id == getUserId()) {
+            if (ads.ownerId == getUserId()) {
                 buttonFavourites.isEnabled = false
                 buttonFavourites.alpha = 0f
             }

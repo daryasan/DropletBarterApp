@@ -40,10 +40,11 @@
         <Button
             android:id="@+id/buttonChangePhoto"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_below="@+id/imageViewEditPhoto"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:background="@drawable/rounded_button"
             android:layout_marginStart="100dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="100dp"
@@ -53,11 +54,13 @@
             android:id="@+id/editTextAdsName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:background="@drawable/edit_text"
             android:layout_below="@+id/buttonChangePhoto"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="50dp"
             android:layout_marginTop="30dp"
+            android:padding="10dp"
             android:layout_marginEnd="50dp"
             android:windowSoftInputMode="adjustPan"
             android:hint="@string/advertisementName" />
@@ -66,6 +69,8 @@
             android:id="@+id/editTextAdsDescription"
             android:layout_width="match_parent"
             android:layout_height="90dp"
+            android:padding="10dp"
+            android:background="@drawable/edit_text"
             android:layout_below="@+id/editTextAdsName"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
@@ -83,6 +88,7 @@
             android:layout_below="@+id/editTextAdsDescription"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
+            android:background="@drawable/edit_text"
             android:layout_marginStart="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="50dp" />
@@ -90,13 +96,14 @@
         <Button
             android:id="@+id/buttonPublish"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_below="@+id/spinnerCategory"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="50dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="50dp"
+            android:background="@drawable/rounded_button"
             android:text="@string/publish" />
 
     </RelativeLayout>

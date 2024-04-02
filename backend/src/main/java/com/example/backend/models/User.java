@@ -29,7 +29,6 @@ public class User {
     private String lastName;
     private String address;
     private byte[] photo;
-    private double rating;
     private Long items;
 //    private List<Advertisement> favourites;
 //    private List<Advertisement> purchases;

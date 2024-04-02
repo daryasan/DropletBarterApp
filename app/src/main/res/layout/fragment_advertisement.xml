@@ -62,17 +62,7 @@
                     android:id="@+id/imageViewSellerPhoto"
                     android:layout_width="60dp"
                     android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:background="@drawable/empty_profile_image" />
-
-                <TextView
-                    android:id="@+id/textViewSellerRating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="10dp"
-                    android:gravity="center"
-                    android:text="5.0"
-                    android:textSize="25sp" />
+                    android:layout_marginStart="10dp" />
 
                 <TextView
                     android:id="@+id/textViewSellerName"
@@ -114,25 +104,27 @@
                 <Button
                     android:id="@+id/buttonContact"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
+                    android:background="@drawable/rounded_button"
                     android:text="@string/connect" />
 
                 <Button
                     android:id="@+id/buttonTake"
                     android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="1"
+                    android:background="@drawable/rounded_button"
                     android:text="@string/take" />
 
             </LinearLayout>

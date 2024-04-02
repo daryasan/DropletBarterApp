@@ -2,7 +2,6 @@ package com.example.dropletbarterapp.mainscreens.advertisements.api.ads
 
 import com.example.dropletbarterapp.mainscreens.advertisements.dto.AdvertisementDataDto
 import com.example.dropletbarterapp.mainscreens.advertisements.dto.AdvertisementEditDto
-import com.example.dropletbarterapp.mainscreens.profile.dto.UserEditDto
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.models.UICategory

@@ -7,7 +7,8 @@ interface PurchasesRepository {
     suspend fun addToPurchases(
         accessToken: String,
         userId: Long,
-        adsId: Long
+        adsId: Long,
+        queryId : Long
     )
 
 //    suspend fun deleteFromPurchases(

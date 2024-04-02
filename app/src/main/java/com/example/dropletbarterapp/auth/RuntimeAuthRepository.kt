@@ -2,6 +2,7 @@ package com.example.dropletbarterapp.auth
 
 import com.example.dropletbarterapp.auth.dto.LoginByEmailDTO
 import com.example.dropletbarterapp.auth.dto.LoginByPhoneDTO
+import com.example.dropletbarterapp.auth.dto.RegisterDTO
 import com.example.dropletbarterapp.auth.dto.TokenEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -27,9 +28,20 @@ class RuntimeAuthRepository(retrofit: Retrofit) : AuthRepository {
         }
     }
 
-    override suspend fun signUpByEmail(email: String, password: String): TokenEntity {
+    override suspend fun signUpByEmail(
+        email: String,
+        password: String,
+        firstName: String,
+        lastName: String,
+        phone: Long
+    ): TokenEntity {
         return withContext(Dispatchers.IO) {
-            val dto = LoginByEmailDTO(email, password)
+            val dto = RegisterDTO(
+                email, password,
+                firstName = firstName,
+                lastName = lastName,
+                phone = phone
+            )
 
             return@withContext authApi.signUpByEmail(dto)
         }

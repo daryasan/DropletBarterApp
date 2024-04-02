@@ -5,9 +5,11 @@ import com.example.dropletbarterapp.models.Advertisement
 object Similarity {
 
     fun findOtherAdvertisements(
-        allAdvertisements: List<Advertisement>,
+        advertisement: Advertisement,
+        allAdvertisements: MutableList<Advertisement>,
         size: Int
     ): List<Advertisement> {
+        allAdvertisements.removeIf { it.id == advertisement.id }
         if (allAdvertisements.size <= size) {
             return allAdvertisements
         }

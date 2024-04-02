@@ -7,7 +7,8 @@ interface SharedUsageRepository {
     suspend fun addToSharedUsage(
         accessToken: String,
         userId: Long,
-        adsId: Long
+        adsId: Long,
+        queryId : Long
     )
 
     suspend fun deleteFromSharedUsage(

@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">Droplet</string>
-    <string name="search_bottom_nav">Поиск</string>
+    <string name="search_bottom_nav">Категории</string>
     <string name="for_you_bottom_nav">Для вас</string>
     <string name="ads_bottom_nav">Объявления</string>
     <string name="chats_bottom_nav">Чаты</string>
     <string name="profile_bottom_nav">Профиль</string>
-    <string name="api_url">http://10.193.62.213:8080</string>
+    <string name="api_url">http://10.193.60.99:8080</string>
     <string name="firstLastName">%1$s %2$s</string>
     <string name="itemsNumber">Айтемов: %1$d</string>
     <string name="alertMesPhone">Укажите номер телефона в настройках!</string>
@@ -81,6 +81,13 @@
     <string name="editYoutAds">Редактируйте объявление</string>
     <string name="changePhotos">Изменить фото</string>
     <string name="saveChanges">Сохранить изменения</string>
+    <string name="queries">Запросы на покупку</string>
+    <string name="accept">Принять</string>
+    <string name="decline">Отклонить</string>
+    <string name="contact">Связаться</string>
+    <string name="recent1">Недавние</string>
+    <string name="Query">Запросы на покупки</string>
+    <string name="noQueries">Пока нет запросов!</string>
     <string-array name="categoryArray">
         <item>Не выбрано</item>
         <item>Совместное использование</item>

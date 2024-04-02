@@ -66,15 +66,17 @@
                             android:layout_height="50dp"
                             android:layout_weight="5"
                             android:gravity="center"
+                            android:textSize="20dp"
                             android:text="@string/name" />
 
                         <TextView
                             android:id="@+id/textViewItems"
                             android:layout_width="0dp"
                             android:layout_height="50dp"
-                            android:layout_weight="2.5"
+                            android:layout_weight="3"
                             android:gravity="center_vertical"
                             android:paddingStart="10dp"
+                            android:textSize="20dp"
                             android:text="@string/items" />
                     </LinearLayout>
 
@@ -88,6 +90,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
+                        android:textSize="20dp"
                         android:text="@string/email" />
 
                     <TextView
@@ -97,6 +100,7 @@
                         android:layout_below="@+id/textViewEmail"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
+                        android:textSize="20dp"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
                         android:text="@string/phone" />
@@ -105,6 +109,7 @@
                         android:id="@+id/textViewAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="50dp"
+                        android:textSize="20dp"
                         android:layout_below="@+id/textViewPhone"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
@@ -119,34 +124,60 @@
                         android:background="@android:color/darker_gray" />
 
                     <Button
-                        android:id="@+id/buttonSettings"
+                        android:id="@+id/buttonQueries"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/textViewAddress"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="5dp"
-                        android:text="@string/changePersonalData" />
+                        android:gravity="center_vertical"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/main_color"
+                        android:text="@string/Query" />
 
-                    <Button
-                        android:id="@+id/buttonQueries"
+                    <View
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/buttonSettings"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginTop="5dp"
-                        android:text="@string/changePersonalData" />
+                        android:layout_height="1dp"
+                        android:layout_below="@id/buttonQueries"
+                        android:background="@android:color/darker_gray" />
 
                     <Button
-                        android:id="@+id/buttonSettingsEmail"
+                        android:id="@+id/buttonSettings"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/buttonQueries"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/main_color"
+                        android:text="@string/changePersonalData" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/buttonSettings"
+                        android:background="@android:color/darker_gray" />
+
+                    <Button
+                        android:id="@+id/buttonSettingsEmail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/buttonSettings"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="5dp"
+                        android:gravity="center_vertical"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/main_color"
                         android:text="@string/changeLogin" />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_below="@id/buttonSettingsEmail"
+                        android:background="@android:color/darker_gray" />
 
 
                     <Button
@@ -157,7 +188,9 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="5dp"
-                        android:layout_marginBottom="30dp"
+                        android:gravity="center_vertical"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/main_color"
                         android:text="@string/logOut" />
 
                 </RelativeLayout>

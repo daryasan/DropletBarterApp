@@ -40,7 +40,7 @@
                 <LinearLayout
                     android:id="@+id/linLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="50dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="20dp"
                     android:layout_marginBottom="20dp">
@@ -49,6 +49,8 @@
                         android:id="@+id/buttonAllAdvertisements"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
+                        android:background="@drawable/rounded_button_unactive"
+                        android:textColor="@color/main_color"
                         android:layout_marginEnd="10dp"
                         android:text="Все"
                         android:textSize="11sp" />
@@ -58,15 +60,19 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:text="@string/SharedUsage"
+                        android:background="@drawable/rounded_button_unactive"
+                        android:textColor="@color/main_color"
                         android:textSize="11sp" />
 
                     <Button
-                        android:id="@+id/buttonClose"
+                        android:id="@+id/buttonRecent"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="35dp"
                         android:layout_marginStart="10dp"
-                        android:text="@string/near"
+                        android:text="@string/recent1"
+                        android:background="@drawable/rounded_button_unactive"
+                        android:textColor="@color/main_color"
                         android:textSize="11sp" />
                 </LinearLayout>
 

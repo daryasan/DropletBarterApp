@@ -1,6 +1,7 @@
 package com.example.dropletbarterapp.mainscreens.fragments
 
 import androidx.lifecycle.ViewModel
+import com.auth0.android.jwt.JWT
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
@@ -25,6 +26,28 @@ class AdvertisementViewModel : ViewModel() {
             Dependencies.tokenService.getAccessToken().toString(),
             advertisement.ownerId
         )
+    }
+
+    fun sendPendingRequest(advertisement: Advertisement) {
+        try {
+            runBlocking {
+                Dependencies.queryRepository.addQuery(
+                    Dependencies.tokenService.getAccessToken().toString(),
+                    advertisement.id,
+                    getUserId()
+                )
+            }
+        } catch (e: HttpException) {
+            runBlocking {
+                Dependencies.tokenService.refreshTokens()
+                Dependencies.queryRepository.addQuery(
+                    Dependencies.tokenService.getAccessToken().toString(),
+                    getUserId(),
+                    advertisement.id
+                )
+            }
+        }
+
     }
 
     fun hideAdvertisement(
@@ -58,32 +81,51 @@ class AdvertisementViewModel : ViewModel() {
         }
     }
 
-    fun findSuggestions(size: Int): List<Advertisement> {
+    fun findSuggestions(advertisement: Advertisement, size: Int): List<Advertisement> {
         var ads: List<Advertisement>
         try {
             runBlocking {
-                ads = Similarity.findOtherAdvertisements(findAllAdvertisements(), size)
+                ads = Similarity.findOtherAdvertisements(
+                    advertisement,
+                    findAllAdvertisements().toMutableList(),
+                    size
+                )
             }
         } catch (e: HttpException) {
             runBlocking {
                 Dependencies.tokenService.refreshTokens()
-                ads = Similarity.findOtherAdvertisements(findAllAdvertisements(), size)
+                ads = Similarity.findOtherAdvertisements(
+                    advertisement,
+                    findAllAdvertisements().toMutableList(),
+                    size
+                )
             }
         }
-        return ads
+        return removeArchived(ads)
     }
 
     private suspend fun findAllAdvertisements(): List<Advertisement> {
         val ads = Dependencies.advertisementRepository.findAllAdvertisements(
             Dependencies.tokenService.getAccessToken().toString()
         )
-        removeArchived(ads)
-        return ads
+
+        return removeArchived(ads)
     }
 
-    fun removeArchived(ads: List<Advertisement>) {
-        ads.toMutableSet().removeIf { !it.statusActive }
-        ads.toList()
+    private fun removeArchived(ads: List<Advertisement>): List<Advertisement> {
+        val withoutArchived = mutableListOf<Advertisement>()
+        for (a in ads) {
+            if (a.statusActive) {
+                withoutArchived.add(a)
+            }
+        }
+        return withoutArchived.toList()
+    }
+
+    fun getUserId(): Long {
+        val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
+        return jwt.getClaim("id").asString()!!.toLong()
+
     }
 
 }

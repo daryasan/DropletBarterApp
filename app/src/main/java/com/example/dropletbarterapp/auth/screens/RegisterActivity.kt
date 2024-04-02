@@ -19,7 +19,6 @@ import java.net.SocketTimeoutException
 
 class RegisterActivity : AppCompatActivity(), CoroutineScope {
 
-    private var byEmail = true
     private var toaster = Toaster()
     private lateinit var validator: Validator
     private lateinit var binding: ActivityRegisterBinding
@@ -41,17 +40,8 @@ class RegisterActivity : AppCompatActivity(), CoroutineScope {
         Dependencies.initDependencies(this)
         validator = Validator(this)
 
-        // set sign up method
-        binding.buttonRegisterByEmail.setOnClickListener {
-            binding.editTextRegisterLogin.hint = "Электронная почта"
-            binding.editTextRegisterLogin.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-            byEmail = true
-        }
-        binding.buttonRegisterByPhone.setOnClickListener {
-            binding.editTextRegisterLogin.hint = "Номер телефона"
-            binding.editTextRegisterLogin.inputType = InputType.TYPE_CLASS_PHONE
-            byEmail = false
-        }
+        binding.editTextRegisterLogin.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+
         binding.buttonLogin.setOnClickListener {
             startActivity(Intent(applicationContext, LoginActivity::class.java))
             overridePendingTransition(0, 0)
@@ -78,6 +68,9 @@ class RegisterActivity : AppCompatActivity(), CoroutineScope {
 
         val password = binding.editTextRegisterPassword.text.toString()
         val login = binding.editTextRegisterLogin.text.toString()
+        val firstName = binding.editTextRegisterName.text.toString()
+        val lastName = binding.editTextRegisterLastName.text.toString()
+        val phone = binding.editTextRegisterPhone.text.toString().toLong()
 
         val repeatPassword = binding.editTextRepeatPassword.text.toString()
         if (password != repeatPassword) {
@@ -86,13 +79,18 @@ class RegisterActivity : AppCompatActivity(), CoroutineScope {
         }
 
 
-        if (validator.validateLogin(login, byEmail) && validator.validatePassword(password)) {
+        if (validator.validateLogin(login, true) && validator.validatePassword(password) &&
+            lastName != "" && firstName != "" && phone != 0L
+        ) {
             return try {
-                val tokenEntity: TokenEntity = if (byEmail) {
-                    Dependencies.authRepository.signUpByEmail(login, password)
-                } else {
-                    Dependencies.authRepository.signUpByPhone(login.toLong(), password)
-                }
+                val tokenEntity: TokenEntity =
+                    Dependencies.authRepository.signUpByEmail(
+                        login,
+                        password,
+                        firstName,
+                        lastName,
+                        phone
+                    )
                 Dependencies.tokenService.setTokens(tokenEntity)
                 true
             } catch (e: HttpException) {

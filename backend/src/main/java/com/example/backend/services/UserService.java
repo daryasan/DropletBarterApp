@@ -47,6 +47,25 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void changeBalance(Long id, int change) throws UserException {
+        Optional<User> optionalUser = userRepository.findById(id);
+        User user;
+        if (optionalUser.isPresent()) {
+            user = optionalUser.get();
+        } else {
+            throw new UserException("No such user!");
+        }
+
+        user.setItems(user.getItems() + change);
+
+        if (user.getItems() >= 0){
+            userRepository.save(user);
+        } else {
+            throw new UserException("Not enough items!");
+        }
+
+    }
+
     public User editEmail(Long id, UserChangeLoginsEmailDto email) throws UserException {
         Optional<User> optionalUser = userRepository.findById(id);
         User user;

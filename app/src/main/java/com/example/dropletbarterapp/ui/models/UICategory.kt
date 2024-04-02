@@ -16,63 +16,63 @@ class UICategory(
                     Category.CLOTHES,
                     "Одежда",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.clothing
                 )
                 Category.ELECTRONICS
                 -> return UICategory(
                     Category.ELECTRONICS,
                     "Электроника",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.tech
                 )
                 Category.HEALTHCARE
                 -> return UICategory(
                     Category.HEALTHCARE,
                     "Здоровье",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.health
                 )
                 Category.FOR_HOME
                 -> return UICategory(
                     Category.FOR_HOME,
                     "Для дома",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.house
                 )
                 Category.FOR_PETS
                 -> return UICategory(
                     Category.FOR_PETS,
                     "Для животных",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.animals
                 )
                 Category.ACCESSORIES
                 -> return UICategory(
                     Category.ACCESSORIES,
                     "Аксессуары",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.accessory
                 )
                 Category.SERVICES
                 -> return UICategory(
                     Category.SERVICES,
                     "Услуги",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.services
                 )
                 Category.SHARED_USAGE
                 -> return UICategory(
                     Category.SHARED_USAGE,
                     "Совместное использование",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.shared
                 )
                 Category.OTHER
                 -> return UICategory(
                     Category.OTHER,
                     "Другое",
                     "#FFFFFF",
-                    R.drawable.empty_profile_image
+                    R.drawable.other
                 )
             }
         }

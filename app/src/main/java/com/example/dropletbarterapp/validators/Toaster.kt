@@ -23,7 +23,8 @@ class Toaster {
     }
 
     fun getToastWrongLogin(context: Context){
-        Toast.makeText(context, "Неверный номер телефона или адрес почты!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Неверный адрес почты!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Номер телефона не может быть пустым!", Toast.LENGTH_SHORT).show()
     }
 
     fun checkNullsAndGetToast(message: String, context: Context, checked: String): Boolean {

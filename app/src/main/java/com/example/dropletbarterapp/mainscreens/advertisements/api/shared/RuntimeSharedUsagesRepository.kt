@@ -1,5 +1,6 @@
 package com.example.dropletbarterapp.mainscreens.advertisements.api.shared
 
+import com.example.dropletbarterapp.mainscreens.advertisements.dto.AddAdvertisementByQueryRequest
 import com.example.dropletbarterapp.mainscreens.advertisements.dto.AddAdvertisementRequest
 import com.example.dropletbarterapp.models.Advertisement
 import kotlinx.coroutines.Dispatchers
@@ -10,13 +11,19 @@ class RuntimeSharedUsagesRepository(retrofit: Retrofit) : SharedUsageRepository 
 
     private val sharedUsageApi = retrofit.create(SharedUsageApi::class.java)
 
-    override suspend fun addToSharedUsage(accessToken: String, userId: Long, adsId: Long) {
+    override suspend fun addToSharedUsage(
+        accessToken: String,
+        userId: Long,
+        adsId: Long,
+        queryId: Long
+    ) {
         withContext(Dispatchers.IO) {
             sharedUsageApi.addToSharedUsage(
                 accessToken = "Bearer $accessToken",
-                request = AddAdvertisementRequest(
+                request = AddAdvertisementByQueryRequest(
                     userId = userId,
-                    adsId = adsId
+                    adsId = adsId,
+                    queryId = queryId
                 )
             )
         }

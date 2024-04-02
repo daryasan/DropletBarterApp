@@ -1,5 +1,6 @@
 package com.example.dropletbarterapp.mainscreens.advertisements.api.shared
 
+import com.example.dropletbarterapp.mainscreens.advertisements.dto.AddAdvertisementByQueryRequest
 import com.example.dropletbarterapp.mainscreens.advertisements.dto.AddAdvertisementRequest
 import com.example.dropletbarterapp.models.Advertisement
 import retrofit2.http.*
@@ -9,7 +10,7 @@ interface SharedUsageApi {
     @POST("/shared/add")
     suspend fun addToSharedUsage(
         @Header("Authorization") accessToken: String,
-        @Body request: AddAdvertisementRequest
+        @Body request: AddAdvertisementByQueryRequest
     )
 
     @PATCH("/shared/delete")

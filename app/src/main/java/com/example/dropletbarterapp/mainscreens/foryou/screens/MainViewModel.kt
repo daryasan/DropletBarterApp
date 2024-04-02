@@ -26,13 +26,18 @@ class MainViewModel {
                     )
             }
         }
-        removeArchived(advertisements)
-        return advertisements
+
+        return removeArchived(advertisements).toSet().shuffled()
     }
 
-    fun removeArchived(ads: List<Advertisement>) {
-        ads.toMutableSet().removeIf { !it.statusActive }
-        ads.toList()
+    private fun removeArchived(ads: List<Advertisement>): List<Advertisement> {
+        val withoutArchived = mutableListOf<Advertisement>()
+        for (a in ads) {
+            if (a.statusActive) {
+                withoutArchived.add(a)
+            }
+        }
+        return withoutArchived.toList()
     }
 
     fun findSharedUsage(): List<Advertisement> {
@@ -55,7 +60,29 @@ class MainViewModel {
                     )
             }
         }
-        return advertisements
+        return removeArchived(advertisements)
+    }
+
+    fun findRecent(): List<Advertisement> {
+        var advertisements: List<Advertisement>
+        try {
+            runBlocking {
+                advertisements =
+                    Dependencies.advertisementRepository.findAllAdvertisements(
+                        Dependencies.tokenService.getAccessToken().toString()
+                    )
+            }
+        } catch (e: HttpException) {
+            runBlocking {
+                Dependencies.tokenService.refreshTokens()
+                advertisements =
+                    Dependencies.advertisementRepository.findAllAdvertisements(
+                        Dependencies.tokenService.getAccessToken().toString()
+                    )
+            }
+        }
+
+        return removeArchived(advertisements.reversed())
     }
 
 }

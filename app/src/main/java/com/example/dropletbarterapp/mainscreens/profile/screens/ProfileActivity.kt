@@ -10,6 +10,7 @@ import com.example.dropletbarterapp.databinding.ActivityProfileBinding
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.ChangeLoginsFragment
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.EditDataFragment
+import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.QueriesFragment
 import com.example.dropletbarterapp.ui.images.CircleCrop
 import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.ui.Navigation
@@ -39,10 +40,12 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
         setContentView(binding.root)
         Dependencies.initDependencies(this)
         enableAndShowElements()
-        // TODO key??
-        // MapKitFactory.setApiKey("b97b0bac-f872-49a3-a911-2699275df4db")
 
         Navigation.setNavigation(this, R.id.profile)
+
+        binding.buttonQueries.setOnClickListener {
+            startQueriesFragment()
+        }
 
         binding.buttonSettings.setOnClickListener {
             startEditDataFragment()
@@ -115,11 +118,12 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
             }
 
         binding.textViewEmail.text = userDataDto.email ?: getString(R.string.alertMesEmail)
-        binding.textViewAddress.text = if (userDataDto.address == null) {
-            getString(R.string.alertMesAddress)
-        } else {
-            userDataDto.address
-        }
+        binding.textViewAddress.text =
+            if (userDataDto.address == null || userDataDto.address == "") {
+                getString(R.string.alertMesAddress)
+            } else {
+                userDataDto.address
+            }
         binding.textViewItems.text = getString(R.string.itemsNumber, userDataDto.items)
         binding.textViewPhone.text = if (userDataDto.phone == null) {
             getString(R.string.alertMesPhone)
@@ -166,6 +170,15 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
     private fun startChangeLoginsFragment() {
         disableAndHideElements()
         val fragment = ChangeLoginsFragment.newInstance()
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.profileLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
+    }
+
+    private fun startQueriesFragment() {
+        disableAndHideElements()
+        val fragment = QueriesFragment.newInstance()
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.profileLayout, fragment)
         transaction.addToBackStack(null)

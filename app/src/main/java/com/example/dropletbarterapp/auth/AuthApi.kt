@@ -2,6 +2,7 @@ package com.example.dropletbarterapp.auth
 
 import com.example.dropletbarterapp.auth.dto.LoginByEmailDTO
 import com.example.dropletbarterapp.auth.dto.LoginByPhoneDTO
+import com.example.dropletbarterapp.auth.dto.RegisterDTO
 import com.example.dropletbarterapp.auth.dto.TokenEntity
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -15,7 +16,7 @@ interface AuthApi {
     suspend fun signInByPhone(@Body loginByPhoneDTO: LoginByPhoneDTO): TokenEntity
 
     @POST("auth/registerEmail")
-    suspend fun signUpByEmail(@Body loginByEmailDTO: LoginByEmailDTO): TokenEntity
+    suspend fun signUpByEmail(@Body registerDTO: RegisterDTO): TokenEntity
 
     @POST("auth/registerPhone")
     suspend fun signUpByPhone(@Body loginByPhoneDTO: LoginByPhoneDTO): TokenEntity

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".mainscreens.profile.screens.fragments.QueriesFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/queriesTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:gravity="center"
+            android:text="@string/queries"
+            android:textAllCaps="true"
+            android:textColor="@color/main_color"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/emptyQueries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/recyclerViewQueries"
+            android:layout_alignTop="@+id/recyclerViewQueries"
+            android:layout_alignEnd="@+id/recyclerViewQueries"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="300dp"
+            android:layout_marginEnd="100dp"
+            android:gravity="center"
+            android:textSize="17sp"
+            android:text="@string/noQueries" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewQueries"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/queriesTitle"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="20dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    </RelativeLayout>
+
+</FrameLayout>

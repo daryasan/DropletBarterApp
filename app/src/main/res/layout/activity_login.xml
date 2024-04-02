@@ -7,38 +7,6 @@
     tools:context=".auth.screens.LoginActivity">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_above="@+id/editTextLogin"
-        android:layout_alignStart="@+id/editTextLogin"
-        android:layout_alignEnd="@+id/editTextLogin"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="-0dp"
-        android:layout_marginTop="140dp"
-        android:layout_marginEnd="-0dp"
-        android:layout_marginBottom="45dp">
-
-        <Button
-            android:id="@+id/buttonLoginByEmail"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:text="@string/loginByEmail"
-            android:textSize="11sp"
-            android:layout_marginEnd="20dp"/>
-
-
-        <Button
-            android:id="@+id/buttonLoginByPhone"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:layout_marginBottom="30dp"
-            android:text="@string/loginByPhobe"
-            android:textSize="11sp" />
-    </LinearLayout>
-
     <EditText
         android:id="@+id/editTextLogin"
         android:layout_width="wrap_content"
@@ -50,6 +18,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="30dp"
         android:ems="10"
+        android:background="@drawable/edit_text"
         android:hint="@string/email"
         android:inputType="textPersonName"
         android:textAlignment="center" />
@@ -58,6 +27,7 @@
         android:id="@+id/editTextPassword"
         android:layout_width="130dp"
         android:layout_height="50dp"
+        android:background="@drawable/edit_text"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_above="@+id/buttonLogin"
@@ -80,6 +50,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="20dp"
         android:text="@string/logIn"
+        android:background="@drawable/rounded_button"
         android:textSize="15sp"/>
 
     <Button
@@ -90,30 +61,14 @@
         android:layout_alignEnd="@+id/buttonLogin"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="200dp"
         android:textAllCaps="false"
-        android:layout_above="@+id/buttonForgotPassword"
+        android:layout_alignParentBottom="true"
         android:background="@android:color/transparent"
         android:text="@string/notRegisteredYet"
-        android:textColor="@color/accent_color"
+        android:textColor="@color/main_color"
         android:textSize="14sp" />
 
-
-    <Button
-        android:id="@+id/buttonForgotPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_alignStart="@+id/buttonLogin"
-        android:layout_alignEnd="@+id/buttonLogin"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="140dp"
-        android:textAllCaps="false"
-        android:background="@android:color/transparent"
-        android:text="@string/forgotPassword"
-        android:textColor="@color/accent_color"
-        android:textSize="14sp" />
 
 
 </RelativeLayout>

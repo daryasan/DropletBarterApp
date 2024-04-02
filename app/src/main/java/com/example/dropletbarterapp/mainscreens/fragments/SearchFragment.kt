@@ -102,23 +102,23 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
 //        })
 
 
-        if (binding.checkboxClose.isActivated) {
-            closer = true
-            setAdvertisements()
-        } else {
-            closer = false
-            setAdvertisements()
-        }
-
-        binding.checkboxClose.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) {
-                closer = true
-                setAdvertisements()
-            } else {
-                closer = false
-                setAdvertisements()
-            }
-        }
+//        if (binding.checkboxClose.isActivated) {
+//            closer = true
+//            setAdvertisements()
+//        } else {
+//            closer = false
+//            setAdvertisements()
+//        }
+//
+//        binding.checkboxClose.setOnCheckedChangeListener { _, isChecked ->
+//            if (isChecked) {
+//                closer = true
+//                setAdvertisements()
+//            } else {
+//                closer = false
+//                setAdvertisements()
+//            }
+//        }
         binding.filterCategory.setSelection(categoryPos!!)
 
     }

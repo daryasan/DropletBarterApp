@@ -1,5 +1,8 @@
 package com.example.dropletbarterapp.mainscreens.fragments
 
+import android.R.attr.dial
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +15,12 @@ import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.FragmentAdvertisementBinding
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.models.Advertisement
+import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
+import com.example.dropletbarterapp.ui.images.CircleCrop
 import com.example.dropletbarterapp.ui.images.ImageUtils
 import com.example.dropletbarterapp.ui.images.SquareCrop
+import com.example.dropletbarterapp.ui.models.UICategory
 import kotlinx.coroutines.runBlocking
 
 
@@ -76,7 +82,7 @@ class AdvertisementFragment : Fragment() {
             }
         })
 
-        if (advertisement.ownerId == ownerData.id) {
+        if (advertisement.ownerId == viewModel.getUserId()) {
             binding.buttonTake.text = "Редактировать"
             binding.buttonContact.text = "Скрыть"
 
@@ -93,7 +99,20 @@ class AdvertisementFragment : Fragment() {
                 binding.buttonTake.isEnabled = false
             }
 
+        } else {
+            if (advertisement.category == UICategory.getPosByCategory(Category.SHARED_USAGE)){
+                binding.buttonTake.text = "Использовать"
+            }
+            binding.buttonTake.setOnClickListener {
+                viewModel.sendPendingRequest(advertisement)
+                binding.buttonTake.text = "Оправлено"
+            }
+
+            binding.buttonContact.setOnClickListener {
+                startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel: ${ownerData.phone}")))
+            }
         }
+
 
 
         // go back
@@ -108,7 +127,7 @@ class AdvertisementFragment : Fragment() {
 
 
     private fun setSimilar() {
-        adapter.advertisements = viewModel.findSuggestions(10)
+        adapter.advertisements = viewModel.findSuggestions(advertisement, 10)
     }
 
     private fun setData() {
@@ -141,7 +160,7 @@ class AdvertisementFragment : Fragment() {
             ownerData.photo,
             requireContext(),
             binding.imageViewSellerPhoto,
-            SquareCrop()
+            CircleCrop()
         )
     }
 

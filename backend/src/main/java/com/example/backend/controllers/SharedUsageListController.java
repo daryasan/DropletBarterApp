@@ -2,6 +2,7 @@ package com.example.backend.controllers;
 
 import com.example.backend.dto.AddAdvertisementRequest;
 import com.example.backend.exceptions.AdvertisementException;
+import com.example.backend.exceptions.QueryException;
 import com.example.backend.exceptions.UserException;
 import com.example.backend.models.Advertisement;
 import com.example.backend.services.SharedUsageListService;
@@ -28,7 +29,7 @@ public class SharedUsageListController {
     private final SharedUsageListService sharedUsageListService;
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> addToFavourites(@RequestBody AddAdvertisementRequest request) throws AdvertisementException, UserException {
+    public ResponseEntity<HttpStatus> addToFavourites(@RequestBody AddAdvertisementRequest request) throws AdvertisementException, UserException, QueryException {
         sharedUsageListService.addAdvertisementsToSharedUsage(request);
         return ResponseEntity.ok(HttpStatus.OK);
     }

@@ -3,6 +3,7 @@ package com.example.backend.controllers;
 import com.example.backend.dto.JwtTokenResponse;
 import com.example.backend.dto.LoginByEmailDto;
 import com.example.backend.dto.LoginByPhoneDto;
+import com.example.backend.dto.RegisterDto;
 import com.example.backend.exceptions.AuthException;
 import com.example.backend.exceptions.RefreshException;
 import com.example.backend.exceptions.UserException;
@@ -48,10 +49,10 @@ public class AuthController {
     }
 
     @PostMapping("/registerEmail")
-    ResponseEntity<JwtTokenResponse> signUpByEmail(@RequestBody LoginByEmailDto loginByEmailDTO, BindingResult bindingResult) throws UserException {
-        validator.validate(loginByEmailDTO, bindingResult);
+    ResponseEntity<JwtTokenResponse> signUpByEmail(@RequestBody RegisterDto registerDto, BindingResult bindingResult) throws UserException {
+        validator.validate(registerDto, bindingResult);
         try {
-            return new ResponseEntity<>(auth.registerByEmail(loginByEmailDTO), HttpStatus.CREATED);
+            return new ResponseEntity<>(auth.registerByEmail(registerDto), HttpStatus.CREATED);
         } catch (UserException e) {
             throw e;
         }

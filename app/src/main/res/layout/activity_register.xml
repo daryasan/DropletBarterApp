@@ -5,38 +5,53 @@
     android:layout_height="match_parent"
     tools:context=".auth.screens.LoginActivity">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editTextRegisterLogin"
-        android:layout_alignStart="@+id/editTextRegisterLogin"
-        android:layout_alignEnd="@+id/editTextRegisterLogin"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="130dp"
+    <EditText
+        android:id="@+id/editTextRegisterName"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@+id/editTextRegisterLastName"
+        android:layout_alignStart="@+id/editTextRegisterPassword"
+        android:layout_alignEnd="@+id/editTextRegisterPassword"
+        android:layout_marginStart="1dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="45dp">
+        android:background="@drawable/edit_text"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Имя"
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
 
-        <Button
-            android:id="@+id/buttonRegisterByEmail"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="10dp"
-            android:layout_weight="1"
-            android:text="ЭЛЕКТРОННАЯ ПОЧТА"
-            android:textSize="11sp" />
+    <EditText
+        android:id="@+id/editTextRegisterLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@+id/editTextRegisterPhone"
+        android:background="@drawable/edit_text"
+        android:layout_alignStart="@+id/editTextRegisterPassword"
+        android:layout_alignEnd="@+id/editTextRegisterPassword"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Фамилия"
+        android:inputType="textPersonName"
+        android:textAlignment="center" />
 
-
-        <Button
-            android:id="@+id/buttonRegisterByPhone"
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="10dp"
-            android:layout_weight="1"
-            android:text="НОМЕР ТЕЛЕФОНА"
-            android:textSize="11sp" />
-    </LinearLayout>
+    <EditText
+        android:id="@+id/editTextRegisterPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_above="@+id/editTextRegisterLogin"
+        android:layout_alignStart="@+id/editTextRegisterPassword"
+        android:layout_alignEnd="@+id/editTextRegisterPassword"
+        android:background="@drawable/edit_text"
+        android:layout_marginStart="1dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="30dp"
+        android:ems="10"
+        android:hint="Телефон"
+        android:inputType="phone"
+        android:textAlignment="center" />
 
     <EditText
         android:id="@+id/editTextRegisterLogin"
@@ -44,6 +59,7 @@
         android:layout_height="50dp"
         android:layout_above="@+id/editTextRegisterPassword"
         android:layout_alignStart="@+id/editTextRegisterPassword"
+        android:background="@drawable/edit_text"
         android:layout_alignEnd="@+id/editTextRegisterPassword"
         android:layout_marginStart="1dp"
         android:layout_marginEnd="0dp"
@@ -63,6 +79,7 @@
         android:layout_marginStart="80dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="30dp"
+        android:background="@drawable/edit_text"
         android:ems="10"
         android:hint="Пароль"
         android:inputType="textPassword"
@@ -76,6 +93,7 @@
         android:layout_alignStart="@+id/editTextRegisterLogin"
         android:layout_alignEnd="@+id/editTextRegisterLogin"
         android:layout_marginBottom="45dp"
+        android:background="@drawable/edit_text"
         android:ems="10"
         android:hint="@string/repeatPassword"
         android:inputType="textPassword"
@@ -92,6 +110,7 @@
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="20dp"
         android:text="ЗАРЕГИСТРИРОВАТЬСЯ"
+        android:background="@drawable/rounded_button"
         android:textSize="15sp" />
 
     <Button
@@ -103,12 +122,11 @@
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="50dp"
         android:background="@android:color/transparent"
-
         android:text="Уже есть аккаунт?"
         android:textAllCaps="false"
-        android:textColor="@color/accent_color"
+        android:textColor="@color/main_color"
         android:textSize="14sp" />
 
 

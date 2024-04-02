@@ -9,10 +9,11 @@ class AdvertisementsActivityViewModel {
 
     suspend fun findMyAdvertisements(): List<Advertisement> {
         val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
-        return Dependencies.advertisementRepository.findAdvertisementsOwnedByUser(
+        val ads = Dependencies.advertisementRepository.findAdvertisementsOwnedByUser(
             Dependencies.tokenService.getAccessToken().toString(),
             jwt.getClaim("id").asString()!!.toLong()
         )
+        return ads.sortedBy { !it.statusActive }
     }
 
     suspend fun getFavourites(): List<Advertisement> {

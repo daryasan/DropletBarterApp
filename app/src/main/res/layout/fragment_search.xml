@@ -28,14 +28,15 @@
                 android:id="@+id/filterCategory"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:background="@drawable/edit_text"
                 android:layout_weight="1" />
 
-            <CheckBox
-                android:id="@+id/checkboxClose"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="@string/close" />
+<!--            <CheckBox-->
+<!--                android:id="@+id/checkboxClose"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="@string/close" />-->
 
         </LinearLayout>
 

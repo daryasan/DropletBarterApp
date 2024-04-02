@@ -26,20 +26,6 @@ class SearchActivity : AppCompatActivity() {
 
         Navigation.setNavigation(this, R.id.search)
 
-//        //search
-//        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(p0: String?): Boolean {
-//                if (p0 != null) {
-//                    startSearchFragment(p0)
-//                }
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(p0: String?): Boolean {
-//                return false
-//            }
-//        })
-
         // category adapter
         adapter = CategoryAdapter()
         binding.recyclerView.adapter = adapter
