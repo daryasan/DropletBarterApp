@@ -15,6 +15,7 @@
         android:layout_above="@id/bottom_navigation"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:windowSoftInputMode="adjustPan"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
@@ -25,14 +26,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <HorizontalScrollView
-                android:id="@+id/scrollViewMain"
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchView"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:focusable="false"
+                android:windowSoftInputMode="adjustPan"
+                app:iconifiedByDefault="false"
+                app:queryHint="Поиск объявлений" />
+
+            <HorizontalScrollView
+                android:id="@+id/scrollViewMain"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@id/searchView"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:scrollbarAlwaysDrawHorizontalTrack="false"
                 android:scrollbars="none">
@@ -49,18 +64,18 @@
                         android:id="@+id/buttonAllAdvertisements"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:background="@drawable/rounded_button_unactive"
-                        android:textColor="@color/main_color"
                         android:layout_marginEnd="10dp"
+                        android:background="@drawable/rounded_button_unactive"
                         android:text="Все"
+                        android:textColor="@color/main_color"
                         android:textSize="11sp" />
 
                     <Button
                         android:id="@+id/buttonSharedUsage"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="@string/SharedUsage"
                         android:background="@drawable/rounded_button_unactive"
+                        android:text="@string/SharedUsage"
                         android:textColor="@color/main_color"
                         android:textSize="11sp" />
 
@@ -68,10 +83,10 @@
                         android:id="@+id/buttonRecent"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="35dp"
                         android:layout_marginStart="10dp"
-                        android:text="@string/recent1"
+                        android:layout_marginEnd="35dp"
                         android:background="@drawable/rounded_button_unactive"
+                        android:text="@string/recent1"
                         android:textColor="@color/main_color"
                         android:textSize="11sp" />
                 </LinearLayout>

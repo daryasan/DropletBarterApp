@@ -56,21 +56,25 @@ class ImageLoader(
     private val cameraRequest =
         fragment.registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.resultCode == Activity.RESULT_OK) {
-                val uuid: String = UUID.randomUUID().toString()
-                val outputDir: File = context.cacheDir
-                val file: File = File.createTempFile(uuid, ".jpg", outputDir)
+                try {
+                    val uuid: String = UUID.randomUUID().toString()
+                    val outputDir: File = context.cacheDir
+                    val file: File = File.createTempFile(uuid, ".jpg", outputDir)
 
-                val imageUri = FileProvider.getUriForFile(
-                    Objects.requireNonNull(context),
-                    BuildConfig.APPLICATION_ID + ".provider", file
-                )
-                ImageUtils.loadImageUri(
-                    imageUri.toString(),
-                    context,
-                    imageView,
-                    cropper
-                )
-                photo = File(it.data?.data.toString()).readBytes()
+                    val imageUri = FileProvider.getUriForFile(
+                        Objects.requireNonNull(context),
+                        BuildConfig.APPLICATION_ID + ".provider", file
+                    )
+                    ImageUtils.loadImageUri(
+                        imageUri.toString(),
+                        context,
+                        imageView,
+                        cropper
+                    )
+                    photo = File(it.data?.data.toString()).readBytes()
+                } catch (e : Exception){
+                    toaster.getToast(context, "Что-то пошло не так...")
+                }
             } else {
                 toaster.getToast(context, "Что-то пошло не так...")
             }

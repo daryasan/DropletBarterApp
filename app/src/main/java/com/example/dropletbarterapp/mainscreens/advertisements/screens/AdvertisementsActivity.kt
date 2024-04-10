@@ -115,11 +115,13 @@ class AdvertisementsActivity : AppCompatActivity() {
                 chooseActiveButton(binding.buttonFavourites)
                 runBlocking {
                     adapter.advertisements = viewModel.getFavourites()
+                    adapter.notifyDataSetChanged()
                 }
             } catch (e: HttpException) {
                 runBlocking {
                     Dependencies.tokenService.refreshTokens()
                     adapter.advertisements = viewModel.getFavourites()
+                    adapter.notifyDataSetChanged()
                 }
             }
             checkVisibility()

@@ -9,6 +9,7 @@ import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.auth.dto.TokenEntity
 import com.example.dropletbarterapp.mainscreens.foryou.screens.MainActivity
 import com.example.dropletbarterapp.validators.Toaster
+import com.example.dropletbarterapp.validators.UIMessageMan
 import com.example.dropletbarterapp.validators.Validator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,6 +23,7 @@ class RegisterActivity : AppCompatActivity(), CoroutineScope {
     private var toaster = Toaster()
     private lateinit var validator: Validator
     private lateinit var binding: ActivityRegisterBinding
+    private val uiMessageMan = UIMessageMan()
 
     private var job: Job = Job()
 
@@ -38,7 +40,7 @@ class RegisterActivity : AppCompatActivity(), CoroutineScope {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Dependencies.initDependencies(this)
-        validator = Validator(this)
+        validator = Validator()
 
         binding.editTextRegisterLogin.inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
 
@@ -70,18 +72,10 @@ class RegisterActivity : AppCompatActivity(), CoroutineScope {
         val login = binding.editTextRegisterLogin.text.toString()
         val firstName = binding.editTextRegisterName.text.toString()
         val lastName = binding.editTextRegisterLastName.text.toString()
-        val phone = binding.editTextRegisterPhone.text.toString().toLong()
-
-        val repeatPassword = binding.editTextRepeatPassword.text.toString()
-        if (password != repeatPassword) {
-            toaster.getToast(applicationContext, "Пароли не совпадают!")
-            return false
-        }
+        val phone = binding.editTextRegisterPhone.text.toString()
 
 
-        if (validator.validateLogin(login, true) && validator.validatePassword(password) &&
-            lastName != "" && firstName != "" && phone != 0L
-        ) {
+        if (checkRegistrationFields()) {
             return try {
                 val tokenEntity: TokenEntity =
                     Dependencies.authRepository.signUpByEmail(
@@ -89,7 +83,7 @@ class RegisterActivity : AppCompatActivity(), CoroutineScope {
                         password,
                         firstName,
                         lastName,
-                        phone
+                        phone.toLong()
                     )
                 Dependencies.tokenService.setTokens(tokenEntity)
                 true
@@ -107,8 +101,28 @@ class RegisterActivity : AppCompatActivity(), CoroutineScope {
                 false
             }
         }
-        toaster.getToastWrongLogin(this)
         return false
+    }
+
+
+    private fun checkRegistrationFields(): Boolean {
+        return uiMessageMan.checkLoginAndGetMessage(
+            binding.editTextRegisterLogin,
+            binding.errorMessageEmail
+        ) and uiMessageMan.checkRepeatPasswordAndGetMessage(
+            binding.editTextRegisterPassword,
+            binding.editTextRepeatPassword,
+            binding.errorMessagePassword,
+            binding.errorMessageRepeatPassword
+        ) and uiMessageMan.checkPhoneAndGetMessage(
+            binding.editTextRegisterPhone, binding.errorMessagePhone
+        ) and uiMessageMan.checkIfNullsAndGetMessage(
+            "Укажите имя", binding.editTextRegisterName, binding.errorMessageFirstName
+        ) and uiMessageMan.checkIfNullsAndGetMessage(
+            "Укажите фамилию",
+            binding.editTextRegisterLastName,
+            binding.errorMessageLastName
+        )
     }
 
 }

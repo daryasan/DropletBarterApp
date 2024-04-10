@@ -55,16 +55,15 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
         adapter = AdvertisementsAdapter()
 
         query = arguments?.getString("query")
-//        if (query != null) {
-//            binding.searchBarMain.setQuery(query, false)
-//        }
+        if (query != null) {
+            binding.searchView.setQuery(query, false)
+        }
 
         categoryPos = arguments?.getInt("categoryPos")
         if (categoryPos != null) {
             binding.filterCategory.setSelection(categoryPos!!)
         }
 
-        setAdvertisements()
         binding.recyclerView.adapter = adapter
 
         // adapter for dropdown list
@@ -87,19 +86,22 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
             }
         })
 
-//        binding.searchBarMain.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-//            override fun onQueryTextSubmit(p0: String?): Boolean {
-//                if (p0 != null) {
-//                    query = p0
-//                    setAdvertisements()
-//                }
-//                return true
-//            }
-//
-//            override fun onQueryTextChange(p0: String?): Boolean {
-//                return false
-//            }
-//        })
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(p0: String?): Boolean {
+                if (p0 != null) {
+                    query = p0
+                    setAdvertisements()
+                }
+                return true
+            }
+
+            override fun onQueryTextChange(p0: String?): Boolean {
+                return false
+            }
+        })
+
+        setAdvertisements()
 
 
 //        if (binding.checkboxClose.isActivated) {
@@ -119,18 +121,7 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
 //                setAdvertisements()
 //            }
 //        }
-        binding.filterCategory.setSelection(categoryPos!!)
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (adapter.advertisements.isEmpty()) {
-            binding.nothingFound.alpha = 1f
-        } else {
-            binding.nothingFound.alpha = 0f
-        }
-        binding.filterCategory.setSelection(categoryPos!!)
     }
 
 

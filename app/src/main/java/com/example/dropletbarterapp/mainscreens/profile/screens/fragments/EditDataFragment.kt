@@ -1,32 +1,24 @@
 package com.example.dropletbarterapp.mainscreens.profile.screens.fragments
 
-import android.R
-import android.content.Context
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.OnBackPressedCallback
-import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import android.R
 import com.example.dropletbarterapp.databinding.FragmentEditBinding
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
-import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.maps.YandexApi
+import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.maps.MapsFragment
 import com.example.dropletbarterapp.ui.images.CircleCrop
 import com.example.dropletbarterapp.ui.images.ImageLoader
 import com.example.dropletbarterapp.ui.images.ImageUtils
 import com.example.dropletbarterapp.utils.Dependencies
-import com.example.dropletbarterapp.validators.Toaster
-import com.yandex.mapkit.MapKitFactory
+import com.example.dropletbarterapp.validators.UIMessageMan
 import kotlinx.coroutines.runBlocking
 import retrofit2.*
-
-import retrofit2.converter.gson.GsonConverterFactory
 
 class EditDataFragment : Fragment() {
 
@@ -36,7 +28,7 @@ class EditDataFragment : Fragment() {
     }
 
     private lateinit var viewModel: EditDataViewModel
-    val toaster = Toaster()
+    private val uiMessageMan = UIMessageMan()
     private lateinit var binding: FragmentEditBinding
     var photo: ByteArray? = null
     private lateinit var imageLoader: ImageLoader
@@ -52,11 +44,12 @@ class EditDataFragment : Fragment() {
         }
 
         binding.buttonSave.setOnClickListener {
-            if (toaster.checkNullsAndGetToast(
-                    "Введите имя и фамилию, чтобы сохранить!",
-                    requireContext(),
-                    binding.editTextFirstName.text.toString(),
-                    binding.editTextLastName.text.toString()
+            if (uiMessageMan.checkIfNullsAndGetMessage(
+                    "Введите имя", binding.editTextFirstName,
+                    binding.errorMessageFirstName
+                ) and uiMessageMan.checkIfNullsAndGetMessage(
+                    "Введите фамилию", binding.editTextLastName,
+                    binding.errorMessageLastName
                 )
             ) {
                 photo = imageLoader.photo
@@ -87,57 +80,11 @@ class EditDataFragment : Fragment() {
             }
         }
 
-        // address
-        val adapter =
-            ArrayAdapter(
-                requireContext(),
-                R.layout.simple_dropdown_item_1line,
-                listOf<String>()
-            )
-        binding.editTextAddress.setAdapter(adapter)
 
-//        binding.editTextAddress.addTextChangedListener(object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//                val retrofit = Retrofit.Builder().baseUrl("https://geocode-maps.yandex.ru/")
-//                    .addConverterFactory(GsonConverterFactory.create()).build()
-//                val api: YandexApi = retrofit.create(YandexApi::class.java)
-//                val call = api.suggestAddresses(
-//                    "b97b0bac-f872-49a3-a911-2699275df4db",
-//                    p0.toString()
-//                )
-//
-//                call.enqueue(object : Callback<String> {
-//                    override fun onResponse(call: Call<String>, response: Response<String>) {
-//                        if (response.isSuccessful) {
-//                            val addressesList = mutableListOf<String>()
-//                            response.body()?.let { address ->
-//                                addressesList.add(address)
-//                            }
-//                            adapter.clear()
-//                            adapter.addAll(addressesList)
-//                            adapter.notifyDataSetChanged()
-//                        } else {
-//                            Log.d(
-//                                "call",
-//                                "error in api ${response.message()} ${response.body()} ${response.code()}"
-//                            )
-//                        }
-//                    }
-//
-//                    override fun onFailure(call: Call<String>, t: Throwable) {
-//                        Log.d("call", "error in api ${t.message}")
-//                    }
-//
-//                })
-//
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {}
-//
-//        })
+        binding.editTextAddress.setOnClickListener {
+            startMapsDataFragment()
+        }
+
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -167,9 +114,25 @@ class EditDataFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentEditBinding.inflate(layoutInflater)
-        MapKitFactory.setApiKey("b97b0bac-f872-49a3-a911-2699275df4db");
         return binding.root
 
+    }
+
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        try {
+            runBlocking {
+                val userData = viewModel.getUserData()
+                setData(userData)
+            }
+        } catch (e: HttpException) {
+            runBlocking {
+                Dependencies.tokenService.refreshTokens()
+                val userData = viewModel.getUserData()
+                setData(userData)
+            }
+        }
     }
 
 
@@ -195,6 +158,14 @@ class EditDataFragment : Fragment() {
             binding.buttonChangePhoto.text = "Изменить фото"
         }
 
+    }
+
+    private fun startMapsDataFragment() {
+        val fragment = MapsFragment.newInstance()
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.replace(com.example.dropletbarterapp.R.id.frameLaoutEditData, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 }

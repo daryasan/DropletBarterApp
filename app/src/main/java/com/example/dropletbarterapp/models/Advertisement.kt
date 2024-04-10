@@ -11,5 +11,7 @@ class Advertisement(
     @SerializedName("category") val category: Int,
     @SerializedName("ownerId") val ownerId: Long
 ) {
-    //val tags = TagGenerator.generateTags(this)
+    override fun equals(other: Any?): Boolean {
+        return (other as Advertisement).id == id
+    }
 }

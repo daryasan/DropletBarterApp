@@ -10,6 +10,7 @@ import com.example.dropletbarterapp.auth.dto.TokenEntity
 import com.example.dropletbarterapp.databinding.ActivityLoginBinding
 import com.example.dropletbarterapp.mainscreens.foryou.screens.MainActivity
 import com.example.dropletbarterapp.validators.Toaster
+import com.example.dropletbarterapp.validators.UIMessageMan
 import com.example.dropletbarterapp.validators.Validator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -23,6 +24,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var validator: Validator
     private val toaster: Toaster = Toaster()
     private lateinit var binding: ActivityLoginBinding
+    private val uiMessage = UIMessageMan()
 
     private var job: Job = Job()
 
@@ -39,7 +41,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Dependencies.initDependencies(this)
-        validator = Validator(this)
+        validator = Validator()
 
         // click listeners
         binding.buttonRegister.setOnClickListener { view: View? ->
@@ -70,14 +72,31 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
 
         val password = binding.editTextPassword.text.toString()
         val login = binding.editTextLogin.text.toString()
-        if (validator.validateLogin(login, true) && validator.validatePassword(password)) {
+        if (uiMessage.checkPasswordAndGetMessage(
+                binding.editTextPassword,
+                binding.errorMessagePassword
+            ) and
+            uiMessage.checkIfNullsAndGetMessage(
+                "Введите пароль",
+                binding.editTextLogin,
+                binding.errorMessageLogin
+            )
+            and uiMessage.checkLoginAndGetMessage(
+                binding.editTextLogin,
+                binding.errorMessageLogin
+            )
+        ) {
             return try {
                 val tokenEntity: TokenEntity =
                     Dependencies.authRepository.signInByEmail(login, password)
                 Dependencies.tokenService.setTokens(tokenEntity)
                 true
             } catch (e: HttpException) {
-                toaster.getToast(this, "Неверный логин или пароль!")
+                uiMessage.getMessage(
+                    binding.editTextLogin,
+                    binding.errorMessageLogin,
+                    "Неверный логин или пароль"
+                )
                 false
             } catch (e: SocketTimeoutException) {
                 toaster.getToast(
@@ -90,7 +109,6 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
                 false
             }
         }
-        toaster.getToastWrongLogin(this)
         return false
     }
 

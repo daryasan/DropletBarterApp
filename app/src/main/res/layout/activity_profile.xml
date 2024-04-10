@@ -115,6 +115,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginTop="20dp"
                         android:gravity="center"
+                        android:layout_marginBottom="10dp"
                         android:text="@string/address" />
 
                     <View
@@ -190,7 +191,7 @@
                         android:layout_marginTop="5dp"
                         android:gravity="center_vertical"
                         android:background="@android:color/transparent"
-                        android:textColor="@color/main_color"
+                        android:textColor="@color/red"
                         android:text="@string/logOut" />
 
                 </RelativeLayout>

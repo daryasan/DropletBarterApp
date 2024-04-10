@@ -41,6 +41,20 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress" />
 
+        <TextView
+            android:id="@+id/errorMessageEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textColor="@color/red"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/editTextEmail"
+            android:layout_alignStart="@id/editTextEmail"
+            android:layout_alignEnd="@id/editTextEmail"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"/>
+
         <Button
             android:id="@+id/buttonChangeEmail"
             android:layout_width="wrap_content"
@@ -66,6 +80,20 @@
             android:gravity="center"
             android:hint="@string/PhoneHint"
             android:inputType="phone" />
+
+        <TextView
+            android:id="@+id/errorMessagePhone"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textColor="@color/red"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/editTextPhone"
+            android:layout_alignStart="@id/editTextPhone"
+            android:layout_alignEnd="@id/editTextPhone"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/buttonChangePhone"
@@ -110,6 +138,20 @@
             android:inputType="textPassword"
             android:textAlignment="center" />
 
+        <TextView
+            android:id="@+id/errorMessagePassword"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textColor="@color/red"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/editTextEditPassword"
+            android:layout_alignStart="@id/editTextEmail"
+            android:layout_alignEnd="@id/editTextEmail"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"/>
+
         <EditText
             android:id="@+id/editTextRepeatPassword"
             android:layout_width="130dp"
@@ -123,6 +165,20 @@
             android:hint="@string/repeatPassword"
             android:inputType="textPassword"
             android:textAlignment="center" />
+
+        <TextView
+            android:id="@+id/errorMessageRepeatPassword"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textColor="@color/red"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/editTextRepeatPassword"
+            android:layout_alignStart="@id/editTextEmail"
+            android:layout_alignEnd="@id/editTextEmail"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/buttonChangePassword"

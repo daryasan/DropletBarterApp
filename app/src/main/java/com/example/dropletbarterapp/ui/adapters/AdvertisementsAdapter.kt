@@ -56,10 +56,15 @@ class AdvertisementsAdapter :
             if (ads.ownerId == getUserId()) {
                 buttonFavourites.isEnabled = false
                 buttonFavourites.alpha = 0f
+            } else {
+                buttonFavourites.isEnabled = true
+                buttonFavourites.alpha = 1f
             }
 
             if (!ads.statusActive) {
                 imageViewAds.alpha = 0.7f
+            } else {
+                imageViewAds.alpha = 1f
             }
 
 

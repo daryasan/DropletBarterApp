@@ -5,7 +5,7 @@
     <string name="ads_bottom_nav">Объявления</string>
     <string name="chats_bottom_nav">Чаты</string>
     <string name="profile_bottom_nav">Профиль</string>
-    <string name="api_url">http://10.193.60.99:8080</string>
+    <string name="api_url">http://10.193.61.34:8080</string>
     <string name="firstLastName">%1$s %2$s</string>
     <string name="itemsNumber">Айтемов: %1$d</string>
     <string name="alertMesPhone">Укажите номер телефона в настройках!</string>
@@ -86,7 +86,7 @@
     <string name="decline">Отклонить</string>
     <string name="contact">Связаться</string>
     <string name="recent1">Недавние</string>
-    <string name="Query">Запросы на покупки</string>
+    <string name="Query">Запросы на обмен</string>
     <string name="noQueries">Пока нет запросов!</string>
     <string-array name="categoryArray">
         <item>Не выбрано</item>
@@ -100,5 +100,7 @@
         <item>Услуги</item>
         <item>Другое</item>
     </string-array>
+    <string name="save">Сохранить</string>
+    <string name="chooseAdress">Выберите адрес...</string>
 
 </resources>

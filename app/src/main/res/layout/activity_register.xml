@@ -5,6 +5,20 @@
     android:layout_height="match_parent"
     tools:context=".auth.screens.LoginActivity">
 
+    <TextView
+        android:id="@+id/registerDataTitle"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/editTextRegisterName"
+        android:layout_alignStart="@+id/editTextRegisterName"
+        android:layout_alignEnd="@+id/editTextRegisterName"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="Регистрация"
+        android:textAllCaps="true"
+        android:textColor="@color/main_color"
+        android:textSize="24sp" />
+
     <EditText
         android:id="@+id/editTextRegisterName"
         android:layout_width="wrap_content"
@@ -20,6 +34,20 @@
         android:hint="Имя"
         android:inputType="textPersonName"
         android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/errorMessageFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@color/red"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/editTextRegisterLastName"
+        android:layout_alignStart="@id/editTextRepeatPassword"
+        android:layout_alignEnd="@id/editTextRepeatPassword"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="20dp"
+        android:textSize="12sp"/>
 
     <EditText
         android:id="@+id/editTextRegisterLastName"
@@ -37,6 +65,20 @@
         android:inputType="textPersonName"
         android:textAlignment="center" />
 
+    <TextView
+        android:id="@+id/errorMessageLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@color/red"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/editTextRegisterPhone"
+        android:layout_alignStart="@id/editTextRepeatPassword"
+        android:layout_alignEnd="@id/editTextRepeatPassword"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="20dp"
+        android:textSize="12sp"/>
+
     <EditText
         android:id="@+id/editTextRegisterPhone"
         android:layout_width="wrap_content"
@@ -52,6 +94,20 @@
         android:hint="Телефон"
         android:inputType="phone"
         android:textAlignment="center" />
+
+    <TextView
+        android:id="@+id/errorMessagePhone"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@color/red"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/editTextRegisterLogin"
+        android:layout_alignStart="@id/editTextRepeatPassword"
+        android:layout_alignEnd="@id/editTextRepeatPassword"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="20dp"
+        android:textSize="12sp"/>
 
     <EditText
         android:id="@+id/editTextRegisterLogin"
@@ -69,6 +125,20 @@
         android:inputType="textPersonName"
         android:textAlignment="center" />
 
+    <TextView
+        android:id="@+id/errorMessageEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@color/red"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/editTextRegisterPassword"
+        android:layout_alignStart="@id/editTextRepeatPassword"
+        android:layout_alignEnd="@id/editTextRepeatPassword"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="20dp"
+        android:textSize="12sp"/>
+
     <EditText
         android:id="@+id/editTextRegisterPassword"
         android:layout_width="130dp"
@@ -85,6 +155,20 @@
         android:inputType="textPassword"
         android:textAlignment="center" />
 
+    <TextView
+        android:id="@+id/errorMessagePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@color/red"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/editTextRepeatPassword"
+        android:layout_alignStart="@id/editTextRepeatPassword"
+        android:layout_alignEnd="@id/editTextRepeatPassword"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="20dp"
+        android:textSize="12sp"/>
+
     <EditText
         android:id="@+id/editTextRepeatPassword"
         android:layout_width="130dp"
@@ -92,37 +176,49 @@
         android:layout_above="@+id/buttonRegister"
         android:layout_alignStart="@+id/editTextRegisterLogin"
         android:layout_alignEnd="@+id/editTextRegisterLogin"
-        android:layout_marginBottom="45dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/edit_text"
         android:ems="10"
         android:hint="@string/repeatPassword"
         android:inputType="textPassword"
         android:textAlignment="center" />
 
+    <TextView
+        android:id="@+id/errorMessageRepeatPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:textColor="@color/red"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@id/buttonRegister"
+        android:layout_alignStart="@id/editTextRepeatPassword"
+        android:layout_alignEnd="@id/editTextRepeatPassword"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginEnd="20dp"
+        android:textSize="12sp"/>
+
     <Button
         android:id="@+id/buttonRegister"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_above="@id/buttonLogin"
-        android:layout_alignStart="@+id/editTextRegisterLogin"
-        android:layout_alignEnd="@+id/editTextRegisterLogin"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
+        android:layout_alignStart="@+id/buttonLogin"
+        android:layout_alignEnd="@+id/buttonLogin"
+        android:layout_marginStart="-20dp"
+        android:layout_marginEnd="-20dp"
         android:layout_marginBottom="20dp"
-        android:text="ЗАРЕГИСТРИРОВАТЬСЯ"
         android:background="@drawable/rounded_button"
+        android:text="ЗАРЕГИСТРИРОВАТЬСЯ"
         android:textSize="15sp" />
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_alignStart="@+id/buttonRegister"
-        android:layout_alignEnd="@+id/buttonRegister"
+        android:layout_alignStart="@+id/editTextRepeatPassword"
+        android:layout_alignEnd="@+id/editTextRepeatPassword"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="40dp"
         android:background="@android:color/transparent"
         android:text="Уже есть аккаунт?"
         android:textAllCaps="false"

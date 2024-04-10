@@ -3,14 +3,36 @@ package com.example.dropletbarterapp.validators
 import android.content.Context
 import android.widget.Toast
 
-class Toaster {
-    fun checkNullsAndGetToast(
-        message: String,
+class Toaster() : ErrorSender {
+
+    override val validator: Validator
+        get() = Validator()
+
+    fun getToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun checkNullsAndGetMessage(
         context: Context,
-        vararg checked: String
+        message: String,
+        field: String?
     ): Boolean {
-        for (s in checked) {
-            if (s.isEmpty()) {
+        return if (validator.validateFieldIsNull(field)) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            false
+        } else {
+            true
+        }
+
+    }
+
+    override fun checkNullsAndGetMessage(
+        context: Context,
+        message: String,
+        vararg field: String?
+    ): Boolean {
+        for (f in field) {
+            if (validator.validateFieldIsNull(f)) {
                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
                 return false
             }
@@ -18,20 +40,7 @@ class Toaster {
         return true
     }
 
-    fun getToast(context: Context, message: String) {
+    override fun showMessage(context: Context, message: String) {
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-    }
-
-    fun getToastWrongLogin(context: Context){
-        Toast.makeText(context, "Неверный адрес почты!", Toast.LENGTH_SHORT).show()
-        Toast.makeText(context, "Номер телефона не может быть пустым!", Toast.LENGTH_SHORT).show()
-    }
-
-    fun checkNullsAndGetToast(message: String, context: Context, checked: String): Boolean {
-        if (checked.isEmpty()) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-            return false
-        }
-        return true
     }
 }

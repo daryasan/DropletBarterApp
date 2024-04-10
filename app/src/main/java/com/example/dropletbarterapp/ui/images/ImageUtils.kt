@@ -12,6 +12,10 @@ import java.util.*
 
 object ImageUtils {
 
+    fun encodeImageFromString(image: String): ByteArray {
+        return Base64.getDecoder().decode(image)
+    }
+
     private fun decodeBitmapImageFromDB(image: String): Bitmap {
         val photoByte = Base64.getDecoder().decode(image)
         return BitmapFactory.decodeByteArray(

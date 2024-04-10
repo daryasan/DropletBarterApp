@@ -15,6 +15,7 @@ import com.example.dropletbarterapp.ui.images.CircleCrop
 import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.ui.Navigation
 import com.example.dropletbarterapp.ui.images.ImageUtils
+import com.yandex.mapkit.MapKitFactory
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 
@@ -34,8 +35,10 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
         job.cancel()
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Dependencies.initDependencies(this)
@@ -89,7 +92,7 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
         binding.layoutProfileRoot.isEnabled = false
     }
 
-    private fun enableAndShowElements() {
+    fun enableAndShowElements() {
         binding.layoutProfileRoot.alpha = 1f
         binding.layoutProfileRoot.isEnabled = true
     }

@@ -5,10 +5,14 @@ import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.models.UICategory
 import com.example.dropletbarterapp.utils.Dependencies
+import info.debatty.java.stringsimilarity.JaroWinkler
+import info.debatty.java.stringsimilarity.NormalizedLevenshtein
 import kotlinx.coroutines.runBlocking
 import retrofit2.HttpException
 
 class SearchViewModel : ViewModel() {
+
+    private var allAdvertisement = listOf<Advertisement>()
 
     fun findAdvertisements(
         query: String?,
@@ -153,10 +157,13 @@ class SearchViewModel : ViewModel() {
     }
 
     private suspend fun findAllAdvertisements(): List<Advertisement> {
-        val ads = Dependencies.advertisementRepository.findAllAdvertisements(
-            Dependencies.tokenService.getAccessToken().toString()
-        )
-        return removeArchived(ads)
+        if (allAdvertisement.isEmpty()) {
+            val ads = Dependencies.advertisementRepository.findAllAdvertisements(
+                Dependencies.tokenService.getAccessToken().toString()
+            )
+            allAdvertisement = removeArchived(ads)
+        }
+        return allAdvertisement
     }
 
     private suspend fun findCloserAdvertisements(): MutableList<Advertisement> {
@@ -164,7 +171,15 @@ class SearchViewModel : ViewModel() {
     }
 
     private suspend fun findAdvertisementsByQuery(query: String): List<Advertisement> {
-        return mutableListOf()
+
+        val ads = findAllAdvertisements()
+        val jw = JaroWinkler()
+        val nl = NormalizedLevenshtein()
+
+        val similarAds = ads.filter { ad ->
+            jw.similarity(query, ad.name) > 0.8 || nl.similarity(query, ad.name) > 0.8
+        }
+        return similarAds
     }
 
     private suspend fun findCategoryAdvertisement(

@@ -43,44 +43,63 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="100dp"
-            android:background="@drawable/rounded_button"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="100dp"
+            android:background="@drawable/rounded_button"
             android:text="@string/changePhoto" />
 
-        <AutoCompleteTextView
+        <TextView
             android:id="@+id/editTextAddress"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:minHeight="50dp"
             android:layout_below="@+id/buttonChangePhoto"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="80dp"
-            android:layout_marginTop="50dp"
-            android:background="@drawable/edit_text"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="80dp"
-            android:gravity="center"
             android:autofillHints="postalAddress"
-            android:hint="@string/AddressHint"
+            android:background="@drawable/edit_text"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:hint="@string/chooseAdress"
             android:inputType="textPostalAddress" />
 
         <EditText
-            android:background="@drawable/edit_text"
             android:id="@+id/editTextFirstName"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:textColor="@color/black"
             android:layout_below="@+id/editTextAddress"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="80dp"
+            android:textSize="18sp"
+            android:background="@drawable/edit_text"
             android:gravity="center"
             android:hint="@string/FirstNameHint"
             android:inputType="textPersonName" />
 
+        <TextView
+            android:id="@+id/errorMessageFirstName"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/editTextFirstName"
+            android:layout_alignStart="@id/editTextFirstName"
+            android:layout_alignEnd="@id/editTextFirstName"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/red"
+            android:textSize="12sp" />
+
         <EditText
-            android:background="@drawable/edit_text"
             android:id="@+id/editTextLastName"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
@@ -90,9 +109,25 @@
             android:layout_marginStart="80dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="80dp"
+            android:textSize="18sp"
+            android:background="@drawable/edit_text"
             android:gravity="center"
             android:hint="@string/LastNameHint"
             android:inputType="textPersonName" />
+
+        <TextView
+            android:id="@+id/errorMessageLastName"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textColor="@color/red"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/editTextLastName"
+            android:layout_alignStart="@id/editTextLastName"
+            android:layout_alignEnd="@id/editTextLastName"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"/>
 
         <Button
             android:id="@+id/buttonSave"

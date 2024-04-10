@@ -17,6 +17,7 @@ import com.example.dropletbarterapp.ui.images.ImageLoader
 import com.example.dropletbarterapp.ui.images.SquareCrop
 import com.example.dropletbarterapp.ui.models.UICategory
 import com.example.dropletbarterapp.validators.Toaster
+import com.example.dropletbarterapp.validators.UIMessageMan
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -35,6 +36,7 @@ class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener 
     private var name: String? = null
     private var description: String? = null
     private lateinit var imageLoader: ImageLoader
+    private val uiMessageMan = UIMessageMan()
 
 
     override fun onCreateView(
@@ -82,13 +84,17 @@ class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener 
             name = binding.editTextAdsName.text.toString()
             description = binding.editTextAdsDescription.text.toString()
             photo = imageLoader.photo
-            if (name == "") {
-                toaster.getToast(requireContext(), "Название объявления не может быть пустым!")
-            } else if (category == null) {
+
+            if (category == null) {
                 toaster.getToast(requireContext(), "Выберите категорию объявления!")
             } else if (photo == null) {
                 toaster.getToast(requireContext(), "Выберите фото для объявления!")
-            } else {
+            } else if (uiMessageMan.checkIfNullsAndGetMessage(
+                    "Введите название",
+                    binding.editTextAdsName,
+                    binding.errorAdsName
+                )
+            ) {
                 runBlocking {
                     viewModel.addAdvertisement(photo!!, name!!, description!!, category!!)
                 }

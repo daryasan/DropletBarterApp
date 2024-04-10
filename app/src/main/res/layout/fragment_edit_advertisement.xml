@@ -65,6 +65,20 @@
             android:hint="@string/advertisementName"
             android:windowSoftInputMode="adjustPan" />
 
+        <TextView
+            android:id="@+id/errorAdsName"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textColor="@color/red"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@id/editTextAdsName"
+            android:layout_alignStart="@id/editTextAdsName"
+            android:layout_alignEnd="@id/editTextAdsName"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:layout_marginEnd="20dp"
+            android:textSize="12sp"/>
+
         <EditText
             android:id="@+id/editTextAdsDescription"
             android:layout_width="match_parent"

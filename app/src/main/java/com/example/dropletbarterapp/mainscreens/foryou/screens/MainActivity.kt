@@ -16,6 +16,8 @@ import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
 import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.ui.Navigation
+import com.example.dropletbarterapp.ui.models.UICategory
+import com.yandex.mapkit.MapKitFactory
 import kotlinx.coroutines.runBlocking
 import retrofit2.HttpException
 
@@ -26,14 +28,14 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: AdvertisementsAdapter
     private lateinit var viewModel: MainViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         viewModel = MainViewModel()
         setContentView(binding.root)
         Dependencies.initDependencies(this)
-        //Dependencies.tokenService.killTokens()
+
         // if not authorized -> authorize
         if (Dependencies.tokenService.getAccessToken() == null) {
             authorize()
@@ -57,9 +59,22 @@ class MainActivity : AppCompatActivity() {
                 }
             })
             setButtonsChange()
+
+
+            binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+                androidx.appcompat.widget.SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(p0: String?): Boolean {
+                    startSearchFragment(p0.toString())
+                    return false
+                }
+
+                override fun onQueryTextChange(p0: String?): Boolean {
+                    return true
+                }
+
+            })
+
         }
-
-
     }
 
     override fun onBackPressed() {
@@ -135,8 +150,21 @@ class MainActivity : AppCompatActivity() {
             binding.buttonSharedUsage.setBackgroundResource(R.drawable.rounded_button_unactive)
             binding.buttonSharedUsage.setTextColor(resources.getColor(R.color.main_color))
         }
+    }
 
-
+    private fun startSearchFragment(query: String) {
+        disableAndHideElements()
+        val fragment = SearchFragment.newInstance()
+        val bundle = Bundle()
+        bundle.putString(
+            "query",
+            query
+        )
+        fragment.arguments = bundle
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.forYouLayout, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
 }
