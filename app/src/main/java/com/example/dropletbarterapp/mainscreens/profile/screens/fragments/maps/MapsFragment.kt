@@ -135,7 +135,7 @@ class MapsFragment : Fragment() {
     }
 
 
-    suspend fun saveEditedData(address: String?) {
+    private suspend fun saveEditedData(address: String?) {
         val jwt = JWT(Dependencies.tokenService.getAccessToken().toString())
         val userData = Dependencies.userRepository.findUserById(
             Dependencies.tokenService.getAccessToken().toString(),

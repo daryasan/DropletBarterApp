@@ -81,6 +81,14 @@ class EditAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                @Suppress("DEPRECATION")
+                requireActivity().onBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
         viewModel = ViewModelProvider(this)[EditAdvertisementViewModel::class.java]
         imageLoader = ImageLoader(requireContext(), this, binding.imageViewEditPhoto, SquareCrop())
         val adsId = requireArguments().getLong("adsId")
@@ -124,7 +132,8 @@ class EditAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener
                         true
                     )
                 }
-                finishFragment()
+                //requireActivity().supportFragmentManager.popBackStack()
+                requireActivity().onBackPressed()
             }
         }
 
@@ -144,10 +153,6 @@ class EditAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener
         category = null
     }
 
-    @Suppress("DEPRECATION")
-    private fun finishFragment() {
-        requireActivity().supportFragmentManager.popBackStack()
-        requireActivity().onBackPressed()
-    }
+
 
 }

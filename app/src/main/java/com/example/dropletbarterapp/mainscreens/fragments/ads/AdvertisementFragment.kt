@@ -1,6 +1,5 @@
-package com.example.dropletbarterapp.mainscreens.fragments
+package com.example.dropletbarterapp.mainscreens.fragments.ads
 
-import android.R.attr.dial
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.FragmentAdvertisementBinding
+import com.example.dropletbarterapp.mainscreens.fragments.AnotherProfileFragment
+import com.example.dropletbarterapp.mainscreens.fragments.EditAdvertisementFragment
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.models.Category
@@ -28,6 +29,7 @@ class AdvertisementFragment : Fragment() {
 
     companion object {
         fun newInstance() = AdvertisementFragment()
+
     }
 
     private lateinit var viewModel: AdvertisementViewModel
@@ -52,6 +54,8 @@ class AdvertisementFragment : Fragment() {
         viewModel = ViewModelProvider(this)[AdvertisementViewModel::class.java]
         val adsId = requireArguments().getLong("adsId")
 
+        layoutResource = requireArguments().getInt("layoutResource")
+
         runBlocking {
             advertisement = viewModel.findAdvertisement(adsId)
             ownerData = viewModel.findOwner(advertisement)
@@ -60,6 +64,10 @@ class AdvertisementFragment : Fragment() {
 
         binding.linLayoutSeller.setOnClickListener {
             startProfileFragment(advertisement)
+        }
+
+        binding.textViewAddress.setOnClickListener {
+            startMaps()
         }
 
         binding.recyclerView.layoutManager =
@@ -78,12 +86,12 @@ class AdvertisementFragment : Fragment() {
         adapter.setOnAdvertisementClickListener(object :
             AdvertisementsAdapter.OnAdvertisementClickListener {
             override fun onAdvertisementClick(advertisement: Advertisement) {
-                startAdsFragment()
+                startAdsFragment(advertisement)
             }
         })
 
         if (advertisement.ownerId == viewModel.getUserId()) {
-            binding.buttonTake.text = "Редактировать"
+            binding.buttonTake.text = "Изменить"
             binding.buttonContact.text = "Скрыть"
 
             binding.buttonTake.setOnClickListener {
@@ -100,19 +108,18 @@ class AdvertisementFragment : Fragment() {
             }
 
         } else {
-            if (advertisement.category == UICategory.getPosByCategory(Category.SHARED_USAGE)){
+            if (advertisement.category == UICategory.getPosByCategory(Category.SHARED_USAGE)) {
                 binding.buttonTake.text = "Использовать"
             }
             binding.buttonTake.setOnClickListener {
                 viewModel.sendPendingRequest(advertisement)
-                binding.buttonTake.text = "Оправлено"
+                binding.buttonTake.text = "Отправлено"
             }
 
             binding.buttonContact.setOnClickListener {
                 startActivity(Intent(Intent.ACTION_DIAL, Uri.parse("tel: ${ownerData.phone}")))
             }
         }
-
 
 
         // go back
@@ -164,9 +171,10 @@ class AdvertisementFragment : Fragment() {
         )
     }
 
-    private fun startAdsFragment() {
+    private fun startAdsFragment(advertisement: Advertisement) {
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
+        bundle.putInt("layoutResource", layoutResource)
         val fragment = newInstance()
         fragment.arguments = bundle
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -190,12 +198,25 @@ class AdvertisementFragment : Fragment() {
         val bundle = Bundle()
         bundle.putLong("ownerId", advertisement.ownerId)
         val fragment = AnotherProfileFragment.newInstance()
-        fragment.layoutResource = layoutResource
+        bundle.putInt("layoutResource", layoutResource)
         fragment.arguments = bundle
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(layoutResource, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    private fun startMaps() {
+        if (ownerData.address != null && ownerData.address != "") {
+            val bundle = Bundle()
+            bundle.putString("address", ownerData.address)
+            val fragment = ShowAdsOnMapFragment.newInstance()
+            fragment.arguments = bundle
+            val transaction = requireActivity().supportFragmentManager.beginTransaction()
+            transaction.replace(layoutResource, fragment)
+            transaction.addToBackStack(null)
+            transaction.commit()
+        }
     }
 
 

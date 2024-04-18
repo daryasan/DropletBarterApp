@@ -99,38 +99,38 @@ class QueryAdapter :
 
     private fun permitPurchase(query: Query, ads: Advertisement) {
         if (ads.category == UICategory.getPosByCategory(Category.SHARED_USAGE)) {
-            try {
-                runBlocking {
-                    Dependencies.sharedUsageRepository.addToSharedUsage(
-                        Dependencies.tokenService.getAccessToken().toString(),
-                        userId = query.userId,
-                        adsId = ads.id,
-                        queryId = query.id
-                    )
-                    Dependencies.sharedUsageRepository.addToSharedUsage(
-                        Dependencies.tokenService.getAccessToken().toString(),
-                        userId = ads.ownerId,
-                        adsId = ads.id,
-                        queryId = query.id
-                    )
-                }
-            } catch (e: HttpException) {
-                runBlocking {
-                    Dependencies.tokenService.refreshTokens()
-                    Dependencies.sharedUsageRepository.addToSharedUsage(
-                        Dependencies.tokenService.getAccessToken().toString(),
-                        userId = query.userId,
-                        adsId = ads.id,
-                        queryId = query.id
-                    )
-                    Dependencies.sharedUsageRepository.addToSharedUsage(
-                        Dependencies.tokenService.getAccessToken().toString(),
-                        userId = ads.ownerId,
-                        adsId = ads.id,
-                        queryId = query.id
-                    )
-                }
+//            try {
+            runBlocking {
+                Dependencies.sharedUsageRepository.addToSharedUsage(
+                    Dependencies.tokenService.getAccessToken().toString(),
+                    userId = query.userId,
+                    adsId = ads.id,
+                    queryId = query.id
+                )
+                Dependencies.sharedUsageRepository.addToSharedUsage(
+                    Dependencies.tokenService.getAccessToken().toString(),
+                    userId = ads.ownerId,
+                    adsId = ads.id,
+                    queryId = query.id
+                )
             }
+//            } catch (e: HttpException) {
+//                runBlocking {
+//                    Dependencies.tokenService.refreshTokens()
+//                    Dependencies.sharedUsageRepository.addToSharedUsage(
+//                        Dependencies.tokenService.getAccessToken().toString(),
+//                        userId = query.userId,
+//                        adsId = ads.id,
+//                        queryId = query.id
+//                    )
+//                    Dependencies.sharedUsageRepository.addToSharedUsage(
+//                        Dependencies.tokenService.getAccessToken().toString(),
+//                        userId = ads.ownerId,
+//                        adsId = ads.id,
+//                        queryId = query.id
+//                    )
+//                }
+//            }
         }
         try {
             runBlocking {

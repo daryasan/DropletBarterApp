@@ -52,7 +52,10 @@ class EditDataFragment : Fragment() {
                     binding.errorMessageLastName
                 )
             ) {
-                photo = imageLoader.photo
+                if (imageLoader.photo != null){
+                    photo = imageLoader.photo
+                }
+
                 try {
                     runBlocking {
                         viewModel.saveEditedData(
@@ -152,6 +155,11 @@ class EditDataFragment : Fragment() {
             binding.imageViewEditPhoto,
             CircleCrop()
         )
+
+        if (data.photo != null){
+            this.photo = photo
+        }
+
         if (data.photo == null) {
             binding.buttonChangePhoto.text = "Добавить фото"
         } else {

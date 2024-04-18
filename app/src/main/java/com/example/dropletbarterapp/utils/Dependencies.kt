@@ -1,6 +1,7 @@
 package com.example.dropletbarterapp.utils
 
 import android.content.Context
+import android.location.Geocoder
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.AuthRepository
 import com.example.dropletbarterapp.auth.RuntimeAuthRepository
@@ -19,13 +20,16 @@ import com.example.dropletbarterapp.mainscreens.profile.api.user.UserRepository
 import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 
 object Dependencies {
 
     private lateinit var applicationContext: Context
+    lateinit var geocoder: Geocoder
 
     fun initDependencies(context: Context) {
         applicationContext = context
+        geocoder = Geocoder(applicationContext, Locale("ru", "RU"))
     }
 
     private val retrofit: Retrofit by lazy {

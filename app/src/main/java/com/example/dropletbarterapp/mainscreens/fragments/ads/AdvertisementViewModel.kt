@@ -1,10 +1,9 @@
-package com.example.dropletbarterapp.mainscreens.fragments
+package com.example.dropletbarterapp.mainscreens.fragments.ads
 
 import androidx.lifecycle.ViewModel
 import com.auth0.android.jwt.JWT
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.models.Advertisement
-import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.models.UICategory
 import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.utils.Similarity

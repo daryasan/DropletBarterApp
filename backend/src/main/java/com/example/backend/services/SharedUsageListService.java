@@ -14,7 +14,6 @@ import com.example.backend.repositories.SharedUsageListRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -36,14 +35,14 @@ public class SharedUsageListService {
         List<Advertisement> advertisements = sharedUsageList.getAdvertisements();
 
         Query query = queryService.findQuery(request.getQueryId());
-        List<Advertisement> purchases;
-        if (sharedUsageList != null) {
-            purchases = sharedUsageList.getAdvertisements();
-        } else {
-            purchases = Collections.emptyList();
-        }
+//        List<Advertisement> purchases;
+//        if (sharedUsageList != null) {
+//            purchases = sharedUsageList.getAdvertisements();
+//        } else {
+//            purchases = Collections.emptyList();
+//        }
 
-        purchases.add(advertisement);
+        //purchases.add(advertisement);
         QueryDto queryDto = new QueryDto();
         queryDto.setAdsId(query.getAdsId());
         queryDto.setUserId(query.getUserId());
@@ -55,6 +54,8 @@ public class SharedUsageListService {
 
         advertisements.add(advertisement);
         sharedUsageList.setAdvertisements(advertisements);
+        //purchases.add(advertisement);
+
         sharedUsageListRepository.save(sharedUsageList);
     }
 

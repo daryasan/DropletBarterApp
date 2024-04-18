@@ -5,7 +5,7 @@
     android:id="@+id/adsLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".mainscreens.fragments.AdvertisementFragment">
+    tools:context=".mainscreens.fragments.ads.AdvertisementFragment">
 
 
     <ScrollView
@@ -45,7 +45,7 @@
                 android:layout_below="@id/textViewAdsName"
                 android:gravity="center"
                 android:padding="2dp"
-                android:text="@string/AddressHint"
+                android:paddingBottom="10dp"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 

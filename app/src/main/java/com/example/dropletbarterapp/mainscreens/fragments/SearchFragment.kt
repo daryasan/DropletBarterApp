@@ -13,10 +13,10 @@ import android.widget.SearchView
 import androidx.activity.OnBackPressedCallback
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.FragmentSearchBinding
+import com.example.dropletbarterapp.mainscreens.fragments.ads.AdvertisementFragment
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
-import com.example.dropletbarterapp.ui.models.UICategory
-import kotlinx.coroutines.runBlocking
+import java.util.*
 
 class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
@@ -30,6 +30,7 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private var query: String? = null
     private var categoryPos: Int? = 0
     private var closer = false
+    var layoutResource: Int = R.id.searchLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,6 +54,8 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         adapter = AdvertisementsAdapter()
+
+        layoutResource = requireArguments().getInt("layoutResource")
 
         query = arguments?.getString("query")
         if (query != null) {
@@ -104,23 +107,25 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
         setAdvertisements()
 
 
-//        if (binding.checkboxClose.isActivated) {
-//            closer = true
-//            setAdvertisements()
-//        } else {
-//            closer = false
-//            setAdvertisements()
-//        }
-//
-//        binding.checkboxClose.setOnCheckedChangeListener { _, isChecked ->
-//            if (isChecked) {
-//                closer = true
-//                setAdvertisements()
-//            } else {
-//                closer = false
-//                setAdvertisements()
-//            }
-//        }
+        if (binding.checkboxClose.isActivated) {
+            closer = true
+            setAdvertisements()
+        } else {
+            closer = false
+            setAdvertisements()
+        }
+
+        binding.checkboxClose.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                closer = true
+                setAdvertisements()
+            } else {
+                closer = false
+                setAdvertisements()
+            }
+        }
+
+        binding.filterCategory.setSelection(categoryPos!!)
 
     }
 
@@ -140,10 +145,11 @@ class SearchFragment : Fragment(), AdapterView.OnItemSelectedListener {
     private fun startAdsFragment(advertisement: Advertisement) {
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
+        bundle.putInt("layoutResource", layoutResource)
         val fragment = AdvertisementFragment.newInstance()
         fragment.arguments = bundle
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.searchLayout, fragment)
+        transaction.replace(layoutResource, fragment)
         transaction.addToBackStack(null)
         transaction.commit()
     }

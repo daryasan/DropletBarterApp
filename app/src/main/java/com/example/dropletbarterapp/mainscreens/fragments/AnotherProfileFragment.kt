@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.FragmentAnotherProfileBinding
+import com.example.dropletbarterapp.mainscreens.fragments.ads.AdvertisementFragment
 import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.models.Advertisement
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
@@ -46,6 +47,8 @@ class AnotherProfileFragment : Fragment(), CoroutineScope {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[AnotherProfileViewModel::class.java]
         val ownerId = requireArguments().getLong("ownerId")
+
+        layoutResource = requireArguments().getInt("layoutResource")
 
         runBlocking {
             launch {
@@ -105,8 +108,8 @@ class AnotherProfileFragment : Fragment(), CoroutineScope {
         val fragment = AdvertisementFragment.newInstance()
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
+        bundle.putInt("layoutResource", layoutResource)
         fragment.arguments = bundle
-        fragment.layoutResource = layoutResource
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.replace(layoutResource, fragment)
         transaction.addToBackStack(null)

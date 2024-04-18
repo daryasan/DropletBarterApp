@@ -19,13 +19,17 @@ class AnotherProfileViewModel : ViewModel() {
             Dependencies.tokenService.getAccessToken().toString(),
             id
         )
-        removeArchived(ads)
-        return ads
+        return removeArchived(ads)
     }
 
-    fun removeArchived(ads: List<Advertisement>) {
-        ads.toMutableSet().removeIf { !it.statusActive }
-        ads.toList()
-    }
+    private fun removeArchived(ads: List<Advertisement>): List<Advertisement> {
+        val withoutArchived = mutableListOf<Advertisement>()
+        for (a in ads) {
+            if (a.statusActive) {
+                withoutArchived.add(a)
+            }
+        }
+        return withoutArchived.toList()
 
+    }
 }

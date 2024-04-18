@@ -57,6 +57,7 @@ class SearchActivity : AppCompatActivity() {
             "categoryPos",
             UICategory.getPosByCategory(category)
         )
+        bundle.putInt("layoutResource", R.id.searchLayout)
         fragment.arguments = bundle
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.searchLayout, fragment)

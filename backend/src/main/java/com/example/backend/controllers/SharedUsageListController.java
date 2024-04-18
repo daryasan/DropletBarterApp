@@ -29,13 +29,13 @@ public class SharedUsageListController {
     private final SharedUsageListService sharedUsageListService;
 
     @PostMapping("/add")
-    public ResponseEntity<HttpStatus> addToFavourites(@RequestBody AddAdvertisementRequest request) throws AdvertisementException, UserException, QueryException {
+    public ResponseEntity<HttpStatus> addToSharedUsage(@RequestBody AddAdvertisementRequest request) throws AdvertisementException, UserException, QueryException {
         sharedUsageListService.addAdvertisementsToSharedUsage(request);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("/delete")
-    public ResponseEntity<HttpStatus> removeFromFavourites(@RequestBody AddAdvertisementRequest request) throws AdvertisementException, UserException {
+    public ResponseEntity<HttpStatus> removeFromSharedUsage(@RequestBody AddAdvertisementRequest request) throws AdvertisementException, UserException {
         sharedUsageListService.removeAdvertisementsFromSharedUsage(request);
         return ResponseEntity.ok(HttpStatus.OK);
     }

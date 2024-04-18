@@ -8,10 +8,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.databinding.ActivityAdvertisementsBinding
 import com.example.dropletbarterapp.mainscreens.advertisements.screens.fragments.AddAdvertisementFragment
-import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
+import com.example.dropletbarterapp.mainscreens.fragments.ads.AdvertisementFragment
 import com.example.dropletbarterapp.mainscreens.search.screens.SearchActivity
 import com.example.dropletbarterapp.models.Advertisement
-import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
 import com.example.dropletbarterapp.ui.Navigation
 import com.example.dropletbarterapp.utils.Dependencies
@@ -191,9 +190,9 @@ class AdvertisementsActivity : AppCompatActivity() {
     private fun startAdsFragment(advertisement: Advertisement) {
         disableAndHideElements()
         val fragment = AdvertisementFragment.newInstance()
-        fragment.layoutResource = R.id.frameLayoutAds
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
+        bundle.putInt("layoutResource", R.id.frameLayoutAds)
         fragment.arguments = bundle
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayoutAds, fragment)

@@ -1,7 +1,6 @@
 package com.example.dropletbarterapp.auth
 
 import com.example.dropletbarterapp.auth.dto.LoginByEmailDTO
-import com.example.dropletbarterapp.auth.dto.LoginByPhoneDTO
 import com.example.dropletbarterapp.auth.dto.RegisterDTO
 import com.example.dropletbarterapp.auth.dto.TokenEntity
 import kotlinx.coroutines.Dispatchers
@@ -17,14 +16,6 @@ class RuntimeAuthRepository(retrofit: Retrofit) : AuthRepository {
             val dto = LoginByEmailDTO(email, password)
 
             return@withContext authApi.signInByEmail(dto);
-        }
-    }
-
-    override suspend fun signInByPhone(phone: Long, password: String): TokenEntity {
-        return withContext(Dispatchers.IO) {
-            val dto = LoginByPhoneDTO(phone, password)
-
-            return@withContext authApi.signInByPhone(dto)
         }
     }
 
@@ -44,14 +35,6 @@ class RuntimeAuthRepository(retrofit: Retrofit) : AuthRepository {
             )
 
             return@withContext authApi.signUpByEmail(dto)
-        }
-    }
-
-    override suspend fun signUpByPhone(phone: Long, password: String): TokenEntity {
-        return withContext(Dispatchers.IO) {
-            val dto = LoginByPhoneDTO(phone, password)
-
-            return@withContext authApi.signUpByPhone(dto)
         }
     }
 

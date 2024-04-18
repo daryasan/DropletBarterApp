@@ -118,7 +118,7 @@ class AddAdvertisementFragment : Fragment(), AdapterView.OnItemSelectedListener 
 
     @Suppress("DEPRECATION")
     private fun finishFragment() {
-        requireActivity().supportFragmentManager.popBackStack()
+        //requireActivity().supportFragmentManager.popBackStack()
         requireActivity().onBackPressed()
     }
 

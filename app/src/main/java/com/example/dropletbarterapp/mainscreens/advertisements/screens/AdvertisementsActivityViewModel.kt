@@ -20,21 +20,21 @@ class AdvertisementsActivityViewModel {
         return Dependencies.favouritesRepository.findForUser(
             Dependencies.tokenService.getAccessToken().toString(),
             getUserId()
-        )
+        ).toSet().toList()
     }
 
     suspend fun getSharedUsage(): List<Advertisement> {
         return Dependencies.sharedUsageRepository.findForUser(
             Dependencies.tokenService.getAccessToken().toString(),
             getUserId()
-        )
+        ).toSet().toList()
     }
 
     suspend fun getPurchases(): List<Advertisement> {
         return Dependencies.purchasesRepository.findForUser(
             Dependencies.tokenService.getAccessToken().toString(),
             getUserId()
-        )
+        ).toSet().toList()
     }
 
     private fun getUserId(): Long {

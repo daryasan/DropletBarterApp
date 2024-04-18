@@ -2,7 +2,6 @@ package com.example.backend.controllers;
 
 import com.example.backend.dto.JwtTokenResponse;
 import com.example.backend.dto.LoginByEmailDto;
-import com.example.backend.dto.LoginByPhoneDto;
 import com.example.backend.dto.RegisterDto;
 import com.example.backend.exceptions.AuthException;
 import com.example.backend.exceptions.RefreshException;
@@ -39,15 +38,6 @@ public class AuthController {
 
     }
 
-    @PostMapping("/loginPhone")
-    ResponseEntity<JwtTokenResponse> signInByPhone(@RequestBody LoginByPhoneDto loginByPhoneDTO) throws AuthException {
-        try {
-            return ResponseEntity.ok(auth.loginByPhone(loginByPhoneDTO));
-        } catch (AuthException e) {
-            throw e;
-        }
-    }
-
     @PostMapping("/registerEmail")
     ResponseEntity<JwtTokenResponse> signUpByEmail(@RequestBody RegisterDto registerDto, BindingResult bindingResult) throws UserException {
         validator.validate(registerDto, bindingResult);
@@ -59,15 +49,6 @@ public class AuthController {
 
     }
 
-    @PostMapping("/registerPhone")
-    ResponseEntity<JwtTokenResponse> signUpByPhone(@RequestBody LoginByPhoneDto loginByPhoneDTO, BindingResult bindingResult) throws UserException {
-        validator.validate(loginByPhoneDTO, bindingResult);
-        try {
-            return new ResponseEntity<>(auth.registerByPhone(loginByPhoneDTO), HttpStatus.CREATED);
-        } catch (UserException e) {
-            throw e;
-        }
-    }
 
     @PostMapping("/refresh/{id}")
     ResponseEntity<JwtTokenResponse> refreshById(@PathVariable Long id) throws RefreshException {

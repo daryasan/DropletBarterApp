@@ -1,7 +1,10 @@
 package com.example.dropletbarterapp.mainscreens.profile.screens
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.WindowManager
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.auth0.android.jwt.JWT
 import com.example.dropletbarterapp.R
@@ -11,11 +14,10 @@ import com.example.dropletbarterapp.mainscreens.profile.dto.UserDataDto
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.ChangeLoginsFragment
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.EditDataFragment
 import com.example.dropletbarterapp.mainscreens.profile.screens.fragments.QueriesFragment
-import com.example.dropletbarterapp.ui.images.CircleCrop
-import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.ui.Navigation
+import com.example.dropletbarterapp.ui.images.CircleCrop
 import com.example.dropletbarterapp.ui.images.ImageUtils
-import com.yandex.mapkit.MapKitFactory
+import com.example.dropletbarterapp.utils.Dependencies
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 
@@ -65,6 +67,10 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
             }
         }
 
+        binding.buttonQuestion.setOnClickListener {
+            explainItems()
+        }
+
         binding.imageViewAvatar.setOnClickListener {
             startEditDataFragment()
         }
@@ -103,6 +109,20 @@ class ProfileActivity : AppCompatActivity(), CoroutineScope {
             Dependencies.tokenService.getAccessToken().toString(),
             jwt.getClaim("id").asString()!!.toLong()
         )
+    }
+
+    private fun explainItems() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setTitle("Что такое айтемы?")
+        alertDialogBuilder.setMessage("На айтемы можно обменивать вещи. 1 айтем = 1 вещь. За каждую отданную вещь вы получаете 1 айтем!")
+        alertDialogBuilder.setPositiveButton(
+            "Понятно!"
+        ) { _: DialogInterface, _: Int -> }
+        val alertDialog = alertDialogBuilder.create()
+        val lp: WindowManager.LayoutParams = alertDialog.window!!.attributes
+        lp.dimAmount = 0.6f
+        alertDialog.window?.attributes = lp
+        alertDialog.show()
     }
 
     private fun setUserDataToScreen(userDataDto: UserDataDto) {

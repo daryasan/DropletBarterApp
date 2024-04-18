@@ -8,18 +8,13 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.dropletbarterapp.R
 import com.example.dropletbarterapp.auth.screens.LoginActivity
 import com.example.dropletbarterapp.databinding.ActivityMainBinding
-import com.example.dropletbarterapp.mainscreens.fragments.AdvertisementFragment
-import com.example.dropletbarterapp.mainscreens.fragments.AnotherProfileFragment
+import com.example.dropletbarterapp.mainscreens.fragments.ads.AdvertisementFragment
 import com.example.dropletbarterapp.mainscreens.fragments.SearchFragment
 import com.example.dropletbarterapp.models.Advertisement
-import com.example.dropletbarterapp.models.Category
 import com.example.dropletbarterapp.ui.adapters.AdvertisementsAdapter
 import com.example.dropletbarterapp.utils.Dependencies
 import com.example.dropletbarterapp.ui.Navigation
-import com.example.dropletbarterapp.ui.models.UICategory
-import com.yandex.mapkit.MapKitFactory
 import kotlinx.coroutines.runBlocking
-import retrofit2.HttpException
 
 
 class MainActivity : AppCompatActivity() {
@@ -123,8 +118,8 @@ class MainActivity : AppCompatActivity() {
         disableAndHideElements()
         val bundle = Bundle()
         bundle.putLong("adsId", advertisement.id)
+        bundle.putInt("layoutResource", R.id.forYouLayout)
         val fragment = AdvertisementFragment.newInstance()
-        fragment.layoutResource = R.id.forYouLayout
         fragment.arguments = bundle
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.forYouLayout, fragment)
@@ -160,6 +155,7 @@ class MainActivity : AppCompatActivity() {
             "query",
             query
         )
+        bundle.putInt("layoutResource", R.id.forYouLayout)
         fragment.arguments = bundle
         val transaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.forYouLayout, fragment)
